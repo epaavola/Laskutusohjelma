@@ -1,13 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import 'typeface-roboto'
 import Navbar from '../components/navbar'
 
-class Dashboard extends Component {
-    render() {
-      return (
+
+const Dashboard = () => {
+    return (
+        <>
         <Navbar />
+        </>
       );
     }
-  }
 
 export default Dashboard
