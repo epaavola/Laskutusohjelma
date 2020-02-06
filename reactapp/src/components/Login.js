@@ -1,14 +1,36 @@
 import React from 'react'
 import 'typeface-roboto'
-import Navbar from '../components/navbar'
-import Login from '../components/Login'
+import { makeStyles } from '@material-ui/styles'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+
+const useStyles  = makeStyles({
+    container: {
+        marginTop: '15%'
+    },
+    loginInput: {
+        marginBottom: '50px',
+        marginLeft: '35%',
+        marginRight: '30%',
+    },
+    form: {
+        textAlign: 'center',
+        marginLeft: '40%',
+        marginRight: '40%',
+        width: '15%',
+        height: '50%'
+    },
+    loginTextField: {
+        marginBottom: '20px'
+    }
+})
 
 const Frontpage = () => {
-<<<<<<< HEAD
     const classes = useStyles()
     return (
-        <div className={classes.container}>
-            <img src="./images/Laskutuslogo.png" alt="Ohjelman logo"></img>
+        
+        <div className={classes.container}>   
             <div className={classes.loginInput}>
                 <Typography variant="h3" color="primary">
                     Syötä kirjautumistietosi
@@ -28,14 +50,5 @@ const Frontpage = () => {
         </div>
     )
 }
-=======
-      return (
-            <>
-                <Navbar />
-                <Login />
-            </>
-      );
-    }
->>>>>>> 8f7a4d9fbb08f64f46573f445ab0cbc61a7191ab
 
 export default Frontpage

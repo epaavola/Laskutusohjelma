@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ButtonAppBar() {
+function ButtonAppBar() {
   const classes = useStyles();
 
   return (
@@ -32,9 +32,15 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Laskutusohjelma
           </Typography>
+<<<<<<< HEAD
           <Button color="inherit">Kirjaudu sisään</Button>
+=======
+          <Button color="inherit">Login / Logout</Button>
+>>>>>>> 8f7a4d9fbb08f64f46573f445ab0cbc61a7191ab
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+export default ButtonAppBar
