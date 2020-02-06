@@ -1,5 +1,6 @@
 import React from 'react'
 import 'typeface-roboto'
+import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
@@ -26,7 +27,11 @@ const useStyles  = makeStyles({
     }
 })
 
-const Frontpage = () => {
+const Frontpage = (props) => {
+    const onSubmit = (event) => {
+        event.preventDefault()
+        props.history.push('/dashboard')
+    }
     const classes = useStyles()
     return (
         
@@ -37,11 +42,11 @@ const Frontpage = () => {
                 </Typography>
             </div>
             <div>
-                <form className={classes.form}>
+                <form className={classes.form} onSubmit={onSubmit}>
                     <div>
                         <TextField className={classes.loginTextField} variant="outlined" label="Käyttäjätunnus" />
                         <TextField className={classes.loginTextField} variant="outlined" label="Salasana" />
-                        <Button variant="contained" color="primary">
+                        <Button variant="contained" color="primary" type="submit">
                             Kirjaudu sisään
                         </Button>
                     </div>
@@ -51,4 +56,4 @@ const Frontpage = () => {
     )
 }
 
-export default Frontpage
+export default withRouter(Frontpage)

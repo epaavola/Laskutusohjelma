@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -19,7 +20,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function ButtonAppBar() {
+const ButtonAppBar = (props) => {
+  const Logout = (event) => {
+    event.preventDefault()
+    props.history.push('/')
+  }
   const classes = useStyles();
 
   return (
@@ -32,15 +37,11 @@ function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             Laskutusohjelma
           </Typography>
-<<<<<<< HEAD
-          <Button color="inherit">Kirjaudu sisään</Button>
-=======
-          <Button color="inherit">Login / Logout</Button>
->>>>>>> 8f7a4d9fbb08f64f46573f445ab0cbc61a7191ab
+          <Button color="inherit" onClick={Logout}>Logout</Button>
         </Toolbar>
       </AppBar>
     </div>
   );
 }
 
-export default ButtonAppBar
+export default withRouter(ButtonAppBar)
