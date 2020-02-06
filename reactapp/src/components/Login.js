@@ -5,13 +5,13 @@ import { makeStyles } from '@material-ui/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
+import AppIcon from '../images/Laskutuslogo.png'
 
 const useStyles  = makeStyles({
     container: {
-        marginTop: '15%'
     },
     loginInput: {
-        marginBottom: '50px',
+        marginBottom: '1%',
         marginLeft: '35%',
         marginRight: '30%',
     },
@@ -24,6 +24,10 @@ const useStyles  = makeStyles({
     },
     loginTextField: {
         marginBottom: '20px'
+    },
+    image: {
+        width: '75%',
+        alignItems: 'center'
     }
 })
 
@@ -37,6 +41,7 @@ const Frontpage = (props) => {
         
         <div className={classes.container}>   
             <div className={classes.loginInput}>
+            <img src={AppIcon} alt="Laskutusohjelman logo" className={classes.image}></img>
                 <Typography variant="h3" color="primary">
                     Syötä kirjautumistietosi
                 </Typography>
