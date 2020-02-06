@@ -27,6 +27,7 @@ const useStyles  = makeStyles({
     },
     image: {
         width: '75%',
+        height: '75%',
         alignItems: 'center'
     }
 })
@@ -49,8 +50,18 @@ const Frontpage = (props) => {
             <div>
                 <form className={classes.form} onSubmit={onSubmit}>
                     <div>
-                        <TextField className={classes.loginTextField} variant="outlined" label="Käyttäjätunnus" />
-                        <TextField className={classes.loginTextField} variant="outlined" label="Salasana" />
+                        <TextField 
+                            className={classes.loginTextField} 
+                            variant="outlined" 
+                            label="Käyttäjätunnus"
+                            fullWidth
+                        />
+                        <TextField 
+                            className={classes.loginTextField} 
+                            variant="outlined" 
+                            label="Salasana"
+                            fullWidth
+                        />
                         <Button variant="contained" color="primary" type="submit">
                             Kirjaudu sisään
                         </Button>
