@@ -30,6 +30,7 @@ const Frontpage = () => {
     const classes = useStyles()
     return (
         <div className={classes.container}>
+            <img src="./images/Laskutuslogo.png" alt="Ohjelman logo"></img>
             <div className={classes.loginInput}>
                 <Typography variant="h3" color="primary">
                     Syötä kirjautumistietosi
