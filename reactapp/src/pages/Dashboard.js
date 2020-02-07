@@ -1,12 +1,13 @@
 import React from 'react'
 import 'typeface-roboto'
-import Navbar from '../components/navbar'
-
+import DashboardNavbar from '../components/DashboardNavbar';
+import DashboardContent from '../components/DashboardContent';
 
 const Dashboard = () => {
     return (
         <>
-        <Navbar />
+          <DashboardNavbar />
+          <DashboardContent />
         </>
       );
     }

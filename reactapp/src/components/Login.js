@@ -1,11 +1,15 @@
 import React from 'react'
 import 'typeface-roboto'
 import { withRouter } from 'react-router-dom'
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import AppIcon from '../images/Laskutuslogo.png'
+
+/**
+ *  Login form for login page
+ */
 
 const useStyles  = makeStyles({
     container: {
