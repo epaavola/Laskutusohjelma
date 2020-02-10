@@ -1,5 +1,5 @@
 import React from 'react'
-import Frontpage from './pages/frontpage'
+import Frontpage from './pages/Frontpage'
 import Dashboard from './pages/Dashboard'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 

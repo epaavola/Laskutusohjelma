@@ -1,13 +1,13 @@
 import React from 'react'
 import 'typeface-roboto'
-import Navbar from '../components/navbar'
+import Login from '../components/Login'
 import LoginNavbar from '../components/LoginNavbar'
 
 const Frontpage = () => {
       return (
             <>
-                <Navbar />
                 <LoginNavbar />
+                <Login />
             </>
       );
     }
