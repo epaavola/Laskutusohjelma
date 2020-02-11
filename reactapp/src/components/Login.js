@@ -58,12 +58,14 @@ const Frontpage = (props) => {
                             className={classes.loginTextField} 
                             variant="outlined" 
                             label="Käyttäjätunnus"
+                            type="text"
                             fullWidth
                         />
                         <TextField 
                             className={classes.loginTextField} 
                             variant="outlined" 
                             label="Salasana"
+                            type="password"
                             fullWidth
                         />
                         <Button variant="contained" color="primary" type="submit">

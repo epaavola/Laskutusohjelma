@@ -58,7 +58,6 @@ const DashboardContent = () => {
 
     return(
     <div className={classes.root}>
-
         <div className={classes.buttonContainer}>       
             <Paper className={classes.paperButton} elevation={3}>
                 <Button className={classes.buttonMain}>Uusi Lasku</Button>
