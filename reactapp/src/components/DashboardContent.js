@@ -1,5 +1,6 @@
 import React from 'react';
 import 'typeface-roboto'
+import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
@@ -52,7 +53,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-const DashboardContent = () => {
+const DashboardContent = (props) => {
 
     const classes = useStyles();
 
@@ -60,7 +61,7 @@ const DashboardContent = () => {
     <div className={classes.root}>
         <div className={classes.buttonContainer}>       
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain}>Uusi Lasku</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/uusilasku">Uusi Lasku</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
                 <Button className={classes.buttonMain}>Asiakkaat</Button>
