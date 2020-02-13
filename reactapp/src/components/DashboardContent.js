@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'center',
-      paddingLeft: theme.spacing(50),
+      paddingLeft: theme.spacing(5),
       marginTop: theme.spacing(5),
     },
     buttonContainer: {
@@ -37,6 +37,13 @@ const useStyles = makeStyles(theme => ({
         marginLeft: theme.spacing(10),
         padding: theme.spacing(2.5),
     },
+    userInfo: {
+        display: 'flex',
+        flexDirection: 'column',
+        marginTop: theme.spacing(10),
+        marginRight: theme.spacing(10),
+        padding: theme.spacing(2.5),
+    },
     paperButton: {
         display: 'flex',
         justifyContent: 'center',
@@ -49,6 +56,16 @@ const useStyles = makeStyles(theme => ({
         flexGrow: '1',
         justifyContent: 'center',
         padding: theme.spacing(2.5),
+    },
+    paperUserInfo: {
+        display: 'flex',
+        flexGrow: '1',
+        justifyContent: 'center',
+        padding: theme.spacing(2.5),
+    },
+    paperUserInfoHeader: {
+        paddingLeft: theme.spacing(10),
+        paddingRight: theme.spacing(10)
     }
 }));
 
@@ -59,6 +76,13 @@ const DashboardContent = (props) => {
 
     return(
     <div className={classes.root}>
+        <div className={classes.userInfo}>
+            <Paper className={classes.paperUserInfo}>
+                <Typography variant="h4" color="primary" className={classes.paperUserInfoHeader}>
+                    Omat tiedot
+                </Typography>
+            </Paper>
+        </div>
         <div className={classes.buttonContainer}>       
             <Paper className={classes.paperButton} elevation={3}>
                 <Button className={classes.buttonMain} component={Link} to ="/uusilasku">Uusi Lasku</Button>

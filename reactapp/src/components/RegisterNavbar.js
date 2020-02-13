@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 /**
- *  Navigation bar for login page
+ *  Navigation bar for registration page
  */
 
 const useStyles = makeStyles(theme => ({
@@ -23,9 +23,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ButtonAppBar = (props) => {
-  const Register = (event) => {
+  const Login = (event) => {
     event.preventDefault()
-    props.history.push('/rekisteroityminen')
+    props.history.push('/')
   }
   const classes = useStyles();
 
@@ -34,9 +34,9 @@ const ButtonAppBar = (props) => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            Laskutusohjelma
+            Laskutusohjelma - Rekisteröityminen
           </Typography>
-          <Button color="inherit" onClick={Register}>Rekisteröidy</Button>
+          <Button color="inherit" onClick={Login}>Kirjaudu sisään</Button>
         </Toolbar>
       </AppBar>
     </div>

@@ -33,6 +33,12 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    cursor: 'pointer'
+  },
+  state: {
+    flexGrow: 2,
+    textAlign: 'center',
+    marginRight: '20%'
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -69,7 +75,24 @@ const handleClickAway = () => {
 
 const handleUusiLasku = (event) => {
   event.preventDefault()
+  setOpen(prev => !prev)
   props.history.push('/uusilasku')
+}
+
+const handleDashboard = (event) => {
+  event.preventDefault()
+  props.history.push('/dashboard')
+}
+
+const programState = () => {
+  switch (props.history.location.pathname) {
+    case '/dashboard':
+      return 'Etusivu'
+    case '/uusilasku':
+      return 'Uusi lasku'
+    default:
+      return 'Laskutusohjelma'
+  }
 }
 
   return (
@@ -86,8 +109,11 @@ const handleUusiLasku = (event) => {
               >
               <MenuIcon />
               </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                  Laskutusohjelma
+              <Typography variant="h6" className={classes.title} onClick={handleDashboard}>
+                Etusivulle
+              </Typography>
+              <Typography variant="h6" className={classes.state}>
+                  Laskutusohjelma - {programState()}
               </Typography>
               <Button color="inherit" component={Link} to ="/">Kirjaudu ulos</Button>
               </Toolbar>
@@ -105,7 +131,7 @@ const handleUusiLasku = (event) => {
                                 <ListItemIcon>
                                     <KeyboardArrowRightIcon />
                                 </ListItemIcon>
-                                <ListItemText primary="Dashboard" />   
+                                <ListItemText primary="Etusivu" />   
                         </ListItem>
                         <ListItem button component={Link} to="/dashboard" onClick={handleUusiLasku}>
                             <ListItemIcon>
