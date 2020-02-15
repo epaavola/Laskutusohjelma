@@ -73,12 +73,6 @@ const handleClickAway = () => {
   setOpen(false)
 }
 
-const handleUusiLasku = (event) => {
-  event.preventDefault()
-  setOpen(prev => !prev)
-  props.history.push('/uusilasku')
-}
-
 const handleDashboard = (event) => {
   event.preventDefault()
   props.history.push('/dashboard')
@@ -90,6 +84,8 @@ const programState = () => {
       return 'Etusivu'
     case '/uusilasku':
       return 'Uusi lasku'
+    case '/asiakkaat':
+      return 'Asiakkaat'
     default:
       return 'Laskutusohjelma'
   }
@@ -127,43 +123,43 @@ const programState = () => {
                 <Divider />
                 {open ? (
                     <List>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button onClick={handleDashboard}>
                                 <ListItemIcon>
                                     <KeyboardArrowRightIcon />
                                 </ListItemIcon>
                                 <ListItemText primary="Etusivu" />   
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleUusiLasku}>
+                        <ListItem button component={Link} to="/UusiLasku">
                             <ListItemIcon>
                                 <InsertDriveFile />
                             </ListItemIcon>
                             <ListItemText primary="Uusi Lasku" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/Asiakkaat">
                             <ListItemIcon>
                                 <AccountCircle />
                             </ListItemIcon>
                             <ListItemText primary="Asiakkaat" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/Arkisto">
                             <ListItemIcon>
                                 <InboxIcon />
                             </ListItemIcon>
                             <ListItemText primary="Arkisto" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/Asetukset">
                             <ListItemIcon>
                                 <Settings />
                             </ListItemIcon>
                             <ListItemText primary="Asetukset" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/FAQ" >
                             <ListItemIcon>
                                 <LiveHelpIcon />
                             </ListItemIcon>
                             <ListItemText primary="FAQ" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/tietoameista" >
                             <ListItemIcon>
                                 <InfoIcon />
                             </ListItemIcon>
