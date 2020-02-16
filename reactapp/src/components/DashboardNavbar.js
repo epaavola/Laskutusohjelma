@@ -86,6 +86,14 @@ const programState = () => {
       return 'Uusi lasku'
     case '/asiakkaat':
       return 'Asiakkaat'
+    case '/asetukset':
+      return 'Asetukset'
+    case '/FAQ':
+      return 'Usein kysytyt kysymykset'
+    case '/arkisto':
+      return 'Arkisto'
+    case '/tietoameista':
+      return 'Tietoa Meistä'        
     default:
       return 'Laskutusohjelma'
   }
