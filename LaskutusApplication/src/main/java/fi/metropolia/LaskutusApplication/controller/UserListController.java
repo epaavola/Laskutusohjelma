@@ -23,6 +23,13 @@ public class UserListController {
         userListRepo.findAll().forEach(users :: add);
         return users;
     }
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping(path = "/users{id}")
+    public List<User> getUser(@PathVariable int id){
+        List<User> users = new ArrayList<>();
+        userListRepo.findById(id);
+        return users;
+    }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/users")
