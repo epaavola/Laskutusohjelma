@@ -39,7 +39,11 @@ const useStyles  = makeStyles({
 const Registeration = (props) => {
     const onSubmit = (event) => {
         event.preventDefault()
-        props.history.push('/')
+        if (window.confirm('Haluatko heti kirjautua sisään?')) {
+            props.history.push('/dashboard')
+        } else {
+            props.history.push('/')
+        }
     }
     const classes = useStyles()
     return (
@@ -103,6 +107,13 @@ const Registeration = (props) => {
                             className={classes.registerTextField} 
                             variant="outlined" 
                             label="Salasana*"
+                            type="password"
+                            fullWidth
+                        />
+                        <TextField 
+                            className={classes.registerTextField} 
+                            variant="outlined" 
+                            label="Salasana uudestaan*"
                             type="password"
                             fullWidth
                         />

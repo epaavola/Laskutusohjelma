@@ -88,7 +88,7 @@ const DashboardContent = (props) => {
                 <Button className={classes.buttonMain} component={Link} to ="/uusilasku">Uusi Lasku</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain}>Asiakkaat</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/asiakkaat">Asiakkaat</Button>
             </Paper>    
         </div>
         <div className={classes.buttonContainer}>

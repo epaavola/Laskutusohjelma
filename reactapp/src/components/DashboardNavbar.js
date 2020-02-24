@@ -84,12 +84,19 @@ const handleDashboard = (event) => {
   props.history.push('/dashboard')
 }
 
+const handleAsiakkaat = (event) => {
+  event.preventDefault()
+  props.history.push('/asiakkaat')
+}
+
 const programState = () => {
   switch (props.history.location.pathname) {
     case '/dashboard':
       return 'Etusivu'
     case '/uusilasku':
       return 'Uusi lasku'
+    case '/asiakkaat':
+      return 'Asiakkaat'
     default:
       return 'Laskutusohjelma'
   }
@@ -139,7 +146,7 @@ const programState = () => {
                             </ListItemIcon>
                             <ListItemText primary="Uusi Lasku" />
                         </ListItem>
-                        <ListItem button component={Link} to="/dashboard" onClick={handleDrawerClick}>
+                        <ListItem button component={Link} to="/asiakkaat" onClick={handleAsiakkaat}>
                             <ListItemIcon>
                                 <AccountCircle />
                             </ListItemIcon>
