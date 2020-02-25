@@ -1,9 +1,11 @@
 package model;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.*;
+
 
 public class DAObject implements IYritysDAO{
 	
@@ -46,12 +48,12 @@ public class DAObject implements IYritysDAO{
 		return asd;
 	}
 
-	public Yritys readYritys(String yritysnimi) {
+	public Yritys readYritys(int id) {
 		Yritys yri;
 		try(Session ses = istuntotehdas.openSession();) {
 			ses.beginTransaction();
 			yri = new Yritys();
-			ses.load(yri, yritysnimi);
+			ses.load(yri, id);
 			ses.getTransaction().commit();
 		}catch(Exception e) {
 			if(trans!=null) trans.rollback();
@@ -77,6 +79,7 @@ public class DAObject implements IYritysDAO{
 		return yritykset;
 	}
 
+
 	public boolean updateYritys(Yritys yritys) {
 		try(Session ses = istuntotehdas.openSession()){
 			ses.beginTransaction();
@@ -91,12 +94,12 @@ public class DAObject implements IYritysDAO{
 		}
 	}
 
-	public boolean deleteYritys(String yritysnimi) {
+	public boolean deleteYritys(int id) {
 		try(Session ses = istuntotehdas.openSession()){
 			ses.beginTransaction();
 			String s = "DELETE Yritys WHERE yritysnimi = :yritysnimi";
 			Query que = ses.createQuery(s);
-			que.setParameter("yritysnimi", yritysnimi);
+			que.setParameter("id", id);
 			if(que.executeUpdate() > 0) {
 				ses.getTransaction().commit();
 				return true;
