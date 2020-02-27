@@ -1,0 +1,7 @@
+PUT http://localhost:4567/yritykset/qwe
+
+{   
+    "yritysnimi": "qwe",
+    "yritysnumero": 222,
+    "tilinumero": 222
+}

@@ -1,0 +1,7 @@
+POST http://localhost:4567/yritykset HTTP/1.1
+
+{
+    "yritysnimi": "qwe",
+    "yritysnumero": 123,
+    "tilinumero": 321
+}

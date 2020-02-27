@@ -7,19 +7,16 @@ import javax.persistence.*;
 public class Yritys {
 	
 	@Id
-	@Column(name="id")
-	private int id;
-	
 	@Column(name="nimi")
 	private String yritysnimi;
 	
 	@Column(name="numero")
-	private String yritysnumero;
+	private int yritysnumero;
 	
 	@Column(name="tili")
 	private int tilinumero;
 	
-	public Yritys(String y, String yn, int tn) {
+	public Yritys(String y, int yn, int tn) {
 		this.yritysnimi = y;
 		this.yritysnumero = yn;
 		this.tilinumero = tn;
@@ -29,10 +26,6 @@ public class Yritys {
 		
 	}
 
-	public int getID() {
-		return id;
-	}
-	
 	public String getYritysnimi() {
 		return yritysnimi;
 	}
@@ -41,11 +34,11 @@ public class Yritys {
 		this.yritysnimi = yritysnimi;
 	}
 
-	public String getYritysnumero() {
+	public int getYritysnumero() {
 		return yritysnumero;
 	}
 
-	public void setYritysnumero(String yritysnumero) {
+	public void setYritysnumero(int yritysnumero) {
 		this.yritysnumero = yritysnumero;
 	}
 
