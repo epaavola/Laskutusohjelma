@@ -11,12 +11,12 @@ public class Yritys {
 	private String yritysnimi;
 	
 	@Column(name="numero")
-	private int yritysnumero;
+	private String yritysnumero;
 	
 	@Column(name="tili")
 	private int tilinumero;
 	
-	public Yritys(String y, int yn, int tn) {
+	public Yritys(String y, String yn, int tn) {
 		this.yritysnimi = y;
 		this.yritysnumero = yn;
 		this.tilinumero = tn;
@@ -34,11 +34,11 @@ public class Yritys {
 		this.yritysnimi = yritysnimi;
 	}
 
-	public int getYritysnumero() {
+	public String getYritysnumero() {
 		return yritysnumero;
 	}
 
-	public void setYritysnumero(int yritysnumero) {
+	public void setYritysnumero(String yritysnumero) {
 		this.yritysnumero = yritysnumero;
 	}
 
