@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'typeface-roboto'
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -6,6 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import { getUser } from '../service/UserDataService';
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -53,6 +54,7 @@ const UusiLaskuContent = (props) => {
     const classes = useStyles()
 
     //States
+    const [user, setUser] = useState([])
     const [invoiceReceiverName, setInvoiceReceiverName] = useState('')
     const [invoiceReceiverContactPerson, setInvoiceReceiverContactPerson] = useState('')
     const [invoiceReceiverPostAddress, setInvoiceReceiverPostAddress] = useState('')
@@ -119,6 +121,15 @@ const UusiLaskuContent = (props) => {
     const handleBillerPostalCodeChange = (event) => {
         setBillerPostalCode(event.target.value)
     }
+
+    //Get user data from database through API
+    useEffect(() => {
+        let data = null;
+        (async function fetchData() {
+            data = await getUser();
+            setUser(data)         
+        })();
+      }, []);
 
     return (
         <div>
