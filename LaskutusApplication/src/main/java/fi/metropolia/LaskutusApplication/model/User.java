@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class User {
@@ -12,13 +17,21 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
+    @NotBlank
     private String name;
+    @NotBlank
     private String password;
+    @NotBlank
     private String lastName;
+    
     private String yTunnus;
     private String address;
     private String city;
+    
+    @NaturalId
+    @NotBlank
+    @Size(max = 40)
+    @Email
     private String email;
 
     public int getId() {
@@ -43,7 +56,8 @@ public class User {
     }
     
     public void setPassword(String password) {
-    	this.password = password;    }
+    	this.password = password;
+    }
 
     public String getPassword() {
         return password;
