@@ -1,5 +1,6 @@
 package laskutusback;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.AfterEach;
@@ -9,9 +10,11 @@ import org.junit.jupiter.api.Test;
 import model.DAObject;
 import model.Yritys;
 
-public class DAOTest extends Ulkoasu {
+public class DAOTest {
+
 	
-static DAObject yritysDAO = new DAObject();
+	static DAObject yritysDAO = new DAObject();
+
 	
 	static Yritys[] yritykset = null;
 	static Yritys yri = new Yritys("testi", "123", 321);
@@ -20,12 +23,12 @@ static DAObject yritysDAO = new DAObject();
 	static int tilinumero;
 	
 	@BeforeEach
-	public void tyhjennä() {
+	public void tyhjenna() {
 		yritysDAO.deleteAll();
 	}
 	
 	@Test
-    public void testLisääJaListaa() {
+    public void testLisaaJaListaa() {
         assertEquals(4, yritysDAO.readYritykset().length, "Yrityslistaus väärin");
         System.out.println(yritysDAO.readYritykset().length);
         yritysDAO.createYritys(yri);
@@ -34,7 +37,7 @@ static DAObject yritysDAO = new DAObject();
     }
 	
 	@Test
-	public void testPäivitä() {
+	public void testPaivita() {
 		yritysDAO.createYritys(yri);
 		System.out.println(yritysDAO.readYritys("testi").getTilinumero());
 		Yritys yri2 = new Yritys("testi", "999", 000);
