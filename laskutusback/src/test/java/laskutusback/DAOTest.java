@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import model.DAObject;
 import model.Yritys;
 
-public class DAOTest {
+public class DAOTest extends Ulkoasu {
 
 	
-	static DAObject yritysDAO = new DAObject();
+	private DAObject yritysDAO = new DAObject();
 
 	
 	static Yritys[] yritykset = null;
