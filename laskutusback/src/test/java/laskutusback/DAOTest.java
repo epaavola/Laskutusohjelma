@@ -13,7 +13,7 @@ import model.Yritys;
 public class DAOTest extends Ulkoasu {
 
 	
-	public DAObject yritysDAO = new DAObject();
+	private DAObject yritysDAO = new DAObject();
 
 	
 	static Yritys[] yritykset = null;
