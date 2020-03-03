@@ -32,6 +32,9 @@ public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception 
 
 auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
 }
+
+
+
 @Bean
 public PasswordEncoder passwordEncoder() {
 return new BCryptPasswordEncoder();
@@ -45,7 +48,7 @@ return super.authenticationManagerBean();
 protected void configure(HttpSecurity httpSecurity) throws Exception {
 httpSecurity.csrf().disable()
 // tätä pyyntöä ei autentikoida
-.authorizeRequests().antMatchers("/authenticate").permitAll().
+.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
 // muut pyynnot autentikoidaan
 anyRequest().authenticated().and().
 
