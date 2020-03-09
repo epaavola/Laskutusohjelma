@@ -29,9 +29,6 @@ public class DAObject implements InfDAO {
 		istuntotehdas.close();
 	}
 
-	// check owner palauttaa yksittäisen yrityksen username. vertaa checkpermission
-	// userapissa
-
 	public boolean createYritys(Yritys yritys) {
 		try (Session ses = istuntotehdas.openSession()) {
 			trans = ses.beginTransaction();
@@ -137,29 +134,20 @@ public class DAObject implements InfDAO {
 			yritykset = new Yritys[result.size()];
 			for (int i = 0; i < result.size(); i++) {
 				yritykset[i] = (Yritys) result.get(i);
-			}
-			for(int i=0;i<result.size();i++){
-				if(yritykset[i].getYritysnimi().toLowerCase().equals(yritysnimi.toLowerCase())){
-					ses.delete(yritykset[i]);
-					trans.commit();
-					return true;
+				System.out.println(yritykset[i].getYritysnimi() + " poistettava yritys");
+				System.out.println("id " + yritykset[i].getId());
+				if (yritykset[i].getYritysnimi().toLowerCase().equals(yritysnimi.toLowerCase())) {
+					String s = "delete Yritys where id=:id";
+					Query que = ses.createQuery(s);
+					que.setParameter("id", yritykset[i].getId());
+					if (que.executeUpdate() > 0) {
+						ses.getTransaction().commit();
+						return true;
+					}
 				}
 			}
-			
-			trans.rollback();
+			ses.getTransaction().commit();
 			return false;
-			/*
-			Yritys y = (Yritys) ses.createCriteria(Yritys.class).add(Restrictions.eq("yritysnimi", yritysnimi))
-					.uniqueResult();
-			if (y != null) {
-				ses.delete(y);
-				ses.getTransaction().commit();
-				return true;
-			} else {
-				trans.rollback();
-				return false;
-			}
-			*/
 		} catch (Exception e) {
 			if (trans != null)
 				trans.rollback();
@@ -179,10 +167,6 @@ public class DAObject implements InfDAO {
 				ses.getTransaction().commit();
 				return false;
 			}
-			/*
-			 * if (ses.get(Yritys.class, yritysnimi) != null) {
-			 * ses.getTransaction().commit(); return true; } else { return false; }
-			 */
 		} catch (Exception e) {
 			if (trans != null)
 				trans.rollback();
@@ -306,33 +290,99 @@ public class DAObject implements InfDAO {
 	}
 
 	@Override
-	public boolean createLasku(Lasku lasku, String username) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createLasku(Invoice lasku) {
+		try (Session ses = istuntotehdas.openSession()) {
+			trans = ses.beginTransaction();
+			ses.saveOrUpdate(lasku);
+			trans.commit();
+			return true;
+		} catch (Exception e) {
+			if (trans != null)
+				trans.rollback();
+			throw e;
+		}
 	}
 
 	@Override
-	public Lasku readLasku(String laskunumero, String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public Invoice readLasku(String laskunumero, String username) {
+		Invoice[] laskut;
+		List result;
+		Invoice x = null;
+		;
+		try (Session ses = istuntotehdas.openSession();) {
+			trans = ses.beginTransaction();
+			User usr = (User) ses.load(User.class, username);
+			result = usr.getCustomers();
+			laskut = new Invoice[result.size()];
+			for (int i = 0; i < result.size(); i++) {
+				laskut[i] = (Invoice) result.get(i);
+			}
+			ses.getTransaction().commit();
+		} catch (Exception e) {
+			throw e;
+		}
+		for (Invoice y : laskut) {
+			y.setUser(null);
+		}
+		for (int i = 0; i < laskut.length; i++) {
+			if (laskut[i].getLaskunumero().equals(laskunumero)){
+				x = laskut[i];
+			}
+		}
+		return x;
 	}
 
 	@Override
-	public Lasku[] readLaskut(String username) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Yritys updateLasku(Lasku lasku, String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public Invoice[] readLaskut(String username) {
+		Invoice[] laskut;
+		List result;
+		try (Session ses = istuntotehdas.openSession();) {
+			trans = ses.beginTransaction();
+			User usr = (User) ses.get(User.class, username);
+			result = usr.getInvoices();
+			laskut = new Invoice[result.size()];
+			for (int i = 0; i < result.size(); i++) {
+				laskut[i] = (Invoice) result.get(i);
+			}
+			ses.getTransaction().commit();
+		} catch (Exception e) {
+			throw e;
+		}
+		for (Invoice y : laskut) {
+			y.setUser(null);
+		}
+		return laskut;
 	}
 
 	@Override
 	public boolean deleteLasku(String laskunumero, String username) {
-		// TODO Auto-generated method stub
-		return false;
+		Invoice[] laskut;
+		List result;
+		try (Session ses = istuntotehdas.openSession()) {
+			ses.beginTransaction();
+			User usr = (User) ses.load(User.class, username);
+			result = usr.getInvoices();
+			laskut = new Invoice[result.size()];
+			for (int i = 0; i < result.size(); i++) {
+				laskut[i] = (Invoice) result.get(i);
+				System.out.println(laskut[i].getLaskunumero() + " poistettava lasku");
+				if (laskut[i].getLaskunumero().equals(laskunumero)) {
+					String s = "delete Invoice where id=:id";
+					Query que = ses.createQuery(s);
+					que.setParameter("id", laskut[i].getId());
+					if (que.executeUpdate() > 0) {
+						ses.getTransaction().commit();
+						return true;
+					}
+				}
+			}
+			ses.getTransaction().commit();
+			return false;
+		} catch (Exception e) {
+			if (trans != null)
+				trans.rollback();
+			throw e;
+		}
 	}
 
 	@Override
@@ -343,6 +393,26 @@ public class DAObject implements InfDAO {
 			Query que = ses.createQuery(s);
 			que.executeUpdate();
 			ses.getTransaction().commit();
+		}
+	}
+
+	@Override
+	public boolean checkLasku(String laskunumero) {
+		try (Session ses = istuntotehdas.openSession()) {
+			ses.beginTransaction();
+			Invoice y = (Invoice) ses.createCriteria(Invoice.class).add(Restrictions.eq("laskunumero", laskunumero))
+					.uniqueResult();
+			if (y != null) {
+				ses.getTransaction().commit();
+				return true;
+			} else {
+				ses.getTransaction().commit();
+				return false;
+			}
+		} catch (Exception e) {
+			if (trans != null)
+				trans.rollback();
+			throw e;
 		}
 	}
 

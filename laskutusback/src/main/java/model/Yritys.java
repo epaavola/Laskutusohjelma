@@ -6,8 +6,6 @@ import javax.persistence.*;
 @Table(name = "CUSTOMERS")
 public class Yritys {
 
-	// nimi ytunnus yhteyshlö osoite postitoimpka sähkp
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "username", nullable = false)
 	private User User;
@@ -47,9 +45,10 @@ public class Yritys {
 		this.sposti = sposti;
 	}
 
-	public Yritys(model.User user, String yritysnimi, String ytunnus, String yhthlo, String osoite,
+	public Yritys(model.User user, int id, String yritysnimi, String ytunnus, String yhthlo, String osoite,
 			String postitoimipaikka, String sposti) {
 		User = user;
+		this.id = id;
 		this.yritysnimi = yritysnimi;
 		this.ytunnus = ytunnus;
 		this.yhthlo = yhthlo;

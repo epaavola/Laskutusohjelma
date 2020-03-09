@@ -17,9 +17,9 @@ public interface InfDAO {
 	public abstract boolean checkUserExistence(String username);
 	public abstract boolean updateUser(User user);
 
-	public abstract boolean createLasku(Lasku lasku, String username);
-	public abstract Lasku readLasku(String laskunumero, String username);
-	public abstract Lasku[] readLaskut(String username);
-	public abstract Yritys updateLasku(Lasku lasku, String username);
+	public abstract boolean createLasku(Invoice lasku);
+	public abstract Invoice readLasku(String laskunumero, String username);
+	public abstract Invoice[] readLaskut(String username);
 	public abstract boolean deleteLasku(String laskunumero, String username);
+	public abstract boolean checkLasku(String laskunumero);
 }

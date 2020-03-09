@@ -11,5 +11,6 @@
 		<property name="show_sql">true</property>
 		<mapping class="model.Yritys" />
 		<mapping class="model.User" />
+		<mapping class="model.Invoice" />
 	</session-factory>
 </hibernate-configuration>

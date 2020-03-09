@@ -16,6 +16,9 @@ public class User {
     @OneToMany(mappedBy = "User", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Yritys> customers = new ArrayList<Yritys>();
 
+    @OneToMany(mappedBy = "User", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Invoice> invoices = new ArrayList<Invoice>();
+
     @Id
     @Column(nullable = false, name = "username")
     private String username;
@@ -145,5 +148,21 @@ public class User {
 
     public void setTilinro(String tilinro) {
         this.tilinro = tilinro;
+    }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
+    public String getSahkoposti() {
+        return sahkoposti;
+    }
+
+    public void setSahkoposti(String sahkoposti) {
+        this.sahkoposti = sahkoposti;
     }
 }

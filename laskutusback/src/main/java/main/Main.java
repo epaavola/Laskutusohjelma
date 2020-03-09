@@ -1,7 +1,10 @@
 package main;
 
 import model.*;
+import controller.*;
 import static spark.Spark.*;
+
+import controller.InvoiceApi;
 
 public class Main {
 
@@ -15,6 +18,7 @@ public class Main {
 
 		Authenticator authenticator = new Authenticator(dataccesobject);
 		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator);
+		InvoiceApi invoiceApi = new InvoiceApi(dataccesobject, authenticator);
 		UserApi userApi = new UserApi(dataccesobject);
 
 		path("/api", () -> {
@@ -46,6 +50,28 @@ public class Main {
 
 				delete("/delete/:nimi", (req, res) -> {
 					return customerApi.deleteCustomer(req, res);
+				});
+			});
+
+			path("/invoices", () -> {
+				get("/get", (req, res) -> {
+					return invoiceApi.getAll(req, res);
+				});
+
+				get("/get/:numero", (req, res) -> {
+					return invoiceApi.getOne(req, res);
+				});
+
+				post("/add", (req, res) -> {
+					return invoiceApi.addInvoice(req, res);
+				});
+
+				options("/exists/:numero", (req, res) -> {
+					return invoiceApi.checkIfExistsInvoice(req, res);
+				});
+
+				delete("/delete/:numero", (req, res) -> {
+					return invoiceApi.deleteInvoice(req, res);
 				});
 			});
 
