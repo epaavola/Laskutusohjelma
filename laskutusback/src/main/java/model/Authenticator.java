@@ -40,7 +40,7 @@ public class Authenticator {
     public String getReqToken(Request req) {
         String a = StringUtils.substringAfter(req.headers("Authorization"), "Basic");
         a = a.replaceAll("\\s+", "");
-        System.out.println(a);
+        System.out.println(a+" getting req token");
         return a;
     }
 }

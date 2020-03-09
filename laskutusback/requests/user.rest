@@ -17,7 +17,7 @@ POST http://10.114.32.45:8080/createuser HTTP/1.1
 
 ###
 
-DELETE http://localhost:4567/api/user/delete/asdaa HTTP/1.1
+DELETE http://localhost:4567/api/user/delete/asd HTTP/1.1
 Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
 
 ###
@@ -26,7 +26,7 @@ OPTIONS http://localhost:4567/exists/asd HTTP/1.1
 
 ###
 
-post http://localhost:4567/login HTTP/1.1
+POST http://localhost:4567/login HTTP/1.1
 
 {
     "username": "asd",
