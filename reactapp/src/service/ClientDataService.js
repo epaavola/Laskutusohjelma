@@ -1,28 +1,35 @@
 import axios from 'axios'
 
-const clientID = 'Leipomo';
-const dataURL = 'http://localhost:8080/api';
-const clientDataURL = `${dataURL}/yritykset/`;
+    //API
+    const dataURL = 'http://localhost:8080/users';
 
+    //Get all clients from database through API
+    export const getClients = async () => {
+        const result = await axios(dataURL)
+        return result.data     
+    }
+    //POST create asiakas
+    export const newClient = (e) => {
+        e.preventDefault()
+        console.log("Uusi asiakas")
+        axios.post(`${dataURL}`)
+    } 
 
+    //DELETE delete asiakas
+    export const deleteClient = (id, e) => {
+        e.preventDefault()
+        console.log("Poista asiakas: " + id)
+        axios.delete(`${dataURL}${id}`)
+    }
+    
+    //PUT update asiakas
+    export const updateClient = (id, e) => {
+        e.preventDefault()
+        console.log("Päivitä asiakas: " + id)
+        axios.put(`${dataURL}${id}`)
+    } 
 
 const ClientDataService = (props) => {
-
-    const createClient = (newClient) => {
-        return axios.post(`${dataURL}/client/`, newClient)
-    }
-
-    const getClient = (clientID) => {
-        return axios.get(`${dataURL}/yritykset/`, clientID)
-    }
-
-    function getAllClients() {
-        const fetchData = async () => {
-            const result = await axios(clientDataURL)
-            return result.data   
-          };
-          return fetchData()
-    }
 
 }
 

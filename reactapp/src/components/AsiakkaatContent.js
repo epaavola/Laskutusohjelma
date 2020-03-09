@@ -10,8 +10,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { getClients, newClient, deleteClient, updateClient } from '../service/ClientDataService';
 
-import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -51,39 +51,15 @@ const AsiakkaatContent = (props) => {
 
     //States
     const [yritykset, setYritykset] = useState([])
-    
-    //API
-    const dataURL = 'http://localhost:8080/api/yritykset/';
 
-    //Get Asiakas data from API
+    //Get all clients from database through API
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios(dataURL)
-            setYritykset(result.data)
-          };
-          fetchData()
+        let data = null;
+        (async function fetchData() {
+            data = await getClients();
+            setYritykset(data)
+        })();
       }, []);
-    
-    //POST create asiakas
-    const newAsiakas = (e) => {
-        e.preventDefault()
-        console.log("Uusi asiakas")
-        axios.post(`${dataURL}`)
-    } 
-
-    //DELETE delete asiakas
-    const deleteAsiakas = (id, e) => {
-        e.preventDefault()
-        console.log("Poista asiakas: " + id)
-        axios.delete(`${dataURL}${id}`)
-    }
-    
-    //PUT update asiakas
-    const updateAsiakas = (id, e) => {
-        e.preventDefault()
-        console.log("Päivitä asiakas: " + id)
-        axios.put(`${dataURL}${id}`)
-    } 
 
     return (
         <div>
@@ -91,7 +67,7 @@ const AsiakkaatContent = (props) => {
                 <Typography variant="h2" color="primary" className={classes.header1}>
                     Asiakkaat
                 </Typography>
-                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => newAsiakas(e)}>Lisää uusi asiakas</Button>
+                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => newClient(e)}>Lisää uusi asiakas</Button>
             </div>
             <div className={classes.content}>
                 <TableContainer component={Paper}>
@@ -117,8 +93,8 @@ const AsiakkaatContent = (props) => {
                                     <TableCell align="right">-</TableCell>
                                     <TableCell align="right">{yritys.tilinumero}</TableCell>
                                     <TableCell align="right">-</TableCell>
-                                    <TableCell ><Button variant="contained" color="primary" onClick={(e) => updateAsiakas(yritys.id, e)}>Päivitä</Button></TableCell>
-                                    <TableCell ><Button variant="contained" color="secondary" onClick={(e) => deleteAsiakas(yritys.id, e)}>Poista</Button></TableCell>
+                                    <TableCell ><Button variant="contained" color="primary" onClick={(e) => updateClient(yritys.id, e)}>Päivitä</Button></TableCell>
+                                    <TableCell ><Button variant="contained" color="secondary" onClick={(e) => deleteClient(yritys.id, e)}>Poista</Button></TableCell>
                                     </TableRow>
                             ))}
                         </TableBody>

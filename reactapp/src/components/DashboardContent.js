@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import 'typeface-roboto'
 import { Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper';
+import { getUser } from '../service/UserDataService';
 
 /**
  * Content of dashboard page
@@ -53,14 +54,16 @@ const useStyles = makeStyles(theme => ({
     },
     paperLatestInvoice: {
         display: 'flex',
+        flexDirection: 'column',
         flexGrow: '1',
-        justifyContent: 'center',
+        justifyContent: 'felx-start',
         padding: theme.spacing(2.5),
     },
     paperUserInfo: {
         display: 'flex',
+        flexDirection: 'column',
         flexGrow: '1',
-        justifyContent: 'center',
+        justifyContent: 'felx-start',
         padding: theme.spacing(2.5),
     },
     paperUserInfoHeader: {
@@ -69,17 +72,37 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-
 const DashboardContent = (props) => {
 
+    //Style
     const classes = useStyles();
 
+    //States
+    const [user, setUser] = useState([])
+
+    //Get user data from database through API
+    useEffect(() => {
+        let data = null;
+        (async function fetchData() {
+            data = await getUser();
+            setUser(data)         
+        })();
+      }, []);
+        
+    //return  
     return(
     <div className={classes.root}>
         <div className={classes.userInfo}>
             <Paper className={classes.paperUserInfo}>
                 <Typography variant="h4" color="primary" className={classes.paperUserInfoHeader}>
                     Omat tiedot
+                </Typography>
+                <Typography variant="body1" color="primary" style={{paddingTop: '1em'}}>
+                        Nimi : {user.name} <br />
+                        Sähköposti : {user.email} <br />
+                        Osoite : {user.address} <br />
+                        Postitoimipaikka : {user.city} <br />
+                        Y-tunnus : {user.yTunnus}   
                 </Typography>
             </Paper>
         </div>
