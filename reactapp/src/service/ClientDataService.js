@@ -1,7 +1,7 @@
 import axios from 'axios'
 
     //API
-    const dataURL = 'http://localhost:8080/users';
+    const dataURL = 'http://localhost:4567/yritykset';
 
     //Get all clients from database through API
     export const getClients = async () => {

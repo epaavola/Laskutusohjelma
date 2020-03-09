@@ -9,6 +9,10 @@ import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
 import PreviewIcon from '../images/Laskupohja.png'
 import { getUser } from '../service/UserDataService';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -284,7 +288,12 @@ const useStyles  = makeStyles(theme => ({
         },
         marginLeft: '40px',
         marginTop: '150px'
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 160,
+    },
+    
 }))
 
 const UusiLaskuContent = (props) => {
@@ -350,6 +359,8 @@ const UusiLaskuContent = (props) => {
     const [previewInvoiceExpirationDate, setPreviewInvoiceExpirationDate] = useState('')
     const [previewInvoicePenaltyInterest, setPreviewInvoicePenaltyInterest] = useState('')
     const [previewInvoiceMessage, setPreviewInvoiceMessage] = useState('')
+
+    const [asiakas, setAsiakas] = useState('')
     
 
     //Button to clear states
@@ -480,6 +491,10 @@ const UusiLaskuContent = (props) => {
         setAlvKanta(event.target.value)
     }
 
+    const handleDropdownChange = event => {
+        setAsiakas(event.target.value);
+      };
+
     //Get user data from database through API
     useEffect(() => {
         let data = null;
@@ -548,6 +563,23 @@ const UusiLaskuContent = (props) => {
                         <CardContent>
                             <Typography variant="h6" color="secondary">
                                 Laskunsaajan tiedot
+                            <FormControl variant="outlined" className={classes.formControl}>
+                                <InputLabel id="asiakasDropdown">
+                                    Valitse Asiakas
+                                </InputLabel>
+                                <Select
+                                    labelId="asiakasDropdownLabel"
+                                    id="asiakasDropdown"
+                                    value={asiakas}
+                                    onChange={handleDropdownChange}
+                                    labelWidth={'1em'}
+                                >
+                                <MenuItem value="">
+                                    <em>Tyhjä</em>
+                                </MenuItem>
+                                <MenuItem value={'getValueFromAPI'}>Asiakas 1</MenuItem>
+                                </Select>
+                            </FormControl>
                             </Typography>
                             <TextField
                                 className={classes.TextField}

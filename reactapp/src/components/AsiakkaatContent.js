@@ -58,6 +58,7 @@ const AsiakkaatContent = (props) => {
         (async function fetchData() {
             data = await getClients();
             setYritykset(data)
+            console.log(data)
         })();
       }, []);
 
