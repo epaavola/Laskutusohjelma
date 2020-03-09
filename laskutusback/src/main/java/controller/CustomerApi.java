@@ -1,8 +1,9 @@
-package model;
+package controller;
 
 import com.google.gson.Gson;
 
 import spark.*;
+import model.*;
 
 public class CustomerApi {
 

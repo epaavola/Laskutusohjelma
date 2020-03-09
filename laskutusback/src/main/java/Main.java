@@ -1,6 +1,7 @@
 
 
 import model.*;
+import controller.*;
 import static spark.Spark.*;
 
 public class Main {
