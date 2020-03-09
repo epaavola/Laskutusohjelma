@@ -1,57 +1,75 @@
 package main;
 
-import com.google.gson.Gson;
 import model.*;
 import static spark.Spark.*;
 
 public class Main {
 
-	static DAObject yritysDAO = new DAObject();
+	static DAObject dataccesobject = new DAObject();
+
 	public static void main(String[] args) {
 
-		get("/yritykset", (req, res) -> {
-			res.type("application/json");
-			String on = new Gson()
-					.toJson(new Responssi(StatusResponse.SUCCESS, new Gson().toJsonTree(yritysDAO.readYritykset())));
-			System.out.println(on);
-			return on;
+		//port(8080);
+		
+		CorsFilter.apply();
+
+		Authenticator authenticator = new Authenticator(dataccesobject);
+		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator);
+		UserApi userApi = new UserApi(dataccesobject);
+
+		path("/api", () -> {
+			before("/*", (req, res) -> {
+				if (!(authenticator.authenticate(req))) {
+					halt(401);
+				}
+			});
+			path("/customers", () -> {
+				get("/get", (req, res) -> {
+					return customerApi.getAll(req, res);
+				});
+
+				get("/get/:nimi", (req, res) -> {
+					return customerApi.getOne(req, res);
+				});
+
+				post("/add", (req, res) -> {
+					return customerApi.addCustomer(req, res);
+				});
+
+				put("/update", (req, res) -> {
+					return customerApi.updateCustomer(req, res);
+				});
+
+				options("/exists/:nimi", (req, res) -> {
+					return customerApi.checkIfExistsCustomer(req, res);
+				});
+
+				delete("/delete/:nimi", (req, res) -> {
+					return customerApi.deleteCustomer(req, res);
+				});
+			});
+
+			path("/user", () -> {
+				put("/update", (req, res) -> {
+					return userApi.updateUser(req, res);
+				});
+
+				delete("/delete/:nimi", (req, res) -> {
+					return userApi.deleteUser(req, res);
+				});
+			});
 		});
 
-		get("/yritykset/:nimi", (req, res) -> {
-			res.type("application/json");
-			return new Gson().toJson(new Responssi(StatusResponse.SUCCESS,
-					new Gson().toJsonTree((yritysDAO.readYritys(req.params((":nimi")))))));
+		post("/createuser", (req, res) -> {
+			return userApi.addUser(req, res);
 		});
 
-		post("/yritykset", (req, res) -> {
-			res.type("application/json");
-			Yritys yritys = new Gson().fromJson(req.body(), Yritys.class);
-			yritysDAO.createYritys(yritys);
-			return new Gson().toJson(new Responssi(StatusResponse.SUCCESS));
+		options("/exists/:nimi", (req, res) -> {
+			return userApi.checkIfExistsUser(req, res);
 		});
 
-		put("/yritykset/:nimi", (req, res) -> {
-			res.type("application/json");
-			Yritys toEdit = new Gson().fromJson(req.body(), Yritys.class);
-			Yritys edited = yritysDAO.updateYritys(toEdit);
-			if (edited != null) {
-				return new Gson().toJson(new Responssi(StatusResponse.SUCCESS, new Gson().toJsonTree(edited)));
-			} else {
-				return new Gson().toJson(
-					new Responssi(StatusResponse.ERROR, new Gson().toJson("User not found or error in edit")));
-			}
-		});
-
-		options("/yritykset/:nimi", (req, res) -> {
-			res.type("application/json");
-			return new Gson().toJson(new Responssi(StatusResponse.SUCCESS,
-			(yritysDAO.tarkistaYritys(req.params(":nimi"))) ? "Exists" : "Not in the db"));
-		});
-
-		delete("/yritykset/:nimi", (req, res) -> {
-			res.type("application/json");
-			yritysDAO.deleteYritys(req.params(":nimi"));
-			return new Gson().toJson(new Responssi(StatusResponse.SUCCESS, "yritys poistettu"));
+		post("/login", (req, res) -> {
+			return userApi.login(req, res);
 		});
 	}
 }
