@@ -7,7 +7,6 @@ import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
-import PreviewIcon from '../images/Laskupohja.png'
 import { getUser } from '../service/UserDataService';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -59,6 +58,11 @@ const useStyles  = makeStyles(theme => ({
         width: '20%',
         margin: '1%'
     },
+    productsCard: {
+        width: '25%',
+        marginTop: '1%',
+        marginLeft: '15%'
+    },
     TextField: {
         margin: '2%'
     },
@@ -69,225 +73,19 @@ const useStyles  = makeStyles(theme => ({
     previewHeader: {
         marginLeft: '15%'
     },
-    preview: {
-        marginLeft: '15%',
-        marginRight: '15%',
-        marginTop: '5%',
-        backgroundImage: `url(${PreviewIcon})`,
-        height: '1732px',
-        width: '1310px'
-    },
-    previewImage: {
-        width: '100%',
-        height: 'auto'
-    },
-    previewField: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        }
-    },
-    preview_billerInfoHeader: {
-        display: 'flex',
-        flexDirection: 'column',
-        marginLeft: '100px',
-    },
-    preview_billerInfoHeader_name: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginTop: '90px'
-    },
-    preview_billerInfoHeader_postaddress: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-    },
-    preview_invoiceInfo: {
-        display: 'flex',
-        flexDirection: 'row',
-        marginLeft: '100px',
-    },
-    preview_invoiceReceiverInfo: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    preview_invoiceDetails: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    preview_invoiceInfo_receiverName: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginTop: '20px'
-    },
-    preview_invoiceInfo_receiverContactPerson: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-    },
-    preview_invoiceInfo_receiverPostAddress: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-    },
-    preview_invoiceInfo_receiverPostalCode: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-    },
-    preview_invoiceInfo_invoiceNumber: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '295px',
-        marginTop: '5px'
-    },
-    preview_invoiceInfo_invoiceDate: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '295px',
-        marginTop: '3px'
-    },
-    preview_invoiceInfo_invoiceExpirationDate: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '295px',
-        marginTop: '2px'
-    },
-    preview_invoiceInfo_invoicePenaltyInterest: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '295px',
-        marginTop: '2px'
-    },
-    preview_invoiceMessage: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    preview_invoiceMessageDetails: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '110px',
-        marginTop: '25px'
-    },
-    preview_products: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    preview_productName: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '110px',
-        marginTop: '150px'
-    },
-    preview_productAmount: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '125px',
-        marginTop: '150px',
-        width: '100px'
-    },
-    preview_productPrice: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '40px',
-        marginTop: '150px',
-        width: '75px'
-    },
-    preview_productAlvKanta: {
-        '& .MuiOutlinedInput-root': {
-            '& fieldset': {
-            border: '0px'
-            },
-            '&:hover fieldset' : {
-                border: '0px'
-            }
-        },
-        marginLeft: '40px',
-        marginTop: '150px'
+    table: {
+        border: '1px solid black'
+      }, 
+      th: {
+        margin: theme.spacing(5),
+        border: '1px solid black'
+      }, 
+      td: {
+        margin: theme.spacing(5),
+        border: '1px solid black'
+      },
+    total: {
+        marginTop: theme.spacing(5)
     },
     formControl: {
         margin: theme.spacing(1),
@@ -342,23 +140,9 @@ const UusiLaskuContent = (props) => {
     const [productName, setProductName] = useState('')
     const [productAmount, setProductAmount] = useState('')
     const [productPrice, setProductPrice] = useState('')
+    const [productPriceNet, setProductPriceNet] = useState(0)
 
     const [alvKanta, setAlvKanta] = useState('')
-
-    const [previewBillerName, setPreviewBillerName] = useState('')
-    const [previewBillerPostAddress, setPreviewBillerPostAddress] = useState('')
-    const [previewBillerPostalCode, setPreviewBillerPostalCode] = useState('')
-
-    const [previewInvoiceReceiverName, setPreviewInvoiceReceiverName] = useState('')
-    const [previewInvoiceReceiverContactPerson, setPreviewInvoiceReceiverContanctPerson] = useState('')
-    const [previewInvoiceReceiverPostAddress, setPreviewInvoiceReceiverPostAddress] = useState('')
-    const [previewInvoiceReceiverPostalCode, setPreviewInvoiceReceiverPostalCode] = useState('')
-
-    const [previewInvoiceNumber, setPreviewInvoiceNumber] = useState('')
-    const [previewInvoiceDate, setPreviewInvoiceDate] = useState('')
-    const [previewInvoiceExpirationDate, setPreviewInvoiceExpirationDate] = useState('')
-    const [previewInvoicePenaltyInterest, setPreviewInvoicePenaltyInterest] = useState('')
-    const [previewInvoiceMessage, setPreviewInvoiceMessage] = useState('')
 
     const [asiakas, setAsiakas] = useState('')
     
@@ -378,86 +162,53 @@ const UusiLaskuContent = (props) => {
         setBillerName('')
         setBillerPostAddress('')
         setBillerPostalCode('')
-        setPreviewBillerName('')
-        setPreviewBillerPostAddress('')
-        setPreviewBillerPostalCode('')
-        setPreviewInvoiceReceiverName('')
-        setPreviewInvoiceReceiverContanctPerson('')
-        setPreviewInvoiceReceiverPostAddress('')
-        setPreviewInvoiceReceiverPostalCode('')
-        setPreviewInvoiceNumber('')
-        setPreviewInvoiceDate('')
-        setPreviewInvoiceExpirationDate('')
-        setPreviewInvoicePenaltyInterest('')
-        setPreviewInvoiceMessage('')
         setProducts([])
         setProductName('')
         setProductPrice('')
         setProductAmount('')
         setAlvKanta('')
+        setProductPriceNet('')
     }
 
     //Event listeners
     const handleInvoiceReceiverNameChange = (event) => {
         setInvoiceReceiverName(event.target.value)
-        setPreviewInvoiceReceiverName(event.target.value)
     }
     const handleInvoiceReceiverContactPersonChange = (event) => {
         setInvoiceReceiverContactPerson(event.target.value)
-        setPreviewInvoiceReceiverContanctPerson(event.target.value)
     }
     const handleInvoiceReceiverPostAddressChange = (event) => {
         setInvoiceReceiverPostAddress(event.target.value)
-        setPreviewInvoiceReceiverPostAddress(event.target.value)
     }
     const handleInvoiceReceiverPostalCodeChange = (event) => {
         setInvoiceReceiverPostalCode(event.target.value)
-        setPreviewInvoiceReceiverPostalCode(event.target.value)
     }
     const handleInvoiceNumberChange = (event) => {
         setInvoiceNumber(event.target.value)
-        setPreviewInvoiceNumber(event.target.value)
     }
     const handleInvoiceDateChange = (event) => {
         setInvoiceDate(event.target.value)
-        setPreviewInvoiceDate(event.target.value)
     }
     const handleInvoiceExpirationDateChange = (event) => {
         setInvoiceExpirationDate(event.target.value)
-        setPreviewInvoiceExpirationDate(event.target.value)
     }
     const handleInvoicePenaltyInterestChange = (event) => {
         setInvoicePenaltyInterest(event.target.value)
-        setPreviewInvoicePenaltyInterest(event.target.value + " %")
     }
     const handleInvoiceMessageChange = (event) => {
         setInvoiceMessage(event.target.value)
-        if (event.target.value.length >= 118 || event.target.value.length <= 235) {
-            setPreviewInvoiceMessage(event.target.value.substring(0, 118) 
-            + "\n" + event.target.value.substring(118, 236)
-            + "\n" + event.target.value.substring(236, 354)
-            + "\n" + event.target.value.substring(354, 472)
-            + "\n" + event.target.value.substring(472, 590)
-            + "\n" + event.target.value.substring(590, 708)
-            + "\n" + event.target.value.substring(708, 826))
-        } else {
-            setPreviewInvoiceMessage(event.target.value)
-        }
     }
     const handleBillerBusinessIdChange = (event) => {
         setBillerBusinessId(event.target.value)
     }
     const handleBillerNameChange = (event) => {
         setBillerName(event.target.value)
-        setPreviewBillerName(event.target.value)
     }
     const handleBillerPostAddressChange = (event) => {
         setBillerPostAddress(event.target.value)
-        setPreviewBillerPostAddress(event.target.value + ", ")
     }
     const handleBillerPostalCodeChange = (event) => {
         setBillerPostalCode(event.target.value)
-        setPreviewBillerPostalCode(event.target.value)
     }
 
     const handleProductNameChange = (event) => {
@@ -481,6 +232,8 @@ const UusiLaskuContent = (props) => {
             alvKanta: alvKanta
         }
         setProducts(products.concat(productObject))
+        setProductPriceNet(productPriceNet + productObject.price * productObject.amount)
+        console.log('productPriceNet', productPriceNet)
         setProductName('')
         setProductPrice('')
         setProductAmount('')
@@ -736,191 +489,51 @@ const UusiLaskuContent = (props) => {
                     </Button>
                 </div>
             </form>
+            
             <Typography variant="h3" color="primary" className={classes.previewHeader}>
-                    Esikatselu
-                </Typography>
-            <div className={classes.preview}>
-                <div className={classes.preview_billerInfoHeader}>
-                    <TextField
-                        className={classes.preview_billerInfoHeader_name}
-                        inputProps={{style: {
-                            fontSize: 26,
-                            fontWeight: 'bold'
-                        }}}
-                        variant="outlined"
-                        type="text"
-                        size="small"
-                        value={previewBillerName}
-                    />
-                    <TextField
-                        className={classes.preview_billerInfoHeader_postaddress}
-                        inputProps={{style: {
-                            fontSize: 16
-                        }}}
-                        variant="outlined"
-                        type="text"
-                        size="small"
-                        value={previewBillerPostAddress + previewBillerPostalCode}
-                    />
-                </div>
-                <div className={classes.preview_invoiceInfo}>
-                    <div className={classes.preview_invoiceReceiverInfo}>
-                        <TextField
-                            className={classes.preview_invoiceInfo_receiverName}
-                            inputProps={{style: {
-                                fontSize: 24,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceReceiverName}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_receiverContactPerson}
-                            inputProps={{style: {
-                                fontSize: 24,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceReceiverContactPerson}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_receiverPostAddress}
-                            inputProps={{style: {
-                                fontSize: 24,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceReceiverPostAddress}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_receiverPostalCode}
-                            inputProps={{style: {
-                                fontSize: 24,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceReceiverPostalCode}
-                        />
-                    </div>
-                    <div className={classes.preview_invoiceDetails}>
-                        <TextField
-                            className={classes.preview_invoiceInfo_invoiceNumber}
-                            inputProps={{style: {
-                                fontSize: 20,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceNumber}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_invoiceDate}
-                            inputProps={{style: {
-                                fontSize: 20,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceDate}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_invoiceExpirationDate}
-                            inputProps={{style: {
-                                fontSize: 20,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoiceExpirationDate}
-                        />
-                        <TextField
-                            className={classes.preview_invoiceInfo_invoicePenaltyInterest}
-                            inputProps={{style: {
-                                fontSize: 20,
-                                fontWeight: 'bold'
-                            }}}
-                            variant="outlined"
-                            type="text"
-                            size="small"
-                            value={previewInvoicePenaltyInterest}
-                        />
-                    </div>
-                </div>
-                <div className={classes.preview_invoiceMessage}>
-                    <TextField
-                        className={classes.preview_invoiceMessageDetails}
-                        inputProps={{style: {
-                            fontSize: 16,
-                        }}}
-                        variant="outlined"
-                        multiline
-                        rowsMax="7"
-                        type="text"
-                        size="small"
-                        value={previewInvoiceMessage}
-                    />
-                </div>
-                <div className={classes.preview_products}>
-                    <TextField
-                        className={classes.preview_productName}
-                        inputProps={{style: {
-                            fontSize: 14,
-                        }}}
-                        variant="outlined"
-                        multiline
-                        rowsMax="20"
-                        type="text" 
-                        size="small"
-                        value={products.map(product => product.name).join('\n\n')}
-                    />
-                    <TextField
-                        className={classes.preview_productAmount}
-                        inputProps={{style: {
-                            fontSize: 14,
-                        }}}
-                        variant="outlined"
-                        multiline
-                        rowsMax="20"
-                        type="text" 
-                        size="small"
-                        value={products.map(product => product.amount).join('\n\n')}
-                    />
-                    <TextField
-                        className={classes.preview_productPrice}
-                        inputProps={{style: {
-                            fontSize: 14,
-                        }}}
-                        variant="outlined"
-                        multiline
-                        rowsMax="20"
-                        type="text" 
-                        size="small"
-                        value={products.map(product => product.price + " €").join('\n\n')}
-                    />
-                    <TextField
-                        className={classes.preview_productAlvKanta}
-                        inputProps={{style: {
-                            fontSize: 14,
-                        }}}
-                        variant="outlined"
-                        multiline
-                        rowsMax="20"
-                        type="text" 
-                        size="small"
-                        value={products.map(product => product.alvKanta + " %").join('\n\n')}
-                    />
-                </div>
+                    Tuotteet laskulla
+            </Typography>
+            <div className={classes.productsCard}>
+                {products.length === 0 ? 
+                    <Typography variant="h6" color="secondary">
+                    Ei vielä lisättyjä tuotteita
+                    </Typography>
+                : 
+                <table className={classes.table}>
+                    <tr>
+                        <th className={classes.th}>Tuotteen nimi</th>
+                        <th className={classes.th}>Kappalemäärä</th>
+                        <th className={classes.th}>Hinta, €</th>
+                        <th className={classes.th}>ALV-kanta, %</th>
+                    </tr>
+                    {products.map(product => 
+                        <tr key={product.name}>
+                            <td className={classes.td}>{product.name}</td>
+                            <td className={classes.td}>{product.amount}</td>
+                            <td className={classes.td}>{product.price}</td>
+                            <td className={classes.td}>{product.alvKanta}</td>
+                        </tr>)
+                    }
+                </table>}
+                {productPriceNet === 0 ?
+                    ''
+                : 
+                <div className={classes.total}>
+                    <Typography variant="h3" color="primary">
+                        Yhteensä
+                    </Typography>
+                    <table className={classes.table}>
+                    <tr>
+                        <th className={classes.th}>Netto, €</th>
+                        <th className={classes.th}>Brutto, €</th>
+                        <th className={classes.th}>Vero, €</th>
+                        <th className={classes.th}>Yhteensä, €</th>
+                    </tr>
+                    <tr>
+                        <td className={classes.td}>{productPriceNet}</td>
+                    </tr>
+                    </table>
+                </div>}
             </div>
         </div>
     )
