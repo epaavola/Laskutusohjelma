@@ -195,6 +195,9 @@ public class DAObject implements InfDAO {
 			ses.beginTransaction();
 			uri = ses.get(User.class, username);
 			ses.getTransaction().commit();
+			uri.setCustomers(null);
+			uri.setInvoices(null);
+			uri.setPassword(null);
 			return uri;
 		} catch (Exception e) {
 			if (trans != null)

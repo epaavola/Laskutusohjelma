@@ -9,11 +9,24 @@ import model.*;
 public class UserApi {
 
     DAObject dataccesobject;
+    Authenticator auth;
     final GsonBuilder builder = new GsonBuilder().disableHtmlEscaping();
     final Gson gson = builder.create();
 
-    public UserApi(DAObject dao) {
+    public UserApi(DAObject dao, Authenticator auth) {
         this.dataccesobject = dao;
+        this.auth = auth;
+    }
+
+    public Object getUser(Request req, Response res) {
+        res.type("application/json");
+        System.out.println("get user");
+        if (dataccesobject.checkUserExistence(auth.checkPermission(req)) != false) {
+            return gson.toJson(new Responssi(StatusResponse.SUCCESS,
+                    gson.toJsonTree((dataccesobject.readUser(auth.checkPermission(req))))));
+        } else {
+            return new Gson().toJson(new Responssi(StatusResponse.ERROR, new Gson().toJson("User not found")));
+        }
     }
 
     public Object addUser(Request req, Response res) {

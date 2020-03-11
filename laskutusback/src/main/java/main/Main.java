@@ -17,7 +17,7 @@ public class Main {
 		Authenticator authenticator = new Authenticator(dataccesobject);
 		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator);
 		InvoiceApi invoiceApi = new InvoiceApi(dataccesobject, authenticator);
-		UserApi userApi = new UserApi(dataccesobject);
+		UserApi userApi = new UserApi(dataccesobject, authenticator);
 
 		path("/api", () -> {
 			before("/*", (req, res) -> {
@@ -26,59 +26,63 @@ public class Main {
 				}
 			});
 			path("/customers", () -> {
-				get("/get", (req, res) -> {
+				get("", (req, res) -> {
 					return customerApi.getAll(req, res);
 				});
 
-				get("/get/:nimi", (req, res) -> {
+				get("/:nimi", (req, res) -> {
 					return customerApi.getOne(req, res);
 				});
 
-				post("/add", (req, res) -> {
+				post("", (req, res) -> {
 					return customerApi.addCustomer(req, res);
 				});
 
-				put("/update", (req, res) -> {
+				put("", (req, res) -> {
 					return customerApi.updateCustomer(req, res);
 				});
 
-				options("/exists/:nimi", (req, res) -> {
+				options("/:nimi", (req, res) -> {
 					return customerApi.checkIfExistsCustomer(req, res);
 				});
 
-				delete("/delete/:nimi", (req, res) -> {
+				delete("/:nimi", (req, res) -> {
 					return customerApi.deleteCustomer(req, res);
 				});
 			});
 
 			path("/invoices", () -> {
-				get("/get", (req, res) -> {
+				get("", (req, res) -> {
 					return invoiceApi.getAll(req, res);
 				});
 
-				get("/get/:numero", (req, res) -> {
+				get("/:numero", (req, res) -> {
 					return invoiceApi.getOne(req, res);
 				});
 
-				post("/add", (req, res) -> {
+				post("", (req, res) -> {
 					return invoiceApi.addInvoice(req, res);
 				});
 
-				options("/exists/:numero", (req, res) -> {
+				options("/:numero", (req, res) -> {
 					return invoiceApi.checkIfExistsInvoice(req, res);
 				});
 
-				delete("/delete/:numero", (req, res) -> {
+				delete("/:numero", (req, res) -> {
 					return invoiceApi.deleteInvoice(req, res);
 				});
 			});
 
 			path("/user", () -> {
-				put("/update", (req, res) -> {
+				get("", (req, res) -> {
+					return userApi.getUser(req, res);
+				});
+
+				put("", (req, res) -> {
 					return userApi.updateUser(req, res);
 				});
 
-				delete("/delete/:nimi", (req, res) -> {
+				delete("/:nimi", (req, res) -> {
 					return userApi.deleteUser(req, res);
 				});
 			});
