@@ -85,7 +85,8 @@ const useStyles  = makeStyles(theme => ({
         border: '1px solid black'
       },
     total: {
-        marginTop: theme.spacing(5)
+        marginTop: theme.spacing(5),
+        marginBottom: theme.spacing(10)
     },
     formControl: {
         margin: theme.spacing(1),
@@ -141,6 +142,8 @@ const UusiLaskuContent = (props) => {
     const [productAmount, setProductAmount] = useState('')
     const [productPrice, setProductPrice] = useState('')
     const [productPriceNet, setProductPriceNet] = useState(0)
+    const [productPriceGross, setProductPriceGross] = useState(0)
+    const [productPriceTax, setProductPriceTax] = useState(0)
 
     const [alvKanta, setAlvKanta] = useState('')
 
@@ -168,6 +171,8 @@ const UusiLaskuContent = (props) => {
         setProductAmount('')
         setAlvKanta('')
         setProductPriceNet('')
+        setProductPriceGross('')
+        setProductPriceTax('')
     }
 
     //Event listeners
@@ -232,8 +237,9 @@ const UusiLaskuContent = (props) => {
             alvKanta: alvKanta
         }
         setProducts(products.concat(productObject))
-        setProductPriceNet(productPriceNet + productObject.price * productObject.amount)
-        console.log('productPriceNet', productPriceNet)
+        setProductPriceNet(Math.round((productPriceNet + productObject.price * productObject.amount) * 100) / 100)
+        setProductPriceGross(Math.round((productPriceGross + productObject.price * productObject.amount) + (productObject.price * (productObject.alvKanta / 100)) * 100) / 100)
+        setProductPriceTax(Math.round((productPriceTax + productObject.price * (productObject.alvKanta / 100)) * 100 ) / 100)
         setProductName('')
         setProductPrice('')
         setProductAmount('')
@@ -267,7 +273,7 @@ const UusiLaskuContent = (props) => {
                     Tyhjennä
                 </Button>
             </div>
-            <form className={classes.form} onSubmit={handleAddingProduct}>
+            <form className={classes.form}>
                 <div className={classes.invoiceInfoCards}>
                 <Card className={classes.card}>
                         <CardContent>
@@ -325,7 +331,7 @@ const UusiLaskuContent = (props) => {
                                     id="asiakasDropdown"
                                     value={asiakas}
                                     onChange={handleDropdownChange}
-                                    labelWidth={'1em'}
+                                    
                                 >
                                 <MenuItem value="">
                                     <em>Tyhjä</em>
@@ -455,7 +461,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="outlined" 
-                                label="Hinta, € (verollinen)"
+                                label="Hinta, € (veroton)"
                                 type="text"
                                 fullWidth
                                 value={productPrice}
@@ -480,7 +486,7 @@ const UusiLaskuContent = (props) => {
                         </CardContent>
                     </Card>
                 </div>
-                <Button variant="contained" color="primary" className={classes.createProductButton} onClick={handleAddingProduct}>
+                <Button type="button" variant="contained" color="primary" className={classes.createProductButton} onClick={handleAddingProduct}>
                     Lisää tuote
                 </Button>
                 <div className={classes.createButtonDiv}>
@@ -500,20 +506,22 @@ const UusiLaskuContent = (props) => {
                     </Typography>
                 : 
                 <table className={classes.table}>
-                    <tr>
-                        <th className={classes.th}>Tuotteen nimi</th>
-                        <th className={classes.th}>Kappalemäärä</th>
-                        <th className={classes.th}>Hinta, €</th>
-                        <th className={classes.th}>ALV-kanta, %</th>
-                    </tr>
-                    {products.map(product => 
-                        <tr key={product.name}>
-                            <td className={classes.td}>{product.name}</td>
-                            <td className={classes.td}>{product.amount}</td>
-                            <td className={classes.td}>{product.price}</td>
-                            <td className={classes.td}>{product.alvKanta}</td>
-                        </tr>)
-                    }
+                    <tbody>
+                        <tr>
+                            <th className={classes.th}>Tuotteen nimi</th>
+                            <th className={classes.th}>Kappalemäärä</th>
+                            <th className={classes.th}>Veroton hinta, €</th>
+                            <th className={classes.th}>ALV-kanta, %</th>
+                        </tr>
+                        {products.map(product => 
+                            <tr key={product.name}>
+                                <td className={classes.td}>{product.name}</td>
+                                <td className={classes.td}>{product.amount}</td>
+                                <td className={classes.td}>{product.price}</td>
+                                <td className={classes.td}>{product.alvKanta}</td>
+                            </tr>)
+                        }
+                     </tbody>
                 </table>}
                 {productPriceNet === 0 ?
                     ''
@@ -523,15 +531,18 @@ const UusiLaskuContent = (props) => {
                         Yhteensä
                     </Typography>
                     <table className={classes.table}>
-                    <tr>
-                        <th className={classes.th}>Netto, €</th>
-                        <th className={classes.th}>Brutto, €</th>
-                        <th className={classes.th}>Vero, €</th>
-                        <th className={classes.th}>Yhteensä, €</th>
-                    </tr>
-                    <tr>
-                        <td className={classes.td}>{productPriceNet}</td>
-                    </tr>
+                        <tbody>
+                            <tr>
+                                <th className={classes.th}>Veroton, €</th>
+                                <th className={classes.th}>Vero, €</th>
+                                <th className={classes.th}>Verollinen, €</th>
+                            </tr>
+                            <tr>
+                                <td className={classes.td}>{productPriceNet}</td>
+                                <td className={classes.td}>{productPriceTax}</td>
+                                <td className={classes.td}>{productPriceGross}</td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>}
             </div>
