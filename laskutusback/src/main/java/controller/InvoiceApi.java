@@ -5,6 +5,10 @@ import com.google.gson.Gson;
 import model.*;
 import spark.*;
 
+/**
+ * InvoiceApi handles rest calls to invoice routes
+ * and returns json response
+ */
 public class InvoiceApi {
 
     DAObject dataccesobject;

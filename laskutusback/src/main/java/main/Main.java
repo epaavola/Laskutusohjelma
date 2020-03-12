@@ -4,13 +4,16 @@ import model.*;
 import controller.*;
 import static spark.Spark.*;
 
+/**
+ * Main declares routes with Spark and creates authenticator, userapi, customerapi and invoiceapi
+ */
 public class Main {
 
 	static DAObject dataccesobject = new DAObject();
 
 	public static void main(String[] args) {
 
-		//port(8080);
+		port(8080);
 		
 		CorsFilter.apply();
 

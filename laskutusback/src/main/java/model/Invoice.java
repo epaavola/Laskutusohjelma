@@ -2,11 +2,13 @@ package model;
 
 import javax.persistence.*;
 
+/**
+ * Invoice object
+ * ManyToOne mapping to user username
+ */
 @Entity
 @Table(name = "INVOICES")
 public class Invoice {
-
-    // laskunro päivämäärä eräp myöhästymiskorko
 
     @ManyToOne
     @JoinColumn(name = "username", nullable = false)

@@ -7,7 +7,7 @@ import spark.Response;
 import spark.Spark;
 
 /**
- * Really simple helper for enabling CORS in a spark application;
+ * Enables CORS in a spark application;
  */
 public final class CorsFilter {
 
@@ -15,10 +15,12 @@ public final class CorsFilter {
 
     static {
         corsHeaders.put("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS");
-        corsHeaders.put("Access-Control-Allow-Origin", "*");
+        corsHeaders.put("Access-Control-Allow-Origin", "*,");
         corsHeaders.put("Access-Control-Allow-Headers",
                 "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin,");
         corsHeaders.put("Access-Control-Allow-Credentials", "true");
+        corsHeaders.put("Content-Type", "application/json, text/plain, */*");
+        corsHeaders.put("Accept", "application/json, text/plain, */*");
     }
 
     public final static void apply() {

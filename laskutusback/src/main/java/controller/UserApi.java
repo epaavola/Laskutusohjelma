@@ -6,6 +6,10 @@ import com.google.gson.GsonBuilder;
 import spark.*;
 import model.*;
 
+/**
+ * UserApi handles rest calls to user routes
+ * and returns json response
+ */
 public class UserApi {
 
     DAObject dataccesobject;

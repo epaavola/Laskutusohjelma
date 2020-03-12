@@ -1,5 +1,5 @@
 
-POST http://localhost:4567/createuser HTTP/1.1
+POST http://localhost:8080/createuser HTTP/1.1
 
 {
     "username": "asd",
@@ -14,6 +14,11 @@ POST http://10.114.32.45:8080/createuser HTTP/1.1
     "username": "sad",
     "password": "asda"
 }
+
+###
+
+GET http://localhost:8080/api/user
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
 
 ###
 

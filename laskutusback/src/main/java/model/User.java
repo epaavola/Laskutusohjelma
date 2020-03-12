@@ -7,11 +7,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * User object
+ * OneToMany mapping to invoices and clients
+ */
 @Entity
 @Table(name = "USERS")
 public class User {
 
-    // username yritynimi ytunnus osoite postitoi sähköp tilinro
 
     @OneToMany(mappedBy = "User", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Yritys> customers = new ArrayList<Yritys>();

@@ -5,8 +5,8 @@ import axios from 'axios'
 
     //Get all clients from database through API
     export const getClients = async () => {
-        const result = await axios(dataURL)
-        return result.data     
+        const response = await axios.get(dataURL)
+        return response.data
     }
     //POST create asiakas
     export const newClient = (e) => {

@@ -2,6 +2,10 @@ package model;
 
 import javax.persistence.*;
 
+/**
+ * Customer object
+ * ManyToOne mapping to user username
+ */
 @Entity
 @Table(name = "CUSTOMERS")
 public class Yritys {

@@ -5,6 +5,9 @@ import org.apache.commons.lang3.StringUtils;
 
 import spark.Request;
 
+/**
+ * Authorization checker and converter
+ */
 public class Authenticator {
 
     private DAObject dataccesobject;
@@ -13,6 +16,9 @@ public class Authenticator {
         this.dataccesobject = dao;
     }
 
+    /**
+     * Checks username and password from database
+     */
     public boolean authenticate(Request req) {
         System.out.println("Authenticating");
         if (req.headers("Authorization") != null) {
@@ -25,10 +31,13 @@ public class Authenticator {
                 return true;
             }
         }
-        System.out.println("Not logged in");
+        System.out.println("Missing authorization in request");
         return false;
     }
 
+    /**
+     * Decodes authorization token and returns username
+     */
     public String checkPermission(Request req) {
         System.out.println("Checking user permission");
         String a = StringUtils.substringAfter(req.headers("Authorization"), "Basic");
@@ -37,6 +46,9 @@ public class Authenticator {
         return arr[0];
     }
 
+    /**
+     * Returns authorization token
+     */
     public String getReqToken(Request req) {
         String a = StringUtils.substringAfter(req.headers("Authorization"), "Basic");
         a = a.replaceAll("\\s+", "");

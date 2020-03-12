@@ -1,5 +1,5 @@
 
-POST http://localhost:4567/api/customers/add HTTP/1.1
+POST http://localhost:4567/api/customers HTTP/1.1
 Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
 
 {
@@ -12,7 +12,7 @@ Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
 
 ###
 
-GET http://localhost:4567/api/customers/get HTTP/1.1
+GET http://localhost:4567/api/customers HTTP/1.1
 Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
 
 ###
