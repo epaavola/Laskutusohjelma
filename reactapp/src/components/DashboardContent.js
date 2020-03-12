@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper';
 import { getUser } from '../service/UserDataService';
+import { withRouter } from 'react-router-dom';
 
 /**
  * Content of dashboard page
@@ -82,13 +83,12 @@ const DashboardContent = (props) => {
 
     //Get user data from database through API
     useEffect(() => {
-        let data = null;
         (async function fetchData() {
-            data = await getUser();
-            setUser(data)         
-        })();
+            await getUser().then(response => setUser(response.data))    
+        })();  
       }, []);
-        
+
+
     //return  
     return(
     <div className={classes.root}>
@@ -98,11 +98,13 @@ const DashboardContent = (props) => {
                     Omat tiedot
                 </Typography>
                 <Typography variant="body1" color="primary" style={{paddingTop: '1em'}}>
-                        Nimi : {user.name} <br />
-                        Sähköposti : {user.email} <br />
-                        Osoite : {user.address} <br />
-                        Postitoimipaikka : {user.city} <br />
-                        Y-tunnus : {user.yTunnus}   
+                        <b>Yritys :</b> {user.nimi} <br />
+                        <b>Nimi :</b> {user.username} <br />
+                        <b>Sähköposti :</b> {user.sahkoposti} <br />
+                        <b>Osoite :</b> {user.osoite} <br />
+                        <b>Postitoimipaikka :</b> {user.postitoimipaikka} <br />
+                        <b>Y-tunnus :</b> {user.ytunnus} <br />
+                        <b>Tilinumero :</b> {user.tilinro}     
                 </Typography>
             </Paper>
         </div>
@@ -134,4 +136,4 @@ const DashboardContent = (props) => {
 }
 
 
-export default DashboardContent
+export default withRouter(DashboardContent)

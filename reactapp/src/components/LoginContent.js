@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import 'typeface-roboto'
 import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import AppIcon from '../images/Laskutuslogo.png'
+import { userLogin } from '../service/UserDataService';
 
 /**
  *  Login form for login page
@@ -37,11 +38,33 @@ const useStyles  = makeStyles({
 })
 
 const Frontpage = (props) => {
-    const onSubmit = (event) => {
+
+    //States
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [isLogged, setIsLogged] = useState("")
+
+    //Handle the login submit button
+    const onSubmit = async (event) => {
         event.preventDefault()
-        props.history.push('/dashboard')
+        await userLogin(username, password)
+        .then(response => 
+            setIsLogged(response.status))             
     }
+    // Move to the dashboard after login is OK
+    useEffect(() => {
+        if(isLogged === "SUCCESS")
+            props.history.push('/dashboard')
+        }, [isLogged])
+
+    //The most simple validation function
+    function validateForm() {
+        return username.length > 0 && password.length > 0;
+    }
+
     const classes = useStyles()
+
+    //return
     return (
         
         <div className={classes.container}>   
@@ -60,6 +83,7 @@ const Frontpage = (props) => {
                             label="Käyttäjätunnus"
                             type="text"
                             fullWidth
+                            onChange={e => setUsername(e.target.value)}
                         />
                         <TextField 
                             className={classes.loginTextField} 
@@ -67,11 +91,12 @@ const Frontpage = (props) => {
                             label="Salasana"
                             type="password"
                             fullWidth
+                            onChange={e => setPassword(e.target.value)}
                         />
-                        <Button variant="contained" color="primary" type="submit">
+                        <Button variant="contained" color="primary" disabled={!validateForm()} type="submit" >
                             Kirjaudu sisään
                         </Button>
-                    </div>
+                    </div>                   
                 </form>
             </div>
         </div>
