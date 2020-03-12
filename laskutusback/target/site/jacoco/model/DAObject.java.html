@@ -5,13 +5,13 @@ import java.util.List;
 import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.*;
+import org.hibernate.criterion.Restrictions;
 
-public class DAObject implements IYritysDAO {
+public class DAObject implements InfDAO {
 
-<span class="fc" id="L11">	private SessionFactory istuntotehdas = null;</span>
+<span class="fc" id="L12">	private SessionFactory istuntotehdas = null;</span>
 	private final StandardServiceRegistry registry;
-<span class="fc" id="L13">	private Transaction trans = null;</span>
-	private Yritys[] yritykset;
+<span class="fc" id="L14">	private Transaction trans = null;</span>
 
 <span class="fc" id="L16">	public DAObject() {</span>
 <span class="fc" id="L17">		registry = new StandardServiceRegistryBuilder().configure().build();</span>
@@ -30,104 +30,394 @@ public class DAObject implements IYritysDAO {
 <span class="nc" id="L30">	}</span>
 
 	public boolean createYritys(Yritys yritys) {
-		boolean asd;
-<span class="fc" id="L34">		try (Session ses = istuntotehdas.openSession()) {</span>
-<span class="fc" id="L35">			trans = ses.beginTransaction();</span>
-<span class="fc" id="L36">			ses.saveOrUpdate(yritys);</span>
-<span class="fc" id="L37">			trans.commit();</span>
-<span class="fc" id="L38">			asd = true;</span>
-<span class="nc" id="L39">		} catch (Exception e) {</span>
-<span class="nc bnc" id="L40" title="All 2 branches missed.">			if (trans != null)</span>
-<span class="nc" id="L41">				trans.rollback();</span>
-<span class="nc" id="L42">			asd = false;</span>
-<span class="nc" id="L43">			throw e;</span>
+<span class="fc" id="L33">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="fc" id="L34">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L35">			ses.saveOrUpdate(yritys);</span>
+<span class="nc" id="L36">			trans.commit();</span>
+<span class="nc" id="L37">			return true;</span>
+<span class="fc" id="L38">		} catch (Exception e) {</span>
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L40">				trans.rollback();</span>
+<span class="nc" id="L41">			throw e;</span>
 		}
-
-<span class="fc" id="L46">		return asd;</span>
 	}
 
-	public Yritys readYritys(String yritysnimi) {
-		Yritys yri;
-<span class="fc" id="L51">		try (Session ses = istuntotehdas.openSession();) {</span>
-<span class="fc" id="L52">			ses.beginTransaction();</span>
-<span class="fc" id="L53">			yri = new Yritys();</span>
-<span class="fc" id="L54">			ses.load(yri, yritysnimi);</span>
-<span class="fc" id="L55">			ses.getTransaction().commit();</span>
-<span class="nc" id="L56">		} catch (Exception e) {</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">			if (trans != null)</span>
-<span class="nc" id="L58">				trans.rollback();</span>
-<span class="nc" id="L59">			throw e;</span>
-		}
-<span class="fc" id="L61">		return yri;</span>
-	}
-
-	public Yritys[] readYritykset() {
+	public Yritys readYritys(String yritysnimi, String username) {
+		Yritys[] yritykset;
 		List result;
-<span class="fc" id="L66">		try (Session ses = istuntotehdas.openSession();) {</span>
-<span class="fc" id="L67">			trans = ses.beginTransaction();</span>
-<span class="fc" id="L68">			result = ses.createQuery(&quot;FROM Yritys&quot;).list();</span>
-<span class="fc" id="L69">			yritykset = new Yritys[result.size()];</span>
-<span class="fc bfc" id="L70" title="All 2 branches covered.">			for (int i = 0; i &lt; result.size(); i++) {</span>
-<span class="fc" id="L71">				yritykset[i] = (Yritys) result.get(i);</span>
+<span class="nc" id="L48">		Yritys x = null;</span>
+		;
+<span class="nc" id="L50">		try (Session ses = istuntotehdas.openSession();) {</span>
+<span class="nc" id="L51">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L52">			User usr = (User) ses.load(User.class, username);</span>
+<span class="nc" id="L53">			result = usr.getCustomers();</span>
+<span class="nc" id="L54">			yritykset = new Yritys[result.size()];</span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L56">				yritykset[i] = (Yritys) result.get(i);</span>
 			}
-<span class="fc" id="L73">			ses.getTransaction().commit();</span>
-<span class="nc" id="L74">		} catch (Exception e) {</span>
-<span class="nc" id="L75">			throw e;</span>
+<span class="nc" id="L58">			ses.getTransaction().commit();</span>
+<span class="nc" id="L59">		} catch (Exception e) {</span>
+<span class="nc" id="L60">			throw e;</span>
 		}
-
-<span class="fc" id="L78">		return yritykset;</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">		for (Yritys y : yritykset) {</span>
+<span class="nc" id="L63">			y.setUser(null);</span>
+		}
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		for (int i = 0; i &lt; yritykset.length; i++) {</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">			if (yritykset[i].getYritysnimi().toLowerCase().equals(yritysnimi.toLowerCase()))</span>
+<span class="nc" id="L67">				x = yritykset[i];</span>
+		}
+<span class="nc" id="L69">		return x;</span>
 	}
 
-	public Yritys updateYritys(Yritys yritys) {
-<span class="fc" id="L82">		try (Session ses = istuntotehdas.openSession()) {</span>
-<span class="fc" id="L83">			ses.beginTransaction();</span>
-<span class="fc" id="L84">			Yritys v = (Yritys) ses.get(Yritys.class, yritys.getYritysnimi());</span>
-<span class="fc" id="L85">			v.setYritysnumero(yritys.getYritysnumero());</span>
-<span class="fc" id="L86">			v.setTilinumero(yritys.getTilinumero());</span>
-<span class="fc" id="L87">			ses.getTransaction().commit();</span>
-<span class="fc" id="L88">			return v;</span>
-<span class="nc" id="L89">		} catch (Exception e) {</span>
-<span class="nc bnc" id="L90" title="All 2 branches missed.">			if (trans != null)</span>
-<span class="nc" id="L91">				trans.rollback();</span>
-<span class="nc" id="L92">			throw e;</span>
+	public Yritys[] readYritykset(String username) {
+		Yritys[] yritykset;
+		List result;
+<span class="fc" id="L75">		try (Session ses = istuntotehdas.openSession();) {</span>
+<span class="fc" id="L76">			trans = ses.beginTransaction();</span>
+<span class="fc" id="L77">			User usr = (User) ses.get(User.class, username);</span>
+<span class="nc" id="L78">			result = usr.getCustomers();</span>
+<span class="nc" id="L79">			yritykset = new Yritys[result.size()];</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L81">				yritykset[i] = (Yritys) result.get(i);</span>
+			}
+<span class="nc" id="L83">			ses.getTransaction().commit();</span>
+<span class="fc" id="L84">		} catch (Exception e) {</span>
+<span class="fc" id="L85">			throw e;</span>
+		}
+<span class="nc bnc" id="L87" title="All 2 branches missed.">		for (Yritys y : yritykset) {</span>
+<span class="nc" id="L88">			y.setUser(null);</span>
+		}
+<span class="nc" id="L90">		return yritykset;</span>
+	}
+
+	public boolean updateYritys(Yritys yritys, String username) {
+		Yritys[] yritykset;
+		List result;
+<span class="nc" id="L96">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L97">			ses.beginTransaction();</span>
+<span class="nc" id="L98">			User usr = (User) ses.load(User.class, username);</span>
+<span class="nc" id="L99">			result = usr.getCustomers();</span>
+<span class="nc" id="L100">			yritykset = new Yritys[result.size()];</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L102">				yritykset[i] = (Yritys) result.get(i);</span>
+			}
+<span class="nc bnc" id="L104" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">				if (yritykset[i].getYritysnimi().toLowerCase().equals(yritys.getYritysnimi().toLowerCase())) {</span>
+<span class="nc" id="L106">					Yritys v = (Yritys) ses.get(Yritys.class, yritykset[i].getId());</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">					if (v != null) {</span>
+<span class="nc" id="L108">						v.setYtunnus(yritys.getYtunnus());</span>
+<span class="nc" id="L109">						v.setYhthlo(yritys.getYhthlo());</span>
+<span class="nc" id="L110">						v.setOsoite(yritys.getOsoite());</span>
+<span class="nc" id="L111">						v.setPostitoimipaikka(yritys.getPostitoimipaikka());</span>
+<span class="nc" id="L112">						v.setSposti(yritys.getSposti());</span>
+<span class="nc" id="L113">						ses.getTransaction().commit();</span>
+<span class="nc" id="L114">						return true;</span>
+					}
+				}
+			}
+<span class="nc" id="L118">			ses.getTransaction().commit();</span>
+<span class="nc" id="L119">			return false;</span>
+<span class="nc" id="L120">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L122">				trans.rollback();</span>
+<span class="nc" id="L123">			throw e;</span>
 		}
 	}
 
-	public boolean deleteYritys(String yritysnimi) {
-<span class="nc" id="L97">		try (Session ses = istuntotehdas.openSession()) {</span>
-<span class="nc" id="L98">			ses.beginTransaction();</span>
-<span class="nc" id="L99">			String s = &quot;DELETE Yritys WHERE yritysnimi = :yritysnimi&quot;;</span>
-<span class="nc" id="L100">			Query que = ses.createQuery(s);</span>
-<span class="nc" id="L101">			que.setParameter(&quot;yritysnimi&quot;, yritysnimi);</span>
-<span class="nc bnc" id="L102" title="All 2 branches missed.">			if (que.executeUpdate() &gt; 0) {</span>
-<span class="nc" id="L103">				ses.getTransaction().commit();</span>
-<span class="nc" id="L104">				return true;</span>
+	public boolean deleteYritys(String yritysnimi, String username) {
+		Yritys[] yritykset;
+		List result;
+<span class="nc" id="L130">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L131">			ses.beginTransaction();</span>
+<span class="nc" id="L132">			User usr = (User) ses.load(User.class, username);</span>
+<span class="nc" id="L133">			result = usr.getCustomers();</span>
+<span class="nc" id="L134">			yritykset = new Yritys[result.size()];</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L136">				yritykset[i] = (Yritys) result.get(i);</span>
+<span class="nc" id="L137">				System.out.println(yritykset[i].getYritysnimi() + &quot; poistettava yritys&quot;);</span>
+<span class="nc" id="L138">				System.out.println(&quot;id &quot; + yritykset[i].getId());</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">				if (yritykset[i].getYritysnimi().toLowerCase().equals(yritysnimi.toLowerCase())) {</span>
+<span class="nc" id="L140">					String s = &quot;delete Yritys where id=:id&quot;;</span>
+<span class="nc" id="L141">					Query que = ses.createQuery(s);</span>
+<span class="nc" id="L142">					que.setParameter(&quot;id&quot;, yritykset[i].getId());</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">					if (que.executeUpdate() &gt; 0) {</span>
+<span class="nc" id="L144">						ses.getTransaction().commit();</span>
+<span class="nc" id="L145">						return true;</span>
+					}
+				}
+			}
+<span class="nc" id="L149">			ses.getTransaction().commit();</span>
+<span class="nc" id="L150">			return false;</span>
+<span class="nc" id="L151">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L153">				trans.rollback();</span>
+<span class="nc" id="L154">			throw e;</span>
+		}
+	}
+
+	public boolean checkYritys(String yritysnimi) {
+<span class="nc" id="L159">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L160">			ses.beginTransaction();</span>
+<span class="nc" id="L161">			Yritys y = (Yritys) ses.createCriteria(Yritys.class).add(Restrictions.eq(&quot;yritysnimi&quot;, yritysnimi))</span>
+<span class="nc" id="L162">					.uniqueResult();</span>
+<span class="nc bnc" id="L163" title="All 2 branches missed.">			if (y != null) {</span>
+<span class="nc" id="L164">				ses.getTransaction().commit();</span>
+<span class="nc" id="L165">				return true;</span>
 			} else {
-<span class="nc" id="L106">				ses.getTransaction().commit();</span>
-<span class="nc" id="L107">				return false;</span>
+<span class="nc" id="L167">				ses.getTransaction().commit();</span>
+<span class="nc" id="L168">				return false;</span>
 			}
+<span class="nc" id="L170">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L172">				trans.rollback();</span>
+<span class="nc" id="L173">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean createUser(User user) {
+<span class="nc" id="L179">		user.setPassword(user.getEncoded());</span>
+<span class="nc" id="L180">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L181">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L182">			ses.saveOrUpdate(user);</span>
+<span class="nc" id="L183">			trans.commit();</span>
+<span class="nc" id="L184">			return true;</span>
+<span class="nc" id="L185">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L187">				trans.rollback();</span>
+<span class="nc" id="L188">			throw e;</span>
+		}
+	}
+
+	public User readUser(String username) {
+		User uri;
+<span class="nc" id="L194">		try (Session ses = istuntotehdas.openSession();) {</span>
+<span class="nc" id="L195">			ses.beginTransaction();</span>
+<span class="nc" id="L196">			uri = ses.get(User.class, username);</span>
+<span class="nc" id="L197">			ses.getTransaction().commit();</span>
+<span class="nc" id="L198">			uri.setCustomers(null);</span>
+<span class="nc" id="L199">			uri.setInvoices(null);</span>
+<span class="nc" id="L200">			uri.setPassword(null);</span>
+<span class="nc" id="L201">			return uri;</span>
+<span class="nc" id="L202">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L203" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L204">				trans.rollback();</span>
+<span class="nc" id="L205">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean deleteUser(String username) {
+<span class="nc" id="L211">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L212">			ses.beginTransaction();</span>
+<span class="nc" id="L213">			String s = &quot;DELETE User WHERE username = :username&quot;;</span>
+<span class="nc" id="L214">			Query que = ses.createQuery(s);</span>
+<span class="nc" id="L215">			que.setParameter(&quot;username&quot;, username);</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">			if (que.executeUpdate() &gt; 0) {</span>
+<span class="nc" id="L217">				ses.getTransaction().commit();</span>
+<span class="nc" id="L218">				return true;</span>
+			} else {
+<span class="nc" id="L220">				ses.getTransaction().commit();</span>
+<span class="nc" id="L221">				return false;</span>
+			}
+<span class="nc" id="L223">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L224" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L225">				trans.rollback();</span>
+<span class="nc" id="L226">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean checkUserAndPass(String username, String password) {
+<span class="nc" id="L232">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L233">			ses.beginTransaction();</span>
+<span class="nc" id="L234">			String s = &quot;FROM User WHERE username = :username AND password = :password&quot;;</span>
+<span class="nc" id="L235">			Query que = ses.createQuery(s);</span>
+<span class="nc" id="L236">			que.setParameter(&quot;username&quot;, username).setParameter(&quot;password&quot;, password);</span>
+<span class="nc bnc" id="L237" title="All 2 branches missed.">			if (que.uniqueResult() != null) {</span>
+<span class="nc" id="L238">				ses.getTransaction().commit();</span>
+<span class="nc" id="L239">				return true;</span>
+			} else {
+<span class="nc" id="L241">				ses.getTransaction().commit();</span>
+<span class="nc" id="L242">				return false;</span>
+			}
+<span class="nc" id="L244">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L245" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L246">				trans.rollback();</span>
+<span class="nc" id="L247">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean checkUserExistence(String username) {
+<span class="nc" id="L253">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L254">			ses.beginTransaction();</span>
+<span class="nc" id="L255">			String s = &quot;FROM User WHERE username = :username&quot;;</span>
+<span class="nc" id="L256">			Query que = ses.createQuery(s);</span>
+<span class="nc" id="L257">			que.setParameter(&quot;username&quot;, username);</span>
+<span class="nc bnc" id="L258" title="All 2 branches missed.">			if (que.uniqueResult() != null) {</span>
+<span class="nc" id="L259">				ses.getTransaction().commit();</span>
+<span class="nc" id="L260">				return true;</span>
+			} else {
+<span class="nc" id="L262">				ses.getTransaction().commit();</span>
+<span class="nc" id="L263">				return false;</span>
+			}
+<span class="nc" id="L265">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L266" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L267">				trans.rollback();</span>
+<span class="nc" id="L268">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean updateUser(User user) {
+<span class="nc" id="L274">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L275">			ses.beginTransaction();</span>
+<span class="nc" id="L276">			User u = (User) ses.get(User.class, user.getUsername());</span>
+<span class="nc bnc" id="L277" title="All 2 branches missed.">			if (u != null) {</span>
+<span class="nc" id="L278">				u.setNimi(user.getNimi());</span>
+<span class="nc" id="L279">				u.setOsoite(user.getOsoite());</span>
+<span class="nc" id="L280">				u.setPostitoimipaikka(user.getPostitoimipaikka());</span>
+<span class="nc" id="L281">				u.setYtunnus(user.getYtunnus());</span>
+<span class="nc" id="L282">				u.setSposti(user.getSposti());</span>
+<span class="nc" id="L283">				u.setTilinro(user.getTilinro());</span>
+<span class="nc" id="L284">				ses.getTransaction().commit();</span>
+<span class="nc" id="L285">				return true;</span>
+			}
+<span class="nc" id="L287">			return false;</span>
+<span class="nc" id="L288">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L289" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L290">				trans.rollback();</span>
+<span class="nc" id="L291">			throw e;</span>
+		}
+	}
+
+	@Override
+	public boolean createLasku(Invoice lasku) {
+<span class="nc" id="L297">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L298">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L299">			ses.saveOrUpdate(lasku);</span>
+<span class="nc" id="L300">			trans.commit();</span>
+<span class="nc" id="L301">			return true;</span>
+<span class="nc" id="L302">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L303" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L304">				trans.rollback();</span>
+<span class="nc" id="L305">			throw e;</span>
+		}
+	}
+
+	@Override
+	public Invoice readLasku(String laskunumero, String username) {
+		Invoice[] laskut;
+		List result;
+<span class="nc" id="L313">		Invoice x = null;</span>
+		;
+<span class="nc" id="L315">		try (Session ses = istuntotehdas.openSession();) {</span>
+<span class="nc" id="L316">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L317">			User usr = (User) ses.load(User.class, username);</span>
+<span class="nc" id="L318">			result = usr.getCustomers();</span>
+<span class="nc" id="L319">			laskut = new Invoice[result.size()];</span>
+<span class="nc bnc" id="L320" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L321">				laskut[i] = (Invoice) result.get(i);</span>
+			}
+<span class="nc" id="L323">			ses.getTransaction().commit();</span>
+<span class="nc" id="L324">		} catch (Exception e) {</span>
+<span class="nc" id="L325">			throw e;</span>
+		}
+<span class="nc bnc" id="L327" title="All 2 branches missed.">		for (Invoice y : laskut) {</span>
+<span class="nc" id="L328">			y.setUser(null);</span>
+		}
+<span class="nc bnc" id="L330" title="All 2 branches missed.">		for (int i = 0; i &lt; laskut.length; i++) {</span>
+<span class="nc bnc" id="L331" title="All 2 branches missed.">			if (laskut[i].getLaskunumero().equals(laskunumero)){</span>
+<span class="nc" id="L332">				x = laskut[i];</span>
+			}
+		}
+<span class="nc" id="L335">		return x;</span>
+	}
+
+	@Override
+	public Invoice[] readLaskut(String username) {
+		Invoice[] laskut;
+		List result;
+<span class="nc" id="L342">		try (Session ses = istuntotehdas.openSession();) {</span>
+<span class="nc" id="L343">			trans = ses.beginTransaction();</span>
+<span class="nc" id="L344">			User usr = (User) ses.get(User.class, username);</span>
+<span class="nc" id="L345">			result = usr.getInvoices();</span>
+<span class="nc" id="L346">			laskut = new Invoice[result.size()];</span>
+<span class="nc bnc" id="L347" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L348">				laskut[i] = (Invoice) result.get(i);</span>
+			}
+<span class="nc" id="L350">			ses.getTransaction().commit();</span>
+<span class="nc" id="L351">		} catch (Exception e) {</span>
+<span class="nc" id="L352">			throw e;</span>
+		}
+<span class="nc bnc" id="L354" title="All 2 branches missed.">		for (Invoice y : laskut) {</span>
+<span class="nc" id="L355">			y.setUser(null);</span>
+		}
+<span class="nc" id="L357">		return laskut;</span>
+	}
+
+	@Override
+	public boolean deleteLasku(String laskunumero, String username) {
+		Invoice[] laskut;
+		List result;
+<span class="nc" id="L364">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L365">			ses.beginTransaction();</span>
+<span class="nc" id="L366">			User usr = (User) ses.load(User.class, username);</span>
+<span class="nc" id="L367">			result = usr.getInvoices();</span>
+<span class="nc" id="L368">			laskut = new Invoice[result.size()];</span>
+<span class="nc bnc" id="L369" title="All 2 branches missed.">			for (int i = 0; i &lt; result.size(); i++) {</span>
+<span class="nc" id="L370">				laskut[i] = (Invoice) result.get(i);</span>
+<span class="nc" id="L371">				System.out.println(laskut[i].getLaskunumero() + &quot; poistettava lasku&quot;);</span>
+<span class="nc bnc" id="L372" title="All 2 branches missed.">				if (laskut[i].getLaskunumero().equals(laskunumero)) {</span>
+<span class="nc" id="L373">					String s = &quot;delete Invoice where id=:id&quot;;</span>
+<span class="nc" id="L374">					Query que = ses.createQuery(s);</span>
+<span class="nc" id="L375">					que.setParameter(&quot;id&quot;, laskut[i].getId());</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">					if (que.executeUpdate() &gt; 0) {</span>
+<span class="nc" id="L377">						ses.getTransaction().commit();</span>
+<span class="nc" id="L378">						return true;</span>
+					}
+				}
+			}
+<span class="nc" id="L382">			ses.getTransaction().commit();</span>
+<span class="nc" id="L383">			return false;</span>
+<span class="nc" id="L384">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L385" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L386">				trans.rollback();</span>
+<span class="nc" id="L387">			throw e;</span>
 		}
 	}
 
 	@Override
 	public void deleteAll() {
-		// TODO Auto-generated method stub
+<span class="fc" id="L393">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="fc" id="L394">			ses.beginTransaction();</span>
+<span class="fc" id="L395">			String s = &quot;DELETE User; DELETE Yritys; DELETE Lasku&quot;;</span>
+<span class="nc" id="L396">			Query que = ses.createQuery(s);</span>
+<span class="nc" id="L397">			que.executeUpdate();</span>
+<span class="nc" id="L398">			ses.getTransaction().commit();</span>
+		}
+<span class="nc" id="L400">	}</span>
 
-<span class="fc" id="L116">	}</span>
-
-	public boolean tarkistaYritys(String yritysnimi) {
-<span class="nc" id="L119">		try (Session ses = istuntotehdas.openSession()) {</span>
-<span class="nc" id="L120">			ses.beginTransaction();</span>
-<span class="nc bnc" id="L121" title="All 2 branches missed.">			if (ses.get(Yritys.class, yritysnimi) != null) {</span>
-<span class="nc" id="L122">				return true;</span>
+	@Override
+	public boolean checkLasku(String laskunumero) {
+<span class="nc" id="L404">		try (Session ses = istuntotehdas.openSession()) {</span>
+<span class="nc" id="L405">			ses.beginTransaction();</span>
+<span class="nc" id="L406">			Invoice y = (Invoice) ses.createCriteria(Invoice.class).add(Restrictions.eq(&quot;laskunumero&quot;, laskunumero))</span>
+<span class="nc" id="L407">					.uniqueResult();</span>
+<span class="nc bnc" id="L408" title="All 2 branches missed.">			if (y != null) {</span>
+<span class="nc" id="L409">				ses.getTransaction().commit();</span>
+<span class="nc" id="L410">				return true;</span>
 			} else {
-<span class="nc" id="L124">				return false;</span>
+<span class="nc" id="L412">				ses.getTransaction().commit();</span>
+<span class="nc" id="L413">				return false;</span>
 			}
-<span class="nc" id="L126">		} catch (Exception e) {</span>
-<span class="nc bnc" id="L127" title="All 2 branches missed.">			if (trans != null)</span>
-<span class="nc" id="L128">				trans.rollback();</span>
-<span class="nc" id="L129">			throw e;</span>
+<span class="nc" id="L415">		} catch (Exception e) {</span>
+<span class="nc bnc" id="L416" title="All 2 branches missed.">			if (trans != null)</span>
+<span class="nc" id="L417">				trans.rollback();</span>
+<span class="nc" id="L418">			throw e;</span>
 		}
 	}
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
