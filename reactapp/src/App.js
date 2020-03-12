@@ -8,7 +8,7 @@ import Arkisto from './pages/Arkisto'
 import FAQ from './pages/FAQ'
 import About from './pages/About'
 import Asetukset from './pages/Asetukset'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 const App = () => {
   return (
@@ -16,12 +16,12 @@ const App = () => {
                 <>
                     <Switch>
                         <Route path="/" exact component={Frontpage} />
-                        <Route path="/dashboard" exact component={Dashboard} />
-                        <Route path="/uusilasku" exact component={UusiLasku} />
+                        <AuthenticatedPath path="/dashboard" exact component={Dashboard} />
+                        <AuthenticatedPath path="/uusilasku" exact component={UusiLasku} />
                         <Route path="/rekisteroityminen" exact component={Rekisteroityminen} />
-                        <Route path="/asiakkaat" exact component={Asiakkaat} />
-                        <Route path="/arkisto" exact component={Arkisto} />
-                        <Route path="/asetukset" exact component={Asetukset} />
+                        <AuthenticatedPath path="/asiakkaat" exact component={Asiakkaat} />
+                        <AuthenticatedPath path="/arkisto" exact component={Arkisto} />
+                        <AuthenticatedPath path="/asetukset" exact component={Asetukset} />
                         <Route path="/FAQ" exact component={FAQ} />
                         <Route path="/tietoameista" exact component={About} />
                     </Switch>
@@ -29,5 +29,24 @@ const App = () => {
     </Router>
   )
 }
+
+
+const AuthenticatedPath = ({component : Component, ...rest}) => (
+  <Route
+    {...rest}
+    render={props => 
+      localStorage.getItem('auth') ? (
+      <Component {...props} />
+    ) : (
+      <Redirect
+        to={{
+          pathname: "/",
+          state: { from: props.location }
+        }}
+      />
+    )
+  }
+/>
+);
 
 export default App;

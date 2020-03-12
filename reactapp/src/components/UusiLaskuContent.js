@@ -250,11 +250,9 @@ const UusiLaskuContent = (props) => {
 
     //Get user data from database through API
     useEffect(() => {
-        let data = null;
         (async function fetchData() {
-            data = await getUser();
-            setUser(data)         
-        })();
+            await getUser().then(response => setUser(response.data))    
+        })();  
       }, []);
 
     return (

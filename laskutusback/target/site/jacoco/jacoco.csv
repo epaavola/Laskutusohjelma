@@ -1,6 +1,16 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-LaskutusBack,model,Yritys,4,32,0,0,2,14,1,7,1,7
+LaskutusBack,default,Main,221,0,2,0,54,0,26,0,25,0
+LaskutusBack,controller,CustomerApi,251,0,10,0,35,0,12,0,7,0
+LaskutusBack,controller,UserApi,237,0,8,0,37,0,11,0,7,0
+LaskutusBack,controller,InvoiceApi,207,0,8,0,29,0,10,0,6,0
+LaskutusBack,model,Invoice,75,3,0,0,31,2,14,1,14,1
 LaskutusBack,model,Responssi,45,0,0,0,20,0,9,0,9,0
-LaskutusBack,model,DAObject,109,148,12,2,39,35,9,7,3,6
+LaskutusBack,model,Authenticator,105,0,6,0,23,0,7,0,4,0
 LaskutusBack,model,StatusResponse,41,0,0,0,8,0,4,0,4,0
-LaskutusBack,main,Main,182,0,4,0,34,0,11,0,9,0
+LaskutusBack,model,CorsFilter,53,0,0,0,12,0,4,0,4,0
+LaskutusBack,model,Yritys,83,24,0,0,34,10,17,2,17,2
+LaskutusBack,model,DAObject,1023,76,81,1,252,19,57,4,16,4
+LaskutusBack,model,User,170,19,0,0,52,6,27,1,27,1
+LaskutusBack,model,CorsFilter.new Filter() {...},13,0,0,0,5,0,3,0,3,0
+LaskutusBack,model,CorsFilter.new Filter() {...},28,0,0,0,5,0,2,0,2,0
+LaskutusBack,main,Main,221,0,2,0,54,0,26,0,25,0
