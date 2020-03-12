@@ -1,6 +1,9 @@
 package model;
 import com.google.gson.JsonElement;
 
+/**
+ * Responssi object for making json responses to rest calls
+ */
 public class Responssi {
 
     private StatusResponse status;

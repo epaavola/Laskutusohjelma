@@ -3,52 +3,123 @@
 import javax.persistence.*;
 
 @Entity
-@Table(name=&quot;yritys&quot;)
+@Table(name = &quot;CUSTOMERS&quot;)
 public class Yritys {
-	
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = &quot;username&quot;, nullable = false)
+	private User User;
+
 	@Id
-	@Column(name=&quot;nimi&quot;)
+	@GeneratedValue
+	private int id;
+
+	@Column(name = &quot;nimi&quot;, nullable = false)
 	private String yritysnimi;
-	
-	@Column(name=&quot;numero&quot;)
-	private String yritysnumero;
-	
-	@Column(name=&quot;tili&quot;)
-	private int tilinumero;
-	
-<span class="fc" id="L19">	public Yritys(String y, String yn, int tn) {</span>
-<span class="fc" id="L20">		this.yritysnimi = y;</span>
-<span class="fc" id="L21">		this.yritysnumero = yn;</span>
-<span class="fc" id="L22">		this.tilinumero = tn;</span>
-<span class="fc" id="L23">	}</span>
-	
-<span class="fc" id="L25">	public Yritys() {</span>
-		
-<span class="fc" id="L27">	}</span>
+
+	@Column(name = &quot;tunnus&quot;)
+	private String ytunnus;
+
+	@Column(name = &quot;yhteyshlo&quot;)
+	private String yhthlo;
+
+	@Column(name = &quot;osoite&quot;)
+	private String osoite;
+
+	@Column(name = &quot;postitoimipaikka&quot;)
+	private String postitoimipaikka;
+
+	@Column(name = &quot;sahkoposti&quot;)
+	private String sposti;
+
+<span class="fc" id="L35">	public Yritys() {</span>
+<span class="fc" id="L36">	}</span>
+
+<span class="fc" id="L38">	public Yritys(String yritysnimi, String ytunnus, String yhthlo, String osoite, String postitoimipaikka,</span>
+			String sposti) {
+<span class="fc" id="L40">		this.yritysnimi = yritysnimi;</span>
+<span class="fc" id="L41">		this.ytunnus = ytunnus;</span>
+<span class="fc" id="L42">		this.yhthlo = yhthlo;</span>
+<span class="fc" id="L43">		this.osoite = osoite;</span>
+<span class="fc" id="L44">		this.postitoimipaikka = postitoimipaikka;</span>
+<span class="fc" id="L45">		this.sposti = sposti;</span>
+<span class="fc" id="L46">	}</span>
+
+<span class="nc" id="L48">	public Yritys(model.User user, int id, String yritysnimi, String ytunnus, String yhthlo, String osoite,</span>
+			String postitoimipaikka, String sposti) {
+<span class="nc" id="L50">		User = user;</span>
+<span class="nc" id="L51">		this.id = id;</span>
+<span class="nc" id="L52">		this.yritysnimi = yritysnimi;</span>
+<span class="nc" id="L53">		this.ytunnus = ytunnus;</span>
+<span class="nc" id="L54">		this.yhthlo = yhthlo;</span>
+<span class="nc" id="L55">		this.osoite = osoite;</span>
+<span class="nc" id="L56">		this.postitoimipaikka = postitoimipaikka;</span>
+<span class="nc" id="L57">		this.sposti = sposti;</span>
+<span class="nc" id="L58">	}</span>
 
 	public String getYritysnimi() {
-<span class="fc" id="L30">		return yritysnimi;</span>
+<span class="nc" id="L61">		return yritysnimi;</span>
 	}
 
 	public void setYritysnimi(String yritysnimi) {
-<span class="nc" id="L34">		this.yritysnimi = yritysnimi;</span>
-<span class="nc" id="L35">	}</span>
+<span class="nc" id="L65">		this.yritysnimi = yritysnimi;</span>
+<span class="nc" id="L66">	}</span>
 
-	public String getYritysnumero() {
-<span class="fc" id="L38">		return yritysnumero;</span>
+	public User getUser() {
+<span class="nc" id="L69">		return User;</span>
 	}
 
-	public void setYritysnumero(String yritysnumero) {
-<span class="fc" id="L42">		this.yritysnumero = yritysnumero;</span>
-<span class="fc" id="L43">	}</span>
+	public void setUser(User user) {
+<span class="nc" id="L73">		User = user;</span>
+<span class="nc" id="L74">	}</span>
 
-	public int getTilinumero() {
-<span class="fc" id="L46">		return tilinumero;</span>
+	public String getYtunnus() {
+<span class="nc" id="L77">		return ytunnus;</span>
 	}
 
-	public void setTilinumero(int tilinumero) {
-<span class="fc" id="L50">		this.tilinumero = tilinumero;</span>
-<span class="fc" id="L51">	}</span>
+	public void setYtunnus(String ytunnus) {
+<span class="nc" id="L81">		this.ytunnus = ytunnus;</span>
+<span class="nc" id="L82">	}</span>
+
+	public String getYhthlo() {
+<span class="nc" id="L85">		return yhthlo;</span>
+	}
+
+	public void setYhthlo(String yhthlo) {
+<span class="nc" id="L89">		this.yhthlo = yhthlo;</span>
+<span class="nc" id="L90">	}</span>
+
+	public String getOsoite() {
+<span class="nc" id="L93">		return osoite;</span>
+	}
+
+	public void setOsoite(String osoite) {
+<span class="nc" id="L97">		this.osoite = osoite;</span>
+<span class="nc" id="L98">	}</span>
+
+	public String getPostitoimipaikka() {
+<span class="nc" id="L101">		return postitoimipaikka;</span>
+	}
+
+	public void setPostitoimipaikka(String postitoimipaikka) {
+<span class="nc" id="L105">		this.postitoimipaikka = postitoimipaikka;</span>
+<span class="nc" id="L106">	}</span>
+
+	public String getSposti() {
+<span class="nc" id="L109">		return sposti;</span>
+	}
+
+	public void setSposti(String sposti) {
+<span class="nc" id="L113">		this.sposti = sposti;</span>
+<span class="nc" id="L114">	}</span>
+
+	public int getId() {
+<span class="nc" id="L117">		return id;</span>
+	}
+
+	public void setId(int id) {
+<span class="nc" id="L121">		this.id = id;</span>
+<span class="nc" id="L122">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

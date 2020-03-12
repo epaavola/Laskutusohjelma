@@ -7,6 +7,9 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.*;
 import org.hibernate.criterion.Restrictions;
 
+/**
+ * Hibernate data acces object for get, put, post, delete and options commands
+ */
 public class DAObject implements InfDAO {
 
 	private SessionFactory istuntotehdas = null;
@@ -29,6 +32,10 @@ public class DAObject implements InfDAO {
 		istuntotehdas.close();
 	}
 
+	/**
+	 * Creates new @param yritys
+	 */
+	@Override
 	public boolean createYritys(Yritys yritys) {
 		try (Session ses = istuntotehdas.openSession()) {
 			trans = ses.beginTransaction();
@@ -42,6 +49,11 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Gets customer made by user with @param username
+	 * returns a customer
+	 */
+	@Override
 	public Yritys readYritys(String yritysnimi, String username) {
 		Yritys[] yritykset;
 		List result;
@@ -69,6 +81,11 @@ public class DAObject implements InfDAO {
 		return x;
 	}
 
+	/**
+	 * Gets customers made by user with @param username
+	 * returns list of customers
+	 */
+	@Override
 	public Yritys[] readYritykset(String username) {
 		Yritys[] yritykset;
 		List result;
@@ -90,6 +107,11 @@ public class DAObject implements InfDAO {
 		return yritykset;
 	}
 
+	/**
+	 * Updates customer info made by user with @param username
+	 * returns true or false
+	 */
+	@Override
 	public boolean updateYritys(Yritys yritys, String username) {
 		Yritys[] yritykset;
 		List result;
@@ -124,6 +146,11 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Deletes customer made by user with @param username
+	 * returns true or false
+	 */
+	@Override
 	public boolean deleteYritys(String yritysnimi, String username) {
 		Yritys[] yritykset;
 		List result;
@@ -155,6 +182,11 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Checks if the customer exists in database
+	 * returns true or false
+	 */
+	@Override
 	public boolean checkYritys(String yritysnimi) {
 		try (Session ses = istuntotehdas.openSession()) {
 			ses.beginTransaction();
@@ -174,6 +206,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Creates new user
+	 * returns true or error
+	 */
 	@Override
 	public boolean createUser(User user) {
 		user.setPassword(user.getEncoded());
@@ -189,6 +225,11 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Gets user data by @param username
+	 * returns user or null
+	 */
+	@Override
 	public User readUser(String username) {
 		User uri;
 		try (Session ses = istuntotehdas.openSession();) {
@@ -206,6 +247,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Deletes user by @param username
+	 * return true or false
+	 */
 	@Override
 	public boolean deleteUser(String username) {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -227,6 +272,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Checks if user with @param username and @param password exists in database
+	 * returns true or false
+	 */
 	@Override
 	public boolean checkUserAndPass(String username, String password) {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -248,6 +297,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Checks if user with @param username exist in database
+	 * returns true or false
+	 */
 	@Override
 	public boolean checkUserExistence(String username) {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -269,6 +322,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Updates user by username
+	 * return true or false
+	 */
 	@Override
 	public boolean updateUser(User user) {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -292,6 +349,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Creates new invoice in database
+	 * returns true or false
+	 */
 	@Override
 	public boolean createLasku(Invoice lasku) {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -306,6 +367,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Gets one invoice by @param laskunumero made by user with @param username
+	 * returns invoice
+	 */
 	@Override
 	public Invoice readLasku(String laskunumero, String username) {
 		Invoice[] laskut;
@@ -328,13 +393,17 @@ public class DAObject implements InfDAO {
 			y.setUser(null);
 		}
 		for (int i = 0; i < laskut.length; i++) {
-			if (laskut[i].getLaskunumero().equals(laskunumero)){
+			if (laskut[i].getLaskunumero().equals(laskunumero)) {
 				x = laskut[i];
 			}
 		}
 		return x;
 	}
 
+	/**
+	 * Gets all invoices made by user with @param username
+	 * returns list of invoices
+	 */
 	@Override
 	public Invoice[] readLaskut(String username) {
 		Invoice[] laskut;
@@ -357,6 +426,10 @@ public class DAObject implements InfDAO {
 		return laskut;
 	}
 
+	/**
+	 * Deletes invoice by @param laskunumero by user with @param username
+	 * returns true or false
+	 */
 	@Override
 	public boolean deleteLasku(String laskunumero, String username) {
 		Invoice[] laskut;
@@ -388,6 +461,9 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Deletes all data from database
+	 */
 	@Override
 	public void deleteAll() {
 		try (Session ses = istuntotehdas.openSession()) {
@@ -399,6 +475,10 @@ public class DAObject implements InfDAO {
 		}
 	}
 
+	/**
+	 * Checks if invoice exists in the database by @param laskunumero
+	 * returns true or false
+	 */
 	@Override
 	public boolean checkLasku(String laskunumero) {
 		try (Session ses = istuntotehdas.openSession()) {

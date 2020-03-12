@@ -5,6 +5,10 @@ import com.google.gson.Gson;
 import spark.*;
 import model.*;
 
+/**
+ * CustomerApi handles rest calls to customer routes
+ * and returns json response
+ */
 public class CustomerApi {
 
     DAObject dataccesobject;

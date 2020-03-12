@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Content of Responssi.java
+ */
 public enum StatusResponse {
     SUCCESS("Success"), ERROR("Error");
 

@@ -50,17 +50,15 @@ const AsiakkaatContent = (props) => {
     const classes = useStyles()
 
     //States
-    const [yritykset, setYritykset] = useState([])
+    const [clients, setClients] = useState([])
+    const [updatePage, setUpdatePage] = useState(false)
 
-    //Get all clients from database through API
+    //Get customers data from database through API
     useEffect(() => {
-        let data = null;
         (async function fetchData() {
-            data = await getClients();
-            setYritykset(data)
-            console.log(data)
+            await getClients().then(response => setClients(response.data))      
         })();
-      }, []);
+      }, [updatePage]);
 
     return (
         <div>
@@ -68,7 +66,7 @@ const AsiakkaatContent = (props) => {
                 <Typography variant="h2" color="primary" className={classes.header1}>
                     Asiakkaat
                 </Typography>
-                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => newClient(e)}>Lisää uusi asiakas</Button>
+                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => {newClient(); setUpdatePage(!updatePage)}}>Lisää uusi asiakas</Button>
             </div>
             <div className={classes.content}>
                 <TableContainer component={Paper}>
@@ -76,26 +74,28 @@ const AsiakkaatContent = (props) => {
                         <TableHead>
                             <TableRow>
                                 <TableCell>ID</TableCell>
-                                <TableCell align="right">Yrityksen Nimi</TableCell>
-                                <TableCell align="right">Y-tunnus</TableCell>
-                                <TableCell align="right">Yhteyshenkilö</TableCell>
-                                <TableCell align="right">Osoite</TableCell>
-                                <TableCell align="right">Postitoimipaikka</TableCell>
-                                <TableCell align="right">Sähköposti</TableCell>
+                                <TableCell align="center">Yrityksen Nimi</TableCell>
+                                <TableCell align="center">Yhteyshenkilö</TableCell>
+                                <TableCell align="center">Y-tunnus</TableCell>                       
+                                <TableCell align="center">Osoite</TableCell>
+                                <TableCell align="center">Postitoimipaikka</TableCell>
+                                <TableCell align="center">Sähköposti</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>                  
-                            {yritykset.map(yritys => (
-                                    <TableRow key={yritys.id}>
-                                    <TableCell component="th" scope="row">{yritys.id}</TableCell>   
-                                    <TableCell align="right">{yritys.yritysnimi}</TableCell>
-                                    <TableCell align="right">{yritys.yritysnumero}</TableCell>
-                                    <TableCell align="right">-</TableCell>
-                                    <TableCell align="right">-</TableCell>
-                                    <TableCell align="right">{yritys.tilinumero}</TableCell>
-                                    <TableCell align="right">-</TableCell>
-                                    <TableCell ><Button variant="contained" color="primary" onClick={(e) => updateClient(yritys.id, e)}>Päivitä</Button></TableCell>
-                                    <TableCell ><Button variant="contained" color="secondary" onClick={(e) => deleteClient(yritys.id, e)}>Poista</Button></TableCell>
+                            {clients.map(client => (
+                                    <TableRow key={client.id}>
+                                    <TableCell component="th" scope="row">{client.id}</TableCell>   
+                                    <TableCell align="center">{client.yritysnimi}</TableCell>
+                                    <TableCell align="center">{client.yhthlo}</TableCell>
+                                    <TableCell align="center">{client.ytunnus}</TableCell>
+                                    <TableCell align="center">{client.osoite}</TableCell>
+                                    <TableCell align="center">{client.postitoimipaikka}</TableCell>
+                                    <TableCell align="center">{client.sposti}</TableCell>
+                                    <TableCell ><Button variant="contained" color="primary" 
+                                        onClick={(e) => {updateClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Päivitä</Button></TableCell>
+                                    <TableCell ><Button variant="contained" color="secondary" 
+                                        onClick={(e) => {deleteClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Poista</Button></TableCell>
                                     </TableRow>
                             ))}
                         </TableBody>
