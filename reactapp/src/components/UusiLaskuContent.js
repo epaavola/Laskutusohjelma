@@ -12,6 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import {getClients} from '../service/ClientDataService'
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -148,7 +149,14 @@ const UusiLaskuContent = (props) => {
     const [alvKanta, setAlvKanta] = useState('')
 
     const [asiakas, setAsiakas] = useState('')
+    const [clients, setClients] = useState([])
     
+    //Get customers data from database through API
+    useEffect(() => {
+        (async function fetchData() {
+            await getClients().then(response => setClients(response.data))      
+        })();
+      });
 
     //Button to clear states
     const emptyTextFields = (event) => {
@@ -170,9 +178,9 @@ const UusiLaskuContent = (props) => {
         setProductPrice('')
         setProductAmount('')
         setAlvKanta('')
-        setProductPriceNet('')
-        setProductPriceGross('')
-        setProductPriceTax('')
+        setProductPriceNet(0)
+        setProductPriceGross(0)
+        setProductPriceTax(0)
     }
 
     //Event listeners
@@ -328,8 +336,7 @@ const UusiLaskuContent = (props) => {
                                     labelId="asiakasDropdownLabel"
                                     id="asiakasDropdown"
                                     value={asiakas}
-                                    onChange={handleDropdownChange}
-                                    
+                                    onChange={handleDropdownChange}   
                                 >
                                 <MenuItem value="">
                                     <em>Tyhjä</em>

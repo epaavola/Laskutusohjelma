@@ -30,13 +30,28 @@ import axios from 'axios'
         
     }
 
+    export const newUser2 = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
+        axios({
+            method: 'POST',
+            url: newUserURL,
+            data: {username: username, password: password, nimi: nimi, osoite: osoite, postitoimipaikka: postitoimipaikka, sahkoposti: sahkoposti, tilinro: tilinro, ytunnus: ytunnus}
+        })
+        console.log(username)
+    }
+
     //POST create new user
-    export const newUser = (e) => {
+    export const newUser = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
         const options = {
             method: 'POST',
             body: JSON.stringify({
-                username: 'esa',
-                password: 'qwerty'
+                "username": username,
+                "password": password,
+                nimi: nimi,
+                osoite: osoite,
+                postitoimipaikka: postitoimipaikka,
+                sahkoposti: sahkoposti,
+                tilinro: tilinro,
+                ytunnus: ytunnus
             })
         };
         fetch(newUserURL, options)

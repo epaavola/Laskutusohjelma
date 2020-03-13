@@ -78,6 +78,12 @@ const handleDashboard = (event) => {
   props.history.push('/dashboard')
 }
 
+const handleLogout = (event) => {
+  event.preventDefault()
+  localStorage.removeItem('auth')
+  props.history.push('/')
+}
+
 const programState = () => {
   switch (props.history.location.pathname) {
     case '/dashboard':
@@ -119,7 +125,7 @@ const programState = () => {
               <Typography variant="h6" className={classes.state}>
                   Laskutusohjelma - {programState()}
               </Typography>
-              <Button color="inherit" component={Link} to ="/">Kirjaudu ulos</Button>
+              <Button color="inherit" onClick={handleLogout}>Kirjaudu ulos</Button>
               </Toolbar>
           </AppBar>
             <Drawer 

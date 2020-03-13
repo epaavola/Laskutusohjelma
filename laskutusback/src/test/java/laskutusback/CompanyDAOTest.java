@@ -17,7 +17,7 @@ static DAObject yritysDAO = new DAObject();
 	static String yritysnimi;
 	static int yritysnumero;
     static int tilinumero;
-    User usr = new User("asd", "YXNkOllYTmtZWE5rWVE9PQ==");
+    static User usr = new User("asd", "asd");
 	
 	@AfterEach
 	public void tyhjennä() {

@@ -13,7 +13,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		port(8080);
+	//	port(8080);
 		
 		CorsFilter.apply();
 
