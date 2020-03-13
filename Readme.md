@@ -1,25 +1,28 @@
 Laskutusohjelma
 
-Laskutusohjelma on suunniteltu yrityksille ja yksityisille elinkeinonharjoittajille. Tuotteesta hyˆtyv‰t
-eniten pienyritt‰j‰t, jotka joutuisivat muuten tekem‰‰n laskut esimerkiksi k‰sin. Valmis laskupohja
-tarjoaa tuotteen k‰ytt‰j‰lle mahdollisuuden t‰ytt‰‰ sujuvasti asiakkaan tiedot laskuun ja tulostaa tai
-tallentaa lasku helposti l‰hetett‰v‰‰n muotoon. Asiakkaiden tietojen tallennus j‰rjestelm‰‰n
-nopeuttaa laskutusta entisest‰‰n, ja kuukausittainen laskunmuodostus tarjoaa l‰hes
+Laskutusohjelma on suunniteltu yrityksille ja yksityisille elinkeinonharjoittajille. Tuotteesta hy√∂tyv√§t
+eniten pienyritt√§j√§t, jotka joutuisivat muuten tekem√§√§n laskut esimerkiksi k√§sin. Valmis laskupohja
+tarjoaa tuotteen k√§ytt√§j√§lle mahdollisuuden t√§ytt√§√§ sujuvasti asiakkaan tiedot laskuun ja tulostaa tai
+tallentaa lasku helposti l√§hetett√§v√§√§n muotoon. Asiakkaiden tietojen tallennus j√§rjestelm√§√§n
+nopeuttaa laskutusta entisest√§√§n, ja kuukausittainen laskunmuodostus tarjoaa l√§hes
 automatisoidun laskutuksen.
 
-Ohjelman kehityksess‰ k‰ytettiin Visual Studio Codea ja Eclipse‰. 
-Tietokantana toimi MySQL. 
-Backend tehtiin Javalla Sparkia, Hibernatea, Apache Commonsia ja gson:ia k‰ytt‰en.
-Frontend tehtiin React.js:ll‰, k‰ytettiin Material-ui-kirjastoa.
+Ohjelman tekemiseen on k√§ytetty Eclipse√§ ja Visual Studiota. 
+
+Tietokantana k√§ytet√§√§n MySQL:√§√§.
+Backend on tehty Javalla k√§ytt√§en Sparkia, Hibernatea Apache Commonsia sek√§ gson:ia.
+Frontend on tehty React.js:ll√§ k√§ytt√§en apuna Material-UI-kirjastoa.
 
 Asennus- ja konfigurointiohjeita:
 
-Ensimm‰iseksi suorita git clone osoitteesta https://gitlab.com/OTP-Ryhma10/laskutusohjelma.git
+1) Suorita git clone osoitteesta https://gitlab.com/OTP-Ryhma10/laskutusohjelma.git
 
-1) Backend
-	- Valitse projekti Eclipsess‰ ja valitse "Build path". T‰m‰n j‰lkeen korvaa nykyiset hibernatetiedostojen polut koneeltasi lˆytyvill‰ poluilla.
-	- Suorita main-tiedosto
+2) Backend
+	- Avaa projektin build path Eclipsess√§ ja vaihda hibernatetiedostojen polut oman ty√∂asemasi hibernatepolkuihin
+	- Suorita main.java
 
-2) Frontend
-	- Siirry reactapp-hakemistoon ja hae npm-konfigurointi "npm install" -komennolla
-	- Voit k‰ynnist‰‰ frontendin komennolla "npm start"
+3) Frontend
+	- Siirry reactapp-hakemistoon ja avaa komentorivi. 
+	- Hae npm-asennukset suorittamalla komenta "npm install"
+	- Asenna tarvittaessa axios komennolla "npm install --save axios"
+	- Voit k√§ynnist√§√§ frontendin komennolla "npm start"
