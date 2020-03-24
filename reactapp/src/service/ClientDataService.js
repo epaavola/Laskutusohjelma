@@ -1,8 +1,8 @@
 import axios from 'axios'
 
     //API URLS
-    const dataURL = 'http://localhost:4567/'
-    const clientsURL = 'http://localhost:4567/api/customers'
+    const dataURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/'
+    const clientsURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/api/customers'
 
     //GET get all the clients from database
     export const getClients = async () => {
