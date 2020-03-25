@@ -15,7 +15,7 @@ public class Main {
 
 	//	port(8080);
 		
-		CorsFilter.apply();
+		//CorsFilter.apply();
 
 		Authenticator authenticator = new Authenticator(dataccesobject);
 		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator);

@@ -18,7 +18,7 @@ Asennus- ja konfigurointiohjeita:
 1) Suorita git clone osoitteesta https://gitlab.com/OTP-Ryhma10/laskutusohjelma.git
 
 2) Backend
-	- Avaa projektin build path Eclipsessä ja vaihda hibernatetiedostojen polut oman työasemasi hibernatepolkuihin
+	- Avaa projektin build path Eclipsessä tai VSCodessa
 	- Suorita main.java
 
 3) Frontend
