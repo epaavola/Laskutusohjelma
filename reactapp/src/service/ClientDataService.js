@@ -1,14 +1,14 @@
 import axios from 'axios'
 
     //API URLS
-    const dataURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/'
-    const clientsURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/api/customers'
+    const dataURL = 'http://localhost:4567/'
+    const clientsURL = 'http://localhost:4567/api/customers'
 
     //GET get all the clients from database
     export const getClients = async () => {
         return axios.get(clientsURL, {
             headers: {
-              'Authorization': 'Basic' + localStorage.getItem('auth')
+              'Authorization': 'Basic ' + localStorage.getItem('auth')
             }
         }).then(res => {return res.data})
         
@@ -19,7 +19,7 @@ import axios from 'axios'
             method: 'POST',
             url: clientsURL,
             headers: {
-              'Authorization': 'Basic' + localStorage.getItem('auth')
+              'Authorization': 'Basic ' + localStorage.getItem('auth')
             },
             data: {yritysnimi: "Hunaja Oy", ytunnus: "277492-2", yhthlo: "Jari-Pekka (JP)", osoite: "Mannerheimintie 23", postitoimipaikka: "00200 Helsinki", sposti: "jp@hunaja.fi"}
         })
@@ -27,9 +27,9 @@ import axios from 'axios'
     //DELETE delete client
     export const deleteClient = (id, e) => {
         e.preventDefault()
-        axios.delete(clientsURL + "/" + id, {
+        return axios.delete(clientsURL + "/" + id, {
             headers: {
-              'Authorization': 'Basic' + localStorage.getItem('auth')
+              'Authorization': 'Basic ' + localStorage.getItem('auth')
             }
         })
     }

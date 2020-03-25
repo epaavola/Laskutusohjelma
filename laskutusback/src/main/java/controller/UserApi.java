@@ -14,12 +14,16 @@ public class UserApi {
 
     DAObject dataccesobject;
     Authenticator auth;
-    final GsonBuilder builder = new GsonBuilder().disableHtmlEscaping();
-    final Gson gson = builder.create();
+    Gson gson;
 
-    public UserApi(DAObject dao, Authenticator auth) {
+    public UserApi(DAObject dao, Authenticator auth, Gson gson) {
         this.dataccesobject = dao;
         this.auth = auth;
+        this.gson = gson;
+    }
+
+    public Object prerequest(Request req, Response res){
+        return gson.toJson(new Responssi(StatusResponse.SUCCESS));
     }
 
     public Object getUser(Request req, Response res) {

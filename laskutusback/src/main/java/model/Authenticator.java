@@ -1,9 +1,12 @@
 package model;
 
+import com.google.gson.Gson;
+
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
 import spark.Request;
+import spark.Response;
 
 /**
  * Authorization checker and converter
@@ -11,9 +14,20 @@ import spark.Request;
 public class Authenticator {
 
     private DAObject dataccesobject;
+    private Gson gson;
 
-    public Authenticator(DAObject dao) {
+    public Authenticator(DAObject dao, Gson gson) {
         this.dataccesobject = dao;
+        this.gson = gson;
+    }
+
+    /**
+     * preflight OPTION request responder
+     * @param req
+     * @return gson object with access origin headers
+     */
+    public Object prerequest(Request req, Response res){
+        return gson.toJson(new Responssi(StatusResponse.SUCCESS));
     }
 
     /**

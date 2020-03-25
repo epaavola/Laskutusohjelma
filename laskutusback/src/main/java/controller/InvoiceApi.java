@@ -13,17 +13,18 @@ public class InvoiceApi {
 
     DAObject dataccesobject;
     Authenticator auth;
+    Gson gson;
 
-    public InvoiceApi(DAObject dao, Authenticator auth) {
+    public InvoiceApi(DAObject dao, Authenticator auth, Gson gson) {
         this.auth = auth;
         this.dataccesobject = dao;
+        this.gson = gson;
     }
 
     public Object getAll(Request req, Response res) {
         res.type("application/json");
-        Object on = new Gson()
-                .toJson(new Responssi(StatusResponse.SUCCESS, new Gson().toJsonTree(dataccesobject.readLaskut(auth.checkPermission(req)))));
-        System.out.println(on);
+        Object on = gson
+                .toJson(new Responssi(StatusResponse.SUCCESS, gson.toJsonTree(dataccesobject.readLaskut(auth.checkPermission(req)))));
         return on;
     }
 
@@ -42,10 +43,10 @@ public class InvoiceApi {
 		res.type("application/json");
         //System.out.println(req.headers("Authorization"));
         User user = new User(auth.checkPermission(req), auth.getReqToken(req));
-        Invoice lasku = new Gson().fromJson(req.body(), Invoice.class);
+        Invoice lasku = gson.fromJson(req.body(), Invoice.class);
         lasku.setUser(user);
         dataccesobject.createLasku(lasku);
-        return new Gson().toJson(new Responssi(StatusResponse.SUCCESS));
+        return gson.toJson(new Responssi(StatusResponse.SUCCESS));
     }
 
 	public Object checkIfExistsInvoice(Request req, Response res) {

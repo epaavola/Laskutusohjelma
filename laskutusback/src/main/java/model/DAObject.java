@@ -39,6 +39,8 @@ public class DAObject implements InfDAO {
 	public boolean createYritys(Yritys yritys) {
 		try (Session ses = istuntotehdas.openSession()) {
 			trans = ses.beginTransaction();
+			System.out.println(yritys.getYritysnimi());
+			System.out.println(yritys.getUser().getUsername());
 			ses.saveOrUpdate(yritys);
 			trans.commit();
 			return true;

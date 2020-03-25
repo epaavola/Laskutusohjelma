@@ -1,9 +1,9 @@
 import axios from 'axios'
 
     //API
-    const loginURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/login'
-    const newUserURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/createuser'
-    const userURL = 'https://laskutus-cors.herokuapp.com/http://localhost:4567/api/user'
+    const loginURL = 'http://localhost:4567/login'
+    const newUserURL = 'http://localhost:4567/createuser'
+    const userURL = 'http://localhost:4567/api/user'
 
     //POST Login to the application using username and password
     export const userLogin = async (user, pass) => {
@@ -24,7 +24,7 @@ import axios from 'axios'
     export const getUser = async () => {
         return axios.get(userURL, {
             headers: {
-              'Authorization': 'Basic' + localStorage.getItem('auth')
+              'Authorization': 'Basic ' + localStorage.getItem('auth')
             }
         }).then(res => {return res.data})
         
