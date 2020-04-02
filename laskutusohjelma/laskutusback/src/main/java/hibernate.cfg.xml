@@ -1,0 +1,16 @@
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.dialect"> org.hibernate.dialect.MySQL5Dialect
+		</property>
+		<property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/laskutusdb?serverTimezone=UTC
+		</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">kokko15</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="show_sql">true</property>
+		<mapping class="model.Yritys" />
+		<mapping class="model.User" />
+		<mapping class="model.Invoice" />
+	</session-factory>
+</hibernate-configuration>

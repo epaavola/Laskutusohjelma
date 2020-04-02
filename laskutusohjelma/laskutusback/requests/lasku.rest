@@ -1,0 +1,30 @@
+
+POST http://localhost:4567/api/invoices/add HTTP/1.1
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+{
+    "laskunumero": "123-321",
+    "paivamaara": "12.12.2012",
+    "erapaiva": "21.21.2121",
+    "myohastymiskorko": "9%"
+}
+
+###
+
+GET http://localhost:4567/api/invoices/get HTTP/1.1
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+DELETE http://localhost:4567/api/invoices/delete/123-321
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+GET http://localhost:4567/api/customers/get/123-321
+Authorization: Basic YXNkYTpZWE5rWVdGelpHRT0=
+
+###
+
+OPTIONS http://localhost:4567/api/invoices/exists/123-321
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
