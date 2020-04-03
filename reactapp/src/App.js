@@ -11,21 +11,22 @@ import Asetukset from './pages/Asetukset'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 const App = () => {
+
   return (
     <Router>
-                <>
-                    <Switch>
-                        <Route path="/" exact component={Frontpage} />
-                        <AuthenticatedPath path="/dashboard" exact component={Dashboard} />
-                        <AuthenticatedPath path="/uusilasku" exact component={UusiLasku} />
-                        <Route path="/rekisteroityminen" exact component={Rekisteroityminen} />
-                        <AuthenticatedPath path="/asiakkaat" exact component={Asiakkaat} />
-                        <AuthenticatedPath path="/arkisto" exact component={Arkisto} />
-                        <AuthenticatedPath path="/asetukset" exact component={Asetukset} />
-                        <Route path="/FAQ" exact component={FAQ} />
-                        <Route path="/tietoameista" exact component={About} />
-                    </Switch>
-                </>
+      <>
+          <Switch>
+              <Route path="/" exact component={Frontpage} />
+              <AuthenticatedPath path="/dashboard" exact component={Dashboard} />
+              <AuthenticatedPath path="/uusilasku" exact component={UusiLasku} />
+              <Route path="/rekisteroityminen" exact component={Rekisteroityminen} />
+              <AuthenticatedPath path="/asiakkaat" exact component={Asiakkaat} />
+              <AuthenticatedPath path="/arkisto" exact component={Arkisto} />
+              <AuthenticatedPath path="/asetukset" exact component={Asetukset} />
+              <Route path="/FAQ" exact component={FAQ} />
+              <Route path="/tietoameista" exact component={About} />
+          </Switch>
+      </>
     </Router>
   )
 }

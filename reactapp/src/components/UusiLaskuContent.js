@@ -26,6 +26,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
+import { Page, Text, View, Document, StyleSheet, PDFViewer, } from '@react-pdf/renderer'
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -101,6 +102,34 @@ const useStyles  = makeStyles(theme => ({
     },
     
 }))
+
+//PDF-styles
+const pdfStyles = StyleSheet.create({
+    page: {
+        flexDirection: 'row',
+        backgroundColor: '#E4E4E4'
+    },
+    section: {
+        margin: 10,
+        padding: 10,
+        flexGrow: 1
+    }
+})
+
+const PdfInvoice = () => {
+    return (
+        <Document>
+            <Page size="A4" style={pdfStyles.page}>
+                <View styles={pdfStyles.section}>
+                    <Text>Testipaskaa 1</Text>
+                </View>
+                <View styles={pdfStyles.section}>
+                    <Text>Testipaskaa 2</Text>
+                </View>
+            </Page>
+        </Document>
+    )
+}
 
 const UusiLaskuContent = (props) => {
     //Style
@@ -335,8 +364,16 @@ const UusiLaskuContent = (props) => {
     }
 
     const handleDropdownChange = event => {
-        setAsiakas(event.target.value);
-      };
+        setAsiakas(event.target.value)
+    }
+    
+    const createPdfInvoice = () => {
+        return (
+            <PDFViewer>
+                <PdfInvoice />
+            </PDFViewer>
+        )
+    }
 
     //Get user data from database through API
     useEffect(() => {
@@ -355,7 +392,7 @@ const UusiLaskuContent = (props) => {
                     Tyhjennä
                 </Button>
             </div>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={createPdfInvoice}>
                 <div className={classes.invoiceInfoCards}>
                 <Card className={classes.card}>
                         <CardContent>
@@ -431,7 +468,7 @@ const UusiLaskuContent = (props) => {
                                 Laskunsaajan tiedot
                             <FormControl variant="standard" className={classes.formControl}>
                                 <InputLabel id="asiakasDropdown">
-                                    Valitse Asiakas
+                                    Valitse asiakas
                                 </InputLabel>
                                 <Select
                                     labelId="asiakasDropdownLabel"
