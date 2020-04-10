@@ -186,9 +186,11 @@ const UusiLaskuContent = (props) => {
 
     const handleDeletingProduct = (name) => {
        const productToDelete = products.products.find(product => product.name === name)
-       console.log('poistetaan', productToDelete)
+       products.setProduct(products.products.filter(product => product.name !== productToDelete.name))
+       const indexToDelete = products.products.indexOf(productToDelete)
+       products.products.splice(indexToDelete, 1)
     }
-    
+
     //Get user data from database through API
     useEffect(() => {
         (async function fetchData() {
@@ -494,7 +496,7 @@ const UusiLaskuContent = (props) => {
                     Tuotteet laskulla
             </Typography>
             <div className={classes.productsCard}>
-                {products.length === 0 ? 
+                {products.products.length === 0 ? 
                     <Typography variant="h6" color="secondary">
                     Ei vielä lisättyjä tuotteita
                     </Typography>
@@ -516,8 +518,8 @@ const UusiLaskuContent = (props) => {
                                     <TableCell>{product.amount}</TableCell>
                                     <TableCell>{product.price}</TableCell>
                                     <TableCell>{product.alvKanta}</TableCell>
-                                    <TableCell align="right"><Button type="button" variant="contained" color="Primary" onClick={handleUpdatingProduct}>Päivitä</Button></TableCell>
-                                    <TableCell><Button type="button" variant="contained" color="secondary" onClick={handleDeletingProduct(product.name)}>Poista</Button></TableCell>
+                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" onClick={handleUpdatingProduct}>Päivitä</Button></TableCell>
+                                    <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
