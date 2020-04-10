@@ -3,31 +3,46 @@ import model.*;
 import controller.*;
 import static spark.Spark.*;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 /**
- * Main declares routes with Spark and creates authenticator, userapi, customerapi and invoiceapi
+ * Main declares routes with Spark and creates authenticator, userapi,
+ * customerapi and invoiceapi
  */
 public class Main {
 
 	static DAObject dataccesobject = new DAObject();
+	static GsonBuilder builder = new GsonBuilder().disableHtmlEscaping();
+	static Gson gson = builder.create();
 
 	public static void main(String[] args) {
 
-	//	port(8080);
-		
+		// port(8080);
+
 		CorsFilter.apply();
 
-		Authenticator authenticator = new Authenticator(dataccesobject);
-		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator);
-		InvoiceApi invoiceApi = new InvoiceApi(dataccesobject, authenticator);
-		UserApi userApi = new UserApi(dataccesobject, authenticator);
+		Authenticator authenticator = new Authenticator(dataccesobject, gson);
+		CustomerApi customerApi = new CustomerApi(dataccesobject, authenticator, gson);
+		InvoiceApi invoiceApi = new InvoiceApi(dataccesobject, authenticator, gson);
+		UserApi userApi = new UserApi(dataccesobject, authenticator, gson);
 
 		path("/api", () -> {
 			before("/*", (req, res) -> {
-				if (!(authenticator.authenticate(req))) {
-					halt(401);
+				if (!(req.requestMethod() == "OPTIONS")) {
+					if (!(authenticator.authenticate(req))) {
+						halt(401);
+					}
 				}
 			});
+			options("/*", (req,res) -> {
+				return userApi.prerequest(req, res);
+			});
 			path("/customers", () -> {
+				options("", (req,res) -> {
+					return userApi.prerequest(req, res);
+				});
+
 				get("", (req, res) -> {
 					return customerApi.getAll(req, res);
 				});
@@ -44,9 +59,10 @@ public class Main {
 					return customerApi.updateCustomer(req, res);
 				});
 
-				options("/:nimi", (req, res) -> {
-					return customerApi.checkIfExistsCustomer(req, res);
-				});
+				/*
+				 * options("/:nimi", (req, res) -> { return
+				 * customerApi.checkIfExistsCustomer(req, res); });
+				 */
 
 				delete("/:nimi", (req, res) -> {
 					return customerApi.deleteCustomer(req, res);

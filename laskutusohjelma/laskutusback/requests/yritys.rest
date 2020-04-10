@@ -1,0 +1,44 @@
+
+POST http://localhost:4567/api/customers HTTP/1.1
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+{
+    "yritysnimi": "b",
+    "ytunnus": "111-yyy",
+    "yhthlo": "kakka",
+    "osoite": "tie 1 a 23",
+    "postitoimipaikka": "00100 Helsinki"
+}
+
+###
+
+GET http://localhost:4567/api/customers HTTP/1.1
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+DELETE http://localhost:4567/api/customers/delete/b
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+PUT http://localhost:4567/api/customers/update
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+{   
+    "yritysnimi": "aaa",
+    "ytunnus": "222-aaa",
+    "yhthlo": "kakkaaaaa",
+    "osoite": "tie 1 a 23",
+    "postitoimipaikka": "00100 Helsinki"
+}
+
+###
+
+GET http://localhost:4567/api/customers/get/b
+Authorization: Basic YXNkYTpZWE5rWVdGelpHRT0=
+
+###
+
+OPTIONS http://localhost:4567/api/customers/exists/bbb
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==

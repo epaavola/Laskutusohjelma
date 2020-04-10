@@ -1,0 +1,50 @@
+
+POST http://localhost:8080/createuser HTTP/1.1
+
+{
+    "username": "asd",
+    "password": "asda"
+}
+
+###
+
+POST http://10.114.32.45:8080/createuser HTTP/1.1
+
+{
+    "username": "sad",
+    "password": "asda"
+}
+
+###
+
+GET http://localhost:8080/api/user
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+DELETE http://localhost:4567/api/user/delete/asd HTTP/1.1
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+###
+
+OPTIONS http://localhost:4567/exists/asd HTTP/1.1
+
+###
+
+POST http://localhost:4567/login HTTP/1.1
+
+{
+    "username": "asd",
+    "password": "asda"
+}
+
+###
+
+PUT http://localhost:4567/api/user/update
+Authorization: Basic YXNkOllYTmtZWE5rWVE9PQ==
+
+{   
+    "username": "asd",
+    "sahkoposti": "www.sss.ddd"
+}
+
