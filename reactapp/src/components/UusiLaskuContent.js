@@ -170,7 +170,7 @@ const UusiLaskuContent = (props) => {
         products.setProduct(products.products.concat(productObject))
         let netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
         let tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
-        let gross = netPrice + tax
+        let gross = Math.round((netPrice + tax) * 100) / 100
         productPriceNet.setPrices(netPrice)
         productPriceTax.setPrices(tax)
         productPriceGross.setPrices(gross)
@@ -525,7 +525,7 @@ const UusiLaskuContent = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>}
-                {productPriceNet.price === 0 ?
+                {products.products.length === 0 ?
                     ''
                 : 
                 <div className={classes.total}>
