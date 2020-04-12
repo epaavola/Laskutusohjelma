@@ -1,2 +1,0 @@
-GET http://localhost:4567/yritykset
-Authorization: Basic YWxhZGRpbjpvcGVuc2VzYW1l

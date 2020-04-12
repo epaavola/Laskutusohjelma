@@ -17,11 +17,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotBlank
+    
     private String name;
-    @NotBlank
+    
     private String password;
-    @NotBlank
+    
     private String lastName;
     
     private String yTunnus;

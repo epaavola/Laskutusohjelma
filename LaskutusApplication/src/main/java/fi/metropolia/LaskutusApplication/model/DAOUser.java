@@ -3,6 +3,9 @@ package fi.metropolia.LaskutusApplication.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -10,16 +13,19 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "user")
+
 public class DAOUser {
+//	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
+//	    private List<Company> customers = new ArrayList<Company>();
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private long id;
+	
 	@Column
-    
-	private String username;
+   	private String username;
 	@Column
-    
 	@JsonIgnore
 	private String password;
 	
@@ -34,6 +40,8 @@ public class DAOUser {
 	private String address;
 	@Column
 	private String city;
+	
+	
 
 	public DAOUser( String username, String name, String email, String yTunnus,
 			String city, String address) {
@@ -47,6 +55,14 @@ public class DAOUser {
 	public DAOUser () {
 		
 	}
+/*	   public List<Company> getCustomers() {
+	        return customers;
+	    }
+
+	    public void setCustomers(List<Company> customers) {
+	        this.customers = customers;
+	    } */
+
 
 	public String getUsername() {
 		return username;

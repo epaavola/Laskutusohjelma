@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import AppIcon from '../images/Laskutuslogo.png'
-import { userLogin } from '../service/UserDataService';
+import { userLogin2 } from '../service/UserDataService';
 
 /**
  *  Login form for login page
@@ -47,7 +47,7 @@ const Frontpage = (props) => {
     //Handle the login submit button
     const onSubmit = async (event) => {
         event.preventDefault()
-        await userLogin(username, password)
+        await userLogin2(username, password)
         .then(response => 
             setIsLogged(response.status))             
     }
@@ -57,7 +57,7 @@ const Frontpage = (props) => {
             props.history.push('/dashboard')
         }, [isLogged])
 
-    //The most simple validation function
+    //The most simple validation function for login form
     function validateForm() {
         return username.length > 0 && password.length > 0;
     }

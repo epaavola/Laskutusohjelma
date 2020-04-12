@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import {newUser} from '../service/UserDataService'
+import {newUser2} from '../service/UserDataService'
 
 /**
  *  Registration form for registration
@@ -52,7 +52,7 @@ const Registeration = (props) => {
     //Handle register
     const onSubmit = async (event) => {
         event.preventDefault()
-        await newUser(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus)
+        await newUser2(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus)
         
         if (window.confirm('Haluatko heti kirjautua sisään?')) {
             props.history.push('/dashboard')
@@ -62,7 +62,7 @@ const Registeration = (props) => {
         
     }
 
-    //Handle inputs
+    //Handle inputs <7 need opt
     const handleUserameChange = (event) => {
         setUsername(event.target.value)
     }

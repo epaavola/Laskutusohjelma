@@ -1,1 +1,0 @@
-DELETE http://localhost:4567/yritykset/qwe
