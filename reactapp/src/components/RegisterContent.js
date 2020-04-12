@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import 'typeface-roboto'
 import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import {newUser2} from '../service/UserDataService'
+import {newUser} from '../service/UserDataService'
 
 /**
  *  Registration form for registration
@@ -48,19 +48,20 @@ const Registeration = (props) => {
     const [sahkoposti, setSahkoposti] = useState('')
     const [ytunnus, setYtunnus] = useState('')
     const [tilinro, setTilinro] = useState('')
+    const [isRegistered, setIsRegistered] = useState(0)
 
     //Handle register
     const onSubmit = async (event) => {
         event.preventDefault()
-        await newUser2(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus)
-        
-        if (window.confirm('Haluatko heti kirjautua sisään?')) {
-            props.history.push('/dashboard')
-        } else {
-            props.history.push('/')
-        }
-        
+        newUser(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus)
+        .then(response => setIsRegistered(response.status)) 
     }
+
+    // Move to the dashboard after login is OK
+    useEffect(() => {
+        if(isRegistered === 200)
+            props.history.push('/')
+        }, [isRegistered])
 
     //Handle inputs <7 need opt
     const handleUserameChange = (event) => {

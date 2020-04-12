@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import AppIcon from '../images/Laskutuslogo.png'
-import { userLogin2 } from '../service/UserDataService';
+import { userLogin } from '../service/UserDataService';
 
 /**
  *  Login form for login page
@@ -45,15 +45,19 @@ const Frontpage = (props) => {
     const [isLogged, setIsLogged] = useState("")
 
     //Handle the login submit button
-    const onSubmit = async (event) => {
+    const onSubmit = (event) => {
         event.preventDefault()
-        await userLogin2(username, password)
-        .then(response => 
-            setIsLogged(response.status))             
+        userLogin(username, password)
+        .then(response => {
+            console.log(response)
+            localStorage.setItem('auth', 'Bearer ' + response.data.token) // Save auth token to the local storage
+            setIsLogged(response.status)
+        })
+        
     }
     // Move to the dashboard after login is OK
     useEffect(() => {
-        if(isLogged === "SUCCESS")
+        if(isLogged === 200)
             props.history.push('/dashboard')
         }, [isLogged])
 

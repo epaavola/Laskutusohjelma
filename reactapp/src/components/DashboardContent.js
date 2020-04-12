@@ -82,10 +82,8 @@ const DashboardContent = (props) => {
     const [user, setUser] = useState([])
 
     //Get user data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getUser().then(response => setUser(response.data))    
-        })();  
+    useEffect(() => {  
+    
       }, []);
 
 

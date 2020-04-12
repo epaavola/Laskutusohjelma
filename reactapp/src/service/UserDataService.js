@@ -5,43 +5,28 @@ import axios from 'axios'
     const newUserURL = 'http://localhost:8080/register'
     const userURL = 'http://localhost:8080/users'
 
-    //POST Login to the application using username and password
-    export const userLogin = async (user, pass) => {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                username: user,
-                password: pass
-            })
-        };
-        const response = await fetch(loginURL, options)
-        const data = await response.json()
-        localStorage.setItem('auth', data.data) // Save auth token to the local storage
-        return data
-    }
-
-    export const userLogin2 = async (user, pass) => {
-        axios.post(loginURL, {
+    //Login to the application using username and password
+    export async function userLogin(user, pass) {
+        const response = await axios.post(loginURL, {
             username: user,
             password: pass
-        }).then(res => {
-            console.log(res.data)
-            return res.data
         })
+        return response
     }
 
-    //GET get the user data
-    export const getUser = async () => {
-        return axios.get(userURL, {
+    //Get the user data
+    export async function getUser() {
+        const response = await axios.get(userURL, {
             headers: {
-              'Authorization': 'Bearer ' + localStorage.getItem('auth')
+              'Authorization': localStorage.getItem('auth')
             }
-        }).then(res => {return res.data})
-        
+        })
+        return response
     }
 
-    export const newUser2 = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
-        axios.post(newUserURL,{
+    //POST create new user
+    export async function newUser(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) {
+        const response = await axios.post(newUserURL,{
             username: username,
             password: password,
             nimi: nimi,
@@ -49,32 +34,11 @@ import axios from 'axios'
             postitoimipaikka: postitoimipaikka,
             sahkoposti: sahkoposti,
             tilinro :tilinro,
-            ytunnus: ytunnus}
-        ).then(function(response){console.log(response)
-        }).catch(function(error) {console.log(error)}
-        )
+            ytunnus: ytunnus
+        })
+        return response
     }
 
-    //POST create new user
-    export const newUser = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                "username": username,
-                "password": password,
-                nimi: nimi,
-                osoite: osoite,
-                postitoimipaikka: postitoimipaikka,
-                sahkoposti: sahkoposti,
-                tilinro: tilinro,
-                ytunnus: ytunnus
-            })
-        };
-        fetch(newUserURL, options)
-        .then(response => {
-        console.log(response.status);
-        });
-    }
 
     const UserDataService = (props) => {
     }
