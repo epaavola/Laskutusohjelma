@@ -4,85 +4,87 @@ public class CompanyDTO {
 	
 	private long id;
 
-	private String yritysnimi;
+	private String company;
 
-	private String ytunnus;
+	private String vatID;
 
-	private String yhthlo;
+	private String name;
 
-	private String osoite;
+	private String address;
 
-	private String postitoimipaikka;
+	private String city;
 
-	private String sposti;
+	private String email;
 	public CompanyDTO() {
 	}
 
-	public CompanyDTO(String yritysnimi, String ytunnus, String yhthlo, String osoite, String postitoimipaikka,
-			String sposti) {
-		this.yritysnimi = yritysnimi;
-		this.ytunnus = ytunnus;
-		this.yhthlo = yhthlo;
-		this.osoite = osoite;
-		this.postitoimipaikka = postitoimipaikka;
-		this.sposti = sposti;
+	public CompanyDTO(String company, String vatID, String name, String address, String city,
+					  String email) {
+		this.company = company;
+		this.vatID = vatID;
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.email = email;
 	}
 
-	public String getYritysnimi() {
-		return yritysnimi;
+
+
+	public String getCompany() {
+		return company;
 	}
 
-	public void setYritysnimi(String yritysnimi) {
-		this.yritysnimi = yritysnimi;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
-	
 
-	public String getYtunnus() {
-		return ytunnus;
+
+	public String getVatID() {
+		return vatID;
 	}
 
-	public void setYtunnus(String ytunnus) {
-		this.ytunnus = ytunnus;
+	public void setVatID(String vatID) {
+		this.vatID = vatID;
 	}
 
-	public String getYhthlo() {
-		return yhthlo;
+	public String getName() {
+		return name;
 	}
 
-	public void setYhthlo(String yhthlo) {
-		this.yhthlo = yhthlo;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getOsoite() {
-		return osoite;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setOsoite(String osoite) {
-		this.osoite = osoite;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getPostitoimipaikka() {
-		return postitoimipaikka;
+	public String getCity() {
+		return city;
 	}
 
-	public void setPostitoimipaikka(String postitoimipaikka) {
-		this.postitoimipaikka = postitoimipaikka;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getSposti() {
-		return sposti;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setSposti(String sposti) {
-		this.sposti = sposti;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 

@@ -1,6 +1,9 @@
 package fi.metropolia.LaskutusApplication.controller;
 
 
+import fi.metropolia.LaskutusApplication.dao.CompanyDao;
+import fi.metropolia.LaskutusApplication.model.Company;
+import fi.metropolia.LaskutusApplication.model.DAOCompany;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
@@ -14,14 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin
 @RestController
 public class UserListController {
 
     @Autowired
     UserDao userListRepo;
- /*   @Autowired
-    CompanyDao company; */
+
+    @Autowired
+    CompanyDao company;
 
     @GetMapping(path = "/users")
     public List<DAOUser> getAllUsers() {
@@ -34,20 +38,19 @@ public class UserListController {
     public DAOUser getUser(Authentication authentication) {
         return userListRepo.findByUsername(authentication.getName());
     }
- /*   @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(path = "/companies")
-    public List<Company> getAllCompanies(){
-        List<Company> comp = new ArrayList<>();
+
+    @GetMapping(path = "/customers")
+    public List<DAOCompany> getAllCompanies(){
+        List<DAOCompany> comp = new ArrayList<>();
         company.findAll().forEach(comp :: add);
         return comp;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PostMapping(path = "/companies")
-    public Company addUser(@RequestBody Company comp){
+    @PostMapping(path = "/customer")
+    public DAOCompany addCustomer(@RequestBody DAOCompany comp){
         company.save(comp);
         return comp;
-    } */
+    }
 
     @GetMapping("/users/{id}")
     public Optional<DAOUser> getById(@PathVariable long id) {

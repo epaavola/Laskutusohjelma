@@ -1,15 +1,15 @@
 package fi.metropolia.LaskutusApplication.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {

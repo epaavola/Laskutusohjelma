@@ -12,15 +12,12 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "user")
+@Table(name = "USER")
 
 public class DAOUser {
-//	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
-//	    private List<Company> customers = new ArrayList<Company>();
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-
     private long id;
 
     @Column

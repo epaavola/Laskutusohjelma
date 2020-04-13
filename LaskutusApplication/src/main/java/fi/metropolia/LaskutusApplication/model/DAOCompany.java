@@ -1,109 +1,109 @@
 package fi.metropolia.LaskutusApplication.model;
 
 
+ import com.fasterxml.jackson.annotation.JsonIgnore;
+
  import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMERS")
 public class DAOCompany {
 
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JoinColumn(name = "user_id", nullable = false)
-//	private DAOUser user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id", insertable=false, updatable=false)
+	@JsonIgnore
+	private DAOUser user;
+
+	@Column
+	private String company;
 
 	@Id
-	@GeneratedValue
-	private long id;
+	@Column
+	private String vatID;
 
-	@Column(name = "nimi", nullable = false)
-	private String yritysnimi;
+	@Column
+	private String name;
 
-	@Column(name = "tunnus")
-	private String ytunnus;
+	@Column
+	private String address;
 
-	@Column(name = "yhteyshlo")
-	private String yhthlo;
+	@Column
+	private String city;
 
-	@Column(name = "osoite")
-	private String osoite;
-
-	@Column(name = "postitoimipaikka")
-	private String postitoimipaikka;
-
-	@Column(name = "sahkoposti")
-	private String sposti;
+	@Column
+	private String email;
 
 	public DAOCompany() {
 	}
 
-	public DAOCompany(String yritysnimi, String ytunnus, String yhthlo, String osoite, String postitoimipaikka,
-			String sposti) {
-		this.yritysnimi = yritysnimi;
-		this.ytunnus = ytunnus;
-		this.yhthlo = yhthlo;
-		this.osoite = osoite;
-		this.postitoimipaikka = postitoimipaikka;
-		this.sposti = sposti;
+	public DAOCompany(String company, String vatID, String name, String address, String city,
+			String email) {
+		this.company = company;
+		this.vatID = vatID;
+		this.name = name;
+		this.address = address;
+		this.city = city;
+		this.email = email;
 	}
 
 
 
-	public String getYritysnimi() {
-		return yritysnimi;
+	public String getCompany() {
+		return company;
 	}
 
-	public void setYritysnimi(String yritysnimi) {
-		this.yritysnimi = yritysnimi;
+	public void setCompany(String company) {
+		this.company = company;
 	}
 
 
 
-	public String getYtunnus() {
-		return ytunnus;
+	public String getVatID() {
+		return vatID;
 	}
 
-	public void setYtunnus(String ytunnus) {
-		this.ytunnus = ytunnus;
+	public void setVatID(String vatID) {
+		this.vatID = vatID;
 	}
 
-	public String getYhthlo() {
-		return yhthlo;
+	public String getName() {
+		return name;
 	}
 
-	public void setYhthlo(String yhthlo) {
-		this.yhthlo = yhthlo;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getOsoite() {
-		return osoite;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setOsoite(String osoite) {
-		this.osoite = osoite;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getPostitoimipaikka() {
-		return postitoimipaikka;
+	public String getCity() {
+		return city;
 	}
 
-	public void setPostitoimipaikka(String postitoimipaikka) {
-		this.postitoimipaikka = postitoimipaikka;
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getSposti() {
-		return sposti;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setSposti(String sposti) {
-		this.sposti = sposti;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public long getId() {
-		return id;
+
+	public DAOUser getUser() {
+		return user;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setUser(DAOUser user) {
+		this.user = user;
 	}
-
 } 
