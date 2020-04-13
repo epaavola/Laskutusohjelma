@@ -1,8 +1,7 @@
 import React from 'react'
-import Frontpage from './pages/frontpage'
+import Frontpage from './pages/Frontpage'
 import Dashboard from './pages/Dashboard'
 import UusiLasku from './pages/UusiLasku'
-import Rekisteroityminen from './pages/Rekisteroityminen'
 import Asiakkaat from './pages/Asiakkaat'
 import Arkisto from './pages/Arkisto'
 import FAQ from './pages/FAQ'
@@ -18,7 +17,7 @@ const App = () => {
                         <Route path="/" exact component={Frontpage} />
                         <AuthenticatedPath path="/dashboard" exact component={Dashboard} />
                         <AuthenticatedPath path="/uusilasku" exact component={UusiLasku} />
-                        <Route path="/rekisteroityminen" exact component={Rekisteroityminen} />
+                        <Route path="/registration" exact component={Frontpage} />
                         <AuthenticatedPath path="/asiakkaat" exact component={Asiakkaat} />
                         <AuthenticatedPath path="/arkisto" exact component={Arkisto} />
                         <AuthenticatedPath path="/asetukset" exact component={Asetukset} />
