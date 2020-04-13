@@ -15,7 +15,7 @@ import axios from 'axios'
     }
 
     //Get the user data
-    export async function getUser(auth) {
+    export async function getUser() {
         const response = await axios.get(userURL, {
             headers: { 'Authorization': localStorage.getItem('auth')}
         })

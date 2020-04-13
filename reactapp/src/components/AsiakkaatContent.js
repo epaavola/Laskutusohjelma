@@ -10,7 +10,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { getClients, newClient, deleteClient, updateClient } from '../service/ClientDataService';
+import { getCustomers, newClient, deleteClient, updateClient } from '../service/ClientDataService';
 
 
 const useStyles = makeStyles(theme => ({
@@ -50,16 +50,17 @@ const AsiakkaatContent = (props) => {
     const classes = useStyles()
 
     //States
-    const [clients, setClients] = useState([])
+    const [customers, setCustomers] = useState([])
     const [updatePage, setUpdatePage] = useState(false)
 
     //Get customers data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getClients().then(response => setClients(response.data))      
-        })();
-      }, [updatePage]);
+    useEffect(() => {       
+        showCustomerData()
+    }, []);
 
+    function showCustomerData() {
+        getCustomers().then(res => setCustomers(res.data))
+    }
     return (
         <div>
             <div className={classes.title}>
@@ -73,7 +74,6 @@ const AsiakkaatContent = (props) => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
                                 <TableCell align="center">Yrityksen Nimi</TableCell>
                                 <TableCell align="center">Yhteyshenkilö</TableCell>
                                 <TableCell align="center">Y-tunnus</TableCell>                       
@@ -83,19 +83,18 @@ const AsiakkaatContent = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>                  
-                            {clients.map(client => (
-                                    <TableRow key={client.id}>
-                                    <TableCell component="th" scope="row">{client.id}</TableCell>   
-                                    <TableCell align="center">{client.yritysnimi}</TableCell>
-                                    <TableCell align="center">{client.yhthlo}</TableCell>
-                                    <TableCell align="center">{client.ytunnus}</TableCell>
-                                    <TableCell align="center">{client.osoite}</TableCell>
-                                    <TableCell align="center">{client.postitoimipaikka}</TableCell>
-                                    <TableCell align="center">{client.sposti}</TableCell>
+                            {customers.map(customer => (
+                                    <TableRow key={customer.id}>   
+                                    <TableCell align="center">{customer.company}</TableCell>
+                                    <TableCell align="center">{customer.name}</TableCell>
+                                    <TableCell align="center">{customer.vatID}</TableCell>
+                                    <TableCell align="center">{customer.address}</TableCell>
+                                    <TableCell align="center">{customer.city}</TableCell>
+                                    <TableCell align="center">{customer.email}</TableCell>
                                     <TableCell ><Button variant="contained" color="primary" 
-                                        onClick={(e) => {updateClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Päivitä</Button></TableCell>
+                                        onClick={(e) => {updateClient(customer.company, e); setUpdatePage(!updatePage)}}>Päivitä</Button></TableCell>
                                     <TableCell ><Button variant="contained" color="secondary" 
-                                        onClick={(e) => {deleteClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Poista</Button></TableCell>
+                                        onClick={(e) => {deleteClient(customer.company, e); setUpdatePage(!updatePage)}}>Poista</Button></TableCell>
                                     </TableRow>
                             ))}
                         </TableBody>

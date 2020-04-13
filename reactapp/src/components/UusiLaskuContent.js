@@ -12,7 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {getClients} from '../service/ClientDataService'
+import {getCustomers} from '../service/ClientDataService'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -146,13 +146,16 @@ const UusiLaskuContent = (props) => {
 
     //States
     const [user, setUser] = useState([])
-    const [clients, setClients] = useState([])
+    const [customers, setCustomers] = useState([])
+
     //Get customers data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getClients().then(response => setClients(response.data))      
-        })();
-      });
+    useEffect(() => {       
+        showCustomerData()
+    }, []);
+
+    function showCustomerData() {
+        getCustomers().then(res => setCustomers(res.data))
+    }
 
     //Button to clear states  
     const emptyTextFields = (event) => {

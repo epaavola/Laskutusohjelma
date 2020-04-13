@@ -1,18 +1,17 @@
 import axios from 'axios'
 
     //API URLS
-    const dataURL = 'http://localhost:4567/'
-    const clientsURL = 'http://localhost:4567/api/customers'
+    const dataURL = 'http://localhost:8080/'
+    const clientsURL = 'http://localhost:8080/customers'
 
     //GET get all the clients from database
-    export const getClients = async () => {
-        return axios.get(clientsURL, {
-            headers: {
-              'Authorization': 'Basic ' + localStorage.getItem('auth')
-            }
-        }).then(res => {return res.data})
-        
-    }     
+    export async function getCustomers() {
+        const response = await axios.get(clientsURL, {
+            headers: { 'Authorization': localStorage.getItem('auth')}
+        })
+        return response
+    }    
+
     //POST create new client
     export const newClient = async () => {
         axios({
