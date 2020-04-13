@@ -4,7 +4,7 @@ import Login from '../components/LoginContent'
 import Register from '../components/RegisterContent'
 import NavigationBar from '../components/NavigationBar'
 
-const Frontpage = () => {
+const Frontpage = (props) => {
       return (
             <>
                 <NavigationBar />

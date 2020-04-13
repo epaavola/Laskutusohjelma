@@ -1,4 +1,4 @@
-import React , { useState } from 'react';
+import React, { useState } from 'react';
 import { withRouter, Link } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -58,130 +58,151 @@ const useStyles = makeStyles(theme => ({
 
 /**
  * Navigation bar and leftside menu for dashboard
- */ 
+ */
 
 const DashboardNavbar = (props) => {
-  
+
   const classes = useStyles();
   const [open, setOpen] = useState(false);
- 
-const handleDrawerClick = () => {
-  setOpen(prev => !prev)
-}
 
-const handleClickAway = () => {
-  setOpen(false)
-}
-
-const handleDashboard = (event) => {
-  event.preventDefault()
-  props.history.push('/dashboard')
-}
-
-const handleLogout = (event) => {
-  event.preventDefault()
-  localStorage.removeItem('auth')
-  props.history.push('/')
-}
-
-const programState = () => {
-  switch (props.history.location.pathname) {
-    case '/dashboard':
-      return 'Etusivu'
-    case '/uusilasku':
-      return 'Uusi lasku'
-    case '/asiakkaat':
-      return 'Asiakkaat'
-    case '/asetukset':
-      return 'Asetukset'
-    case '/FAQ':
-      return 'Usein kysytyt kysymykset'
-    case '/arkisto':
-      return 'Arkisto'
-    case '/tietoameista':
-      return 'Tietoa meistä'        
-    default:
-      return 'Laskutusohjelma'
+  const handleDrawerClick = () => {
+    setOpen(prev => !prev)
   }
-}
+
+  const handleClickAway = () => {
+    setOpen(false)
+  }
+
+  const handleDashboard = (event) => {
+    event.preventDefault()
+    props.history.push('/dashboard')
+  }
+
+  const handleLogout = (event) => {
+    event.preventDefault()
+    localStorage.removeItem('auth')
+    props.history.push('/')
+  }
+
+  const changeLangFi = () => {
+    props.store.dispatch({ type: "fi" })
+  }
+  const changeLangEn = () => {
+    props.store.dispatch({ type: "en" })
+  }
+  const changeLangAl = () => {
+    props.store.dispatch({ type: "alb" })
+  }
+
+  const LangSelect = () => {
+    return (
+      <>
+        <Button id="fi" color="inherit" onClick={changeLangFi}>Fi</Button>
+        <Button id="en" color="inherit" onClick={changeLangEn}>En</Button>
+        <Button id="alb" color="inherit" onClick={changeLangAl}>Al</Button>
+      </>
+    )
+  }
+
+  const programState = () => {
+    switch (props.history.location.pathname) {
+      case '/dashboard':
+        return 'Etusivu'
+      case '/uusilasku':
+        return 'Uusi lasku'
+      case '/asiakkaat':
+        return 'Asiakkaat'
+      case '/asetukset':
+        return 'Asetukset'
+      case '/FAQ':
+        return 'Usein kysytyt kysymykset'
+      case '/arkisto':
+        return 'Arkisto'
+      case '/tietoameista':
+        return 'Tietoa meistä'
+      default:
+        return 'Laskutusohjelma'
+    }
+  }
 
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <div className={classes.root}>
-          <AppBar position="static" className={classes.appBar}>
-              <Toolbar className={classes.Toolbar}>
-              <IconButton 
-                  edge="start"  
-                  color="inherit" 
-                  aria-label="menu"
-                  onClick={handleDrawerClick}
-                  className={classes.menuButton}
-              >
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar className={classes.Toolbar}>
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              onClick={handleDrawerClick}
+              className={classes.menuButton}
+            >
               <MenuIcon />
-              </IconButton>
-              <Typography variant="h6" className={classes.title} onClick={handleDashboard}>
-                Etusivulle
+            </IconButton>
+            <Typography variant="h6" className={classes.title} onClick={handleDashboard}>
+              Etusivulle
               </Typography>
-              <Typography variant="h6" className={classes.state}>
-                  Laskutusohjelma - {programState()}
-              </Typography>
-              <Button color="inherit" onClick={handleLogout}>Kirjaudu ulos</Button>
-              </Toolbar>
-          </AppBar>
-            <Drawer 
-                className={classes.Drawer}
-                variant="persistent"
-                open={open}
-                anchor="left"
-                >
-                <Divider />
-                {open ? (
-                    <List>
-                        <ListItem button onClick={handleDashboard}>
-                                <ListItemIcon>
-                                    <KeyboardArrowRightIcon />
-                                </ListItemIcon>
-                                <ListItemText primary="Etusivu" />   
-                        </ListItem>
-                        <ListItem button component={Link} to="/uusilasku">
-                            <ListItemIcon>
-                                <InsertDriveFile />
-                            </ListItemIcon>
-                            <ListItemText primary="Uusi Lasku" />
-                        </ListItem>
-                        <ListItem button component={Link} to="/asiakkaat">
-                            <ListItemIcon>
-                                <AccountCircle />
-                            </ListItemIcon>
-                            <ListItemText primary="Asiakkaat" />
-                        </ListItem>
-                        <ListItem button component={Link} to="/arkisto">
-                            <ListItemIcon>
-                                <InboxIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Arkisto" />
-                        </ListItem>
-                        <ListItem button component={Link} to="/asetukset">
-                            <ListItemIcon>
-                                <Settings />
-                            </ListItemIcon>
-                            <ListItemText primary="Asetukset" />
-                        </ListItem>
-                        <ListItem button component={Link} to="/FAQ" >
-                            <ListItemIcon>
-                                <LiveHelpIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="FAQ" />
-                        </ListItem>
-                        <ListItem button component={Link} to="/tietoameista" >
-                            <ListItemIcon>
-                                <InfoIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Tietoa meistä" />
-                        </ListItem>
-                    </List> ) : null}
-                <Divider />
-            </Drawer>
+            <Typography variant="h6" className={classes.state}>
+              Laskutusohjelma - {programState()}
+            </Typography>
+            <LangSelect />
+            <Button color="inherit" onClick={handleLogout}>Kirjaudu ulos</Button>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          className={classes.Drawer}
+          variant="persistent"
+          open={open}
+          anchor="left"
+        >
+          <Divider />
+          {open ? (
+            <List>
+              <ListItem button onClick={handleDashboard}>
+                <ListItemIcon>
+                  <KeyboardArrowRightIcon />
+                </ListItemIcon>
+                <ListItemText primary="Etusivu" />
+              </ListItem>
+              <ListItem button component={Link} to="/uusilasku">
+                <ListItemIcon>
+                  <InsertDriveFile />
+                </ListItemIcon>
+                <ListItemText primary="Uusi Lasku" />
+              </ListItem>
+              <ListItem button component={Link} to="/asiakkaat">
+                <ListItemIcon>
+                  <AccountCircle />
+                </ListItemIcon>
+                <ListItemText primary="Asiakkaat" />
+              </ListItem>
+              <ListItem button component={Link} to="/arkisto">
+                <ListItemIcon>
+                  <InboxIcon />
+                </ListItemIcon>
+                <ListItemText primary="Arkisto" />
+              </ListItem>
+              <ListItem button component={Link} to="/asetukset">
+                <ListItemIcon>
+                  <Settings />
+                </ListItemIcon>
+                <ListItemText primary="Asetukset" />
+              </ListItem>
+              <ListItem button component={Link} to="/FAQ" >
+                <ListItemIcon>
+                  <LiveHelpIcon />
+                </ListItemIcon>
+                <ListItemText primary="FAQ" />
+              </ListItem>
+              <ListItem button component={Link} to="/tietoameista" >
+                <ListItemIcon>
+                  <InfoIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tietoa meistä" />
+              </ListItem>
+            </List>) : null}
+          <Divider />
+        </Drawer>
       </div>
     </ClickAwayListener>
   );

@@ -3,10 +3,10 @@ import 'typeface-roboto'
 import DashboardNavbar from '../components/DashboardNavbar'
 import ArkistoContent from '../components/ArkistoContent'
 
-const Arkisto = () => {
+const Arkisto = ({store}) => {
     return (
         <>
-          <DashboardNavbar />
+          <DashboardNavbar store={store} />
           <ArkistoContent />
         </>
       )

@@ -19,6 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ButtonAppBar = (props) => {
+
     const Login = (event) => {
         event.preventDefault()
         props.history.push('/')
@@ -28,6 +29,27 @@ const ButtonAppBar = (props) => {
         event.preventDefault()
         props.history.push('/registration')
     }
+
+    const changeLangFi = () => {
+        props.store.dispatch({ type: "fi" })
+    }
+    const changeLangEn = () => {
+        props.store.dispatch({ type: "en" })
+    }
+    const changeLangAl = () => {
+        props.store.dispatch({ type: "alb" })
+    }
+
+    const LangSelect = () => {
+        return (
+            <>
+                <Button id="fi" color="inherit" onClick={changeLangFi}>Fi</Button>
+                <Button id="en" color="inherit" onClick={changeLangEn}>En</Button>
+                <Button id="alb" color="inherit" onClick={changeLangAl}>Al</Button>
+            </>
+        )
+    }
+
     const classes = useStyles();
 
     return (
@@ -39,6 +61,7 @@ const ButtonAppBar = (props) => {
                             <Typography variant="h6" className={classes.title}>
                                 Laskutusohjelma
                             </Typography>
+                            <LangSelect />
                             <Button color="inherit" onClick={Register}>Rekisteröidy</Button>
                         </Toolbar>
                         :
@@ -46,6 +69,7 @@ const ButtonAppBar = (props) => {
                             <Typography variant="h6" className={classes.title}>
                                 Laskutusohjelma - Rekisteröityminen
                             </Typography>
+                            <LangSelect />
                             <Button color="inherit" onClick={Login}>Kirjaudu sisään</Button>
                         </Toolbar>
                     }

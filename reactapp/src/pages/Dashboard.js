@@ -3,10 +3,10 @@ import 'typeface-roboto'
 import DashboardNavbar from '../components/DashboardNavbar';
 import DashboardContent from '../components/DashboardContent';
 
-const Dashboard = () => {
+const Dashboard = ({store}) => {
     return (
         <>
-          <DashboardNavbar />
+          <DashboardNavbar store={store} />
           <DashboardContent />
         </>
       );

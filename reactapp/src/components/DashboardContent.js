@@ -12,6 +12,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
+import strings from "../LocalizedStrings"
 
 /**
  * Content of dashboard page
@@ -81,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const DashboardContent = (props) => {
+const DashboardContent = () => {
 
     //Style
     const classes = useStyles();
@@ -104,42 +105,42 @@ const DashboardContent = (props) => {
         <div className={classes.userInfo}>
             <Paper className={classes.paperUserInfo}>
                 <Typography variant="h4" color="primary" className={classes.paperUserInfoHeader}>
-                    Omat tiedot
+                    {strings.info}
                 </Typography>
                 <TableContainer>
                     <Table>
                         <TableBody>                  
                             <TableRow>
-                                <TableCell>Yritys :</TableCell>
+                                <TableCell>{strings.company} :</TableCell>
                                 <TableCell>{user.name}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Nimi :</TableCell>
+                                <TableCell>{strings.name} :</TableCell>
                                 <TableCell>{user.username}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Sähköposti :</TableCell>
+                                <TableCell>{strings.email} :</TableCell>
                                 <TableCell>{user.email}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Y-tunnus :</TableCell>
+                                <TableCell>{strings.businessid} :</TableCell>
                                 <TableCell>{user.vatID}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Osoite :</TableCell>
+                                <TableCell>{strings.address} :</TableCell>
                                 <TableCell>{user.address}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Postitoimipaikka :</TableCell>
+                                <TableCell>{strings.postal} :</TableCell>
                                 <TableCell>{user.city}</TableCell> 
                             </TableRow>
                             <TableRow>
-                                <TableCell>Tilinumero :</TableCell>
+                                <TableCell>{strings.accnumber} :</TableCell>
                                 <TableCell>{user.bankAccount}</TableCell> 
                             </TableRow>
                             <TableRow>  
                                 <TableCell ><Button variant="contained" color="primary" 
-                                    onClick={console.log("Ei toiminnallisuutta")}>Päivitä</Button></TableCell>
+                                    onClick={console.log("Ei toiminnallisuutta")}>{strings.update}</Button></TableCell>
                             </TableRow>
             
                         </TableBody>
@@ -149,24 +150,24 @@ const DashboardContent = (props) => {
         </div>
         <div className={classes.buttonContainer}>       
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/uusilasku">Uusi Lasku</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/uusilasku">{strings.newInvoice}</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/asiakkaat">Asiakkaat</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/asiakkaat">{strings.customers}</Button>
             </Paper>    
         </div>
         <div className={classes.buttonContainer}>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/arkisto">Arkisto</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/arkisto">{strings.archive}</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/asetukset">Asetukset</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/asetukset">{strings.settings}</Button>
             </Paper>
         </div>
         <div className={classes.latestInvoice}>
             <Paper className={classes.paperLatestInvoice}>
             <Typography variant="h4" color="primary">
-                    Viimeisimmät laskut
+                    {strings.latestInvoices}
                 </Typography>
             </Paper>
         </div>
