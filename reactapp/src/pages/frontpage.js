@@ -8,7 +8,7 @@ const Frontpage = () => {
       return (
             <>
                 <NavigationBar />
-                {window.location.pathname.localeCompare("/registration") ? <Login/> : <Register/>}
+                {window.location.pathname === ("/registration") ? <Register/> : <Login/>}
             </>
       );
     }
