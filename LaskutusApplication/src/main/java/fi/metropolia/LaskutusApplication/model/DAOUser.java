@@ -18,43 +18,45 @@ public class DAOUser {
 //	@OneToMany(cascade=CascadeType.ALL, mappedBy="user")
 //	    private List<Company> customers = new ArrayList<Company>();
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	
-	private long id;
-	
-	@Column
-   	private String username;
-	@Column
-	@JsonIgnore
-	private String password;
-	
-	@Column
-	private String name;
-	@Column
-	 @NaturalId
-	private String email;
-	@Column
-	private String yTunnus;
-	@Column
-	private String address;
-	@Column
-	private String city;
-	
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 
-	public DAOUser( String username, String name, String email, String yTunnus,
-			String city, String address) {
-		this. username = username;
-		this.name = name;
-		this.email = email;
-		this.yTunnus = yTunnus;
-		this.city = city;
-		this.address = address;
-}
-	public DAOUser () {
-		
-	}
+    private long id;
+
+    @Column
+    private String username;
+    @Column
+    @JsonIgnore
+    private String password;
+
+    @Column
+    private String name;
+    @Column
+    @NaturalId
+    private String email;
+    @Column
+    private String vatID;
+    @Column
+    private String address;
+    @Column
+    private String city;
+    @Column
+    private String bankAccount;
+
+    public DAOUser(String username, String name, String email, String vatID,
+                   String address, String city, String bankAccount) {
+        this.username = username;
+        this.name = name;
+        this.email = email;
+        this.vatID = vatID;
+        this.city = city;
+        this.address = address;
+        this.bankAccount = bankAccount;
+    }
+
+    public DAOUser() {
+
+    }
 /*	   public List<Company> getCustomers() {
 	        return customers;
 	    }
@@ -64,69 +66,71 @@ public class DAOUser {
 	    } */
 
 
-	public String getUsername() {
-		return username;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getyTunnus() {
-		return yTunnus;
-	}
+    public String getVatID() {
+        return vatID;
+    }
 
-	public void setyTunnus(String yTunnus) {
-		this.yTunnus = yTunnus;
-	}
+    public void setVatID(String vatID) {
+        this.vatID = vatID;
+    }
 
-	public String getAddress() {
-		return address;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getCity() {
+        return city;
+    }
 
-	public void setCity(String city) {
-		this.city = city;
-	}
-	
+    public void setCity(String city) {
+        this.city = city;
+    }
 
+    public String getBankAccount() { return this.bankAccount; }
+
+    public void setBankAccount(String bankAccount) { this.bankAccount = bankAccount; }
 }

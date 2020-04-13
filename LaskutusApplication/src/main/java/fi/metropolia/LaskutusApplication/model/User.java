@@ -19,14 +19,12 @@ public class User {
     private int id;
     
     private String name;
-    
     private String password;
-    
     private String lastName;
-    
-    private String yTunnus;
+    private String vatID;
     private String address;
     private String city;
+    private String bankAccount;
     
     @NaturalId
     @NotBlank
@@ -68,11 +66,11 @@ public class User {
     public String getEmail() {
     	return email;
     }
-    public String getYtunnus() {
-    	return yTunnus;
+    public String getVatID() {
+    	return vatID;
     }
-    public void setYtunnus(String yTunnus) {
-    	this.yTunnus = yTunnus;
+    public void setVatID(String vatID) {
+    	this.vatID = vatID;
     }
     public String getAddress() {
     	return address;
@@ -86,6 +84,7 @@ public class User {
     public void setCity(String city) {
     	this.city = city;
     }
-
+    public String getBankAccount() { return this.bankAccount; }
+    public void setBankAccount(String bankAccount) { this.bankAccount = bankAccount; }
 
 }

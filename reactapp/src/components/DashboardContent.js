@@ -7,6 +7,11 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper';
 import { getUser } from '../service/UserDataService';
 import { withRouter } from 'react-router-dom';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
 
 /**
  * Content of dashboard page
@@ -14,11 +19,14 @@ import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      paddingLeft: theme.spacing(5),
-      marginTop: theme.spacing(5),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingLeft: theme.spacing(5),
+        marginTop: theme.spacing(5),
+    },
+    table: {
+        color: "primary",
     },
     buttonContainer: {
         display: 'flex',
@@ -82,10 +90,13 @@ const DashboardContent = (props) => {
     const [user, setUser] = useState([])
 
     //Get user data from database through API
-    useEffect(() => {  
-    
+    useEffect(() => {       
+            showUserData()
       }, []);
 
+    function showUserData() {
+        getUser().then(res => setUser(res.data))
+    }
 
     //return  
     return(
@@ -95,15 +106,45 @@ const DashboardContent = (props) => {
                 <Typography variant="h4" color="primary" className={classes.paperUserInfoHeader}>
                     Omat tiedot
                 </Typography>
-                <Typography variant="body1" color="primary" style={{paddingTop: '1em'}}>
-                        <b>Yritys :</b> {user.nimi} <br />
-                        <b>Nimi :</b> {user.username} <br />
-                        <b>Sähköposti :</b> {user.sahkoposti} <br />
-                        <b>Osoite :</b> {user.osoite} <br />
-                        <b>Postitoimipaikka :</b> {user.postitoimipaikka} <br />
-                        <b>Y-tunnus :</b> {user.ytunnus} <br />
-                        <b>Tilinumero :</b> {user.tilinro}     
-                </Typography>
+                <TableContainer>
+                    <Table>
+                        <TableBody>                  
+                            <TableRow>
+                                <TableCell>Yritys :</TableCell>
+                                <TableCell>{user.name}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Nimi :</TableCell>
+                                <TableCell>{user.username}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Sähköposti :</TableCell>
+                                <TableCell>{user.email}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Y-tunnus :</TableCell>
+                                <TableCell>{user.vatID}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Osoite :</TableCell>
+                                <TableCell>{user.address}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Postitoimipaikka :</TableCell>
+                                <TableCell>{user.city}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>Tilinumero :</TableCell>
+                                <TableCell>{user.bankAccount}</TableCell> 
+                            </TableRow>
+                            <TableRow>  
+                                <TableCell ><Button variant="contained" color="primary" 
+                                    onClick={console.log("Ei toiminnallisuutta")}>Päivitä</Button></TableCell>
+                            </TableRow>
+            
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Paper>
         </div>
         <div className={classes.buttonContainer}>       

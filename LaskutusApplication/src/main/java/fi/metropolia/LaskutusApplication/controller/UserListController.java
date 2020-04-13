@@ -1,9 +1,10 @@
- package fi.metropolia.LaskutusApplication.controller;
+package fi.metropolia.LaskutusApplication.controller;
 
 
- import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import fi.metropolia.LaskutusApplication.dao.UserDao;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UserListController {
 
@@ -21,12 +23,16 @@ public class UserListController {
  /*   @Autowired
     CompanyDao company; */
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/users")
-    public List<DAOUser> getAllUsers(){
+    public List<DAOUser> getAllUsers() {
         List<DAOUser> users = new ArrayList<>();
-        userListRepo.findAll().forEach(users :: add);
+        userListRepo.findAll().forEach(users::add);
         return users;
+    }
+
+    @GetMapping(path = "/user")
+    public DAOUser getUser(Authentication authentication) {
+        return userListRepo.findByUsername(authentication.getName());
     }
  /*   @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping(path = "/companies")
@@ -42,25 +48,23 @@ public class UserListController {
         company.save(comp);
         return comp;
     } */
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/users/{id}") 
+
+    @GetMapping("/users/{id}")
     public Optional<DAOUser> getById(@PathVariable long id) {
-        return userListRepo.findById(id) ;
-               
+        return userListRepo.findById(id);
+
     }
-    
 
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(path = "/users")
-    public DAOUser addUser(@RequestBody DAOUser user){
+    public DAOUser addUser(@RequestBody DAOUser user) {
         userListRepo.save(user);
         return user;
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
+
     @DeleteMapping(path = "/users/{id}")
-    public void deleteUser(@PathVariable long id){
-            userListRepo.deleteById(id);
+    public void deleteUser(@PathVariable long id) {
+        userListRepo.deleteById(id);
     }
 } 

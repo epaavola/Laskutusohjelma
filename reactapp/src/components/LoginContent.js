@@ -49,7 +49,6 @@ const Frontpage = (props) => {
         event.preventDefault()
         userLogin(username, password)
         .then(response => {
-            console.log(response)
             localStorage.setItem('auth', 'Bearer ' + response.data.token) // Save auth token to the local storage
             setIsLogged(response.status)
         })

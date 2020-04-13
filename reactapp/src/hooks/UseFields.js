@@ -39,6 +39,7 @@ export const useField = (type) => {
     }
 
     return {
+        setValue,
         type,
         value,
         date,

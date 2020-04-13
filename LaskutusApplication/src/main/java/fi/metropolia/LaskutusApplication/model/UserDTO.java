@@ -6,19 +6,21 @@ public class UserDTO {
 	private String password;
 	private String name;
 	private String email;
-	private String yTunnus;
+	private String vatID;
 	private String address;
 	private String city;
+	private String bankAccount;
 	private long id;
 	
-	public UserDTO( String username, String name, String email, String yTunnus,
-			String city, String address) {
+	public UserDTO( String username, String name, String email, String vatID,
+			String address, String city, String bankAccount) {
 		this.username = username;
 		this.name = name;
 		this.email = email;
-		this.yTunnus = yTunnus;
+		this.vatID = vatID;
 		this.city = city;
 		this.address = address;
+		this.bankAccount = bankAccount;
 	}
 	public UserDTO() {
 		
@@ -63,12 +65,12 @@ public class UserDTO {
 		this.email = email;
 	}
 
-	public String getyTunnus() {
-		return yTunnus;
+	public String getVatID() {
+		return vatID;
 	}
 
-	public void setyTunnus(String yTunnus) {
-		this.yTunnus = yTunnus;
+	public void setVatID(String vatID) {
+		this.vatID = vatID;
 	}
 
 	public String getAddress() {
@@ -87,5 +89,7 @@ public class UserDTO {
 		this.city = city;
 	}
 	
+	public String getBankAccount() { return this.bankAccount; }
 
+	public void setBankAccount(String bankAccount) { this.bankAccount = bankAccount; }
 }
