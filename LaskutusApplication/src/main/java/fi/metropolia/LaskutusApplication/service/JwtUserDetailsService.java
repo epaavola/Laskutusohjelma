@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fi.metropolia.LaskutusApplication.dao.UserDao;
+import fi.metropolia.LaskutusApplication.dto.UserDTO;
 import fi.metropolia.LaskutusApplication.model.DAOUser;
-import fi.metropolia.LaskutusApplication.model.UserDTO;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
