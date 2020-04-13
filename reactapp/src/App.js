@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import Frontpage from './pages/Frontpage'
+import Frontpage from './pages/frontpage'
 import Dashboard from './pages/Dashboard'
 import UusiLasku from './pages/UusiLasku'
 import Asiakkaat from './pages/Asiakkaat'

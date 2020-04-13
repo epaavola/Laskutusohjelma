@@ -70,4 +70,10 @@ public class UserListController {
     public void deleteUser(@PathVariable long id) {
         userListRepo.deleteById(id);
     }
+
+    @DeleteMapping(path = "/customers/{companyName}")
+    public void deleteCustomer(@PathVariable String companyName) {
+        DAOCompany comp = company.findByCompany(companyName);
+        company.deleteById(comp.getCustomer_id());
+    }
 } 

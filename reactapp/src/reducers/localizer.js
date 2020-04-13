@@ -28,7 +28,7 @@ const reducer = (state = initialState, action) => {
             console.log(localStorage.getItem("language")+ " storage lang")
             return state;
         default: 
-        strings.setLanguage(state)
+        strings.setLanguage("fi")
         return state
     }
 }

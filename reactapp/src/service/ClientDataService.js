@@ -3,6 +3,7 @@ import axios from 'axios'
     //API URLS
     const dataURL = 'http://localhost:8080/'
     const clientsURL = 'http://localhost:8080/customers'
+    const postClientURL = 'http://localhost:8080/customer'
 
     //GET get all the clients from database
     export async function getCustomers() {
@@ -12,25 +13,29 @@ import axios from 'axios'
         return response
     }    
 
-    //POST create new client
-    export const newClient = async () => {
-        axios({
-            method: 'POST',
-            url: clientsURL,
-            headers: {
-              'Authorization': 'Basic ' + localStorage.getItem('auth')
-            },
-            data: {yritysnimi: "Hunaja Oy", ytunnus: "277492-2", yhthlo: "Jari-Pekka (JP)", osoite: "Mannerheimintie 23", postitoimipaikka: "00200 Helsinki", sposti: "jp@hunaja.fi"}
-        })
+    //POST create new user
+    export async function newCustomer(company,vatID,name,address,city,email) {
+        const options = { headers: { 'Authorization': localStorage.getItem('auth')}}
+        const response = await axios.post(postClientURL,{
+            company: company,
+            vatID: vatID,
+            name: name,
+            address: address,
+            city: city,
+            email: email,
+        }, options)
+        return response
     }
+
     //DELETE delete client
-    export const deleteClient = (id, e) => {
+    export async function deleteCustomer(id,e) {
         e.preventDefault()
-        return axios.delete(clientsURL + "/" + id, {
+        const response = await axios.delete(clientsURL + "/" + id, {
             headers: {
-              'Authorization': 'Basic ' + localStorage.getItem('auth')
+              'Authorization': localStorage.getItem('auth')
             }
         })
+        return response
     }
     
     //PUT update client

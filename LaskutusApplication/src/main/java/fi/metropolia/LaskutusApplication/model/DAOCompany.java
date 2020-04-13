@@ -14,10 +14,13 @@ public class DAOCompany {
 	@JsonIgnore
 	private DAOUser user;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long customer_id;
+
 	@Column
 	private String company;
 
-	@Id
 	@Column
 	private String vatID;
 
@@ -105,5 +108,13 @@ public class DAOCompany {
 
 	public void setUser(DAOUser user) {
 		this.user = user;
+	}
+
+	public long getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(long customer_id) {
+		this.customer_id = customer_id;
 	}
 } 
