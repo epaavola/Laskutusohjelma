@@ -9,11 +9,6 @@ package fi.metropolia.LaskutusApplication.model;
 @Table(name = "CUSTOMERS")
 public class DAOCompany {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", insertable=false, updatable=false)
-	@JsonIgnore
-	private DAOUser user;
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long customer_id;
@@ -35,6 +30,11 @@ public class DAOCompany {
 
 	@Column
 	private String email;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
+	@JsonIgnore
+	private DAOUser user;
 
 	public DAOCompany() {
 	}
@@ -100,7 +100,6 @@ public class DAOCompany {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 
 	public DAOUser getUser() {
 		return user;

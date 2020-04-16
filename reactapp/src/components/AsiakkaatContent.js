@@ -127,7 +127,7 @@ const AsiakkaatContent = (props) => {
                                     <TableCell ><Button variant="contained" color="primary"
                                         onClick={(e) => { updateClient(customer.company, e);  }}>Päivitä</Button></TableCell>
                                     <TableCell ><Button variant="contained" color="secondary"
-                                        onClick={(e) => { deleteCustomer(customer.company, e); window.location.reload() }}>Poista</Button></TableCell>
+                                        onClick={(e) => { deleteCustomer(customer.company, e); handleClose() }}>Poista</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

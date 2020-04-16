@@ -1,16 +1,18 @@
 package fi.metropolia.LaskutusApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "invoice", uniqueConstraints = { @UniqueConstraint(columnNames = { "invoice_number", "user_id" }) })
+@Table(name = "INVOICES", uniqueConstraints = { @UniqueConstraint(columnNames = {"invoice_number"}) })
 public class Invoice {
 
 	private Long id;
 	private String invoiceNumber;
-	private User user;
+	private DAOUser user;
 	private LocalDate createDate;
 	private LocalDate saleDate;
 	private LocalDate paymentDate;
@@ -20,7 +22,6 @@ public class Invoice {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
 	public Long getId() {
 		return id;
 	}
@@ -40,11 +41,12 @@ public class Invoice {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
-	public User getUser() {
+	@JsonIgnore
+	public DAOUser getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(DAOUser user) {
 		this.user = user;
 	}
 

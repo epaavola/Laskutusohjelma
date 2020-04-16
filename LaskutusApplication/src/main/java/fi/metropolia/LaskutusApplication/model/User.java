@@ -20,7 +20,6 @@ public class User {
     
     private String name;
     private String password;
-    private String lastName;
     private String vatID;
     private String address;
     private String city;
@@ -45,12 +44,6 @@ public class User {
     }
     public void setName(String name) {
     	this.name = name;
-    }
-    public void setLastName(String lastName) {
-    	this.lastName = lastName;
-    }
-    public String getLastName() {
-    	return lastName;
     }
     
     public void setPassword(String password) {

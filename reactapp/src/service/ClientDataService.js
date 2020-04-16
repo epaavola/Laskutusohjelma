@@ -41,8 +41,7 @@ import axios from 'axios'
     //PUT update client
     export const updateClient = (id, e) => {
         e.preventDefault()
-        console.log("Päivitä asiakas: " + id)
-        axios.put(`${dataURL}${id}`)
+        
     } 
 
 const ClientDataService = (props) => {
