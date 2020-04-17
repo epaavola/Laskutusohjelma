@@ -13,9 +13,6 @@ public class Invoice {
 	private Long id;
 	private String invoiceNumber;
 	private DAOUser user;
-	private LocalDate createDate;
-	private LocalDate saleDate;
-	private LocalDate paymentDate;
 	private Double netAmount;	//Netto
 	private Double grossAmount; //Brutto
 	private Double vatAmount; // alvi
@@ -48,33 +45,7 @@ public class Invoice {
 
 	public void setUser(DAOUser user) {
 		this.user = user;
-	}
-
-	@Column(name = "create_date", nullable = false)
-	public LocalDate getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(LocalDate createDate) {
-		this.createDate = createDate;
-	}
-
-	@Column(name = "sale_date", nullable = false)
-	public LocalDate getSaleDate() {
-		return saleDate;
-	}
-
-	public void setSaleDate(LocalDate saleDate) {
-		this.saleDate = saleDate;
-	}
-
-	@Column(name = "payment_date", nullable = false)
-	public LocalDate getPaymentDate() {
-		return paymentDate;
-	}
-
-	public void setPaymentDate(LocalDate paymentDate) {
-		this.paymentDate = paymentDate;
+	
 	}
 
 	@Column(name = "net_value", nullable = false)

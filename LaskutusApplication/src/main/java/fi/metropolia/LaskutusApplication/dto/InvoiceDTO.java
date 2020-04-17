@@ -1,41 +1,63 @@
 package fi.metropolia.LaskutusApplication.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
-import javax.validation.constraints.NotBlank;
-import java.time.LocalDate;
-
 public class InvoiceDTO {
 
-	private Long id;
-
-	@NotBlank
 	private String invoiceNumber;
-
-	@NotBlank
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Europe/Warsaw")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate createDate;
-
-	@NotBlank
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Europe/Warsaw")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate saleDate;
-
-	@NotBlank
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "Europe/Warsaw")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	private LocalDate paymentDate;
-
-	@NotBlank
 	private Double netAmount;
-
-	@NotBlank
 	private Double grossAmount;
-
-	@NotBlank
 	private Double vatAmount;
+	private long id;
+
+	public InvoiceDTO(String invoiceNumber, Double netAmount, Double grossAmount, Double vatAmount) {
+		this.invoiceNumber = invoiceNumber;
+		this.netAmount = netAmount;
+		this.grossAmount = grossAmount;
+		this.vatAmount = vatAmount;
+
+	}
+
+	public InvoiceDTO() {
+
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public String invoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public Double getNetAmount() {
+		return netAmount;
+	}
+
+	public void setNetAmount(Double netAmount) {
+		this.netAmount = netAmount;
+	}
+
+	public Double getVatAmount() {
+		return vatAmount;
+	}
+
+	public void setVatAmount(Double vatAmount) {
+		this.vatAmount = vatAmount;
+	}
+
+	public Double getGrossAmount() {
+		return grossAmount;
+	}
+
+	public void setGrossAmount(Double grossAmount) {
+		this.grossAmount = grossAmount;
+	}
 
 }
