@@ -20,6 +20,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -144,6 +149,8 @@ const UusiLaskuContent = (props) => {
     const bank = useField('')
     const client = useField('')
 
+    const [dialogOpen, setDialogOpen] = useState(false)
+
     //States
     const [user, setUser] = useState([])
     const [clients, setClients] = useState([])
@@ -180,8 +187,47 @@ const UusiLaskuContent = (props) => {
         alvKanta.reset()
     }
 
-    const handleUpdatingProduct = (event) => {
-        event.preventDefault()
+    const openDialog = () => {
+        setDialogOpen(true)
+        handleUpdatingProduct()
+    }
+
+    const closeDialog = () => {
+        setDialogOpen(false)
+    }
+
+    const handleUpdatingProduct = () => {
+        console.log('päivitä painettu')
+        console.log('dialogopen: ', dialogOpen)
+        return (
+            <div>
+                <Dialog open={openDialog} onClose={closeDialog} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                        To subscribe to this website, please enter your email address here. We will send updates
+                        occasionally.
+                        </DialogContentText>
+                        <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Email Address"
+                        type="email"
+                        fullWidth
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialog} color="primary">
+                        Cancel
+                        </Button>
+                        <Button onClick={closeDialog} color="primary">
+                        Subscribe
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        )
     }
 
     const handleDeletingProduct = (name) => {
@@ -518,7 +564,7 @@ const UusiLaskuContent = (props) => {
                                     <TableCell>{product.amount}</TableCell>
                                     <TableCell>{product.price}</TableCell>
                                     <TableCell>{product.alvKanta}</TableCell>
-                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" onClick={handleUpdatingProduct}>Päivitä</Button></TableCell>
+                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" onClick={() => openDialog()}>Päivitä</Button></TableCell>
                                     <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
                                 </TableRow>
                             ))}
