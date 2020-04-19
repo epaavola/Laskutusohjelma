@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import fi.metropolia.LaskutusApplication.service.JwtUserDetailsService;
 import fi.metropolia.LaskutusApplication.config.JwtTokenUtil;
+import fi.metropolia.LaskutusApplication.dto.UserDTO;
 import fi.metropolia.LaskutusApplication.model.JwtRequest;
 import fi.metropolia.LaskutusApplication.model.JwtResponse;
-import fi.metropolia.LaskutusApplication.model.UserDTO;
 
 @CrossOrigin
 @RestController

@@ -114,6 +114,9 @@ const UusiLaskuContent = (props) => {
     const alvKannat = getALVdata()
     const pankit = getBankData()
 
+    const customers = useField([])
+    const customerActive = useField([])
+    const customer = useField('')
     const invoiceReceiverName = useField('invoiceReceiverName')
     const invoiceReceiverContactPerson = useField('invoiceReceiverContactPerson')
     const invoiceReceiverPostAddress = useField('invoiceReceiverPostAddress')
@@ -143,19 +146,29 @@ const UusiLaskuContent = (props) => {
     const alvKanta = useField('')
     const products = useField([])
     const bank = useField('')
-    const client = useField('')
 
-    //States
-    const [user, setUser] = useState([])
-    const [customers, setCustomers] = useState([])
 
-    //Get customers data from database through API
+    //Run fetch functions on page load
     useEffect(() => {       
         showCustomerData()
+        showUserData()
     }, []);
 
+    // Get customers from database
     function showCustomerData() {
-        getCustomers().then(res => setCustomers(res.data))
+        getCustomers().then(res => {
+            customers.setArrayData(res.data)
+        })
+    }
+    // Get the user data from database and fill the 'Omat tiedot' form
+    function showUserData() {
+        getUser().then(res => {
+            billerName.setValue(res.data.name)
+            billerPostAddress.setValue(res.data.address)
+            billerPostalCode.setValue(res.data.city)
+            billerBusinessId.setValue(res.data.vatID)
+            billerAccountNumber.setValue(res.data.bankAccount)
+        })    
     }
 
     //Button to clear states  
@@ -171,7 +184,7 @@ const UusiLaskuContent = (props) => {
             price: productPrice.value,
             alvKanta: alvKanta.value
         }
-        products.setProduct(products.products.concat(productObject))
+        products.setArrayData(products.array.concat(productObject))
         let netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
         let tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
         let gross = Math.round((netPrice + tax) * 100) / 100
@@ -189,18 +202,12 @@ const UusiLaskuContent = (props) => {
     }
 
     const handleDeletingProduct = (name) => {
-       const productToDelete = products.products.find(product => product.name === name)
-       products.setProduct(products.products.filter(product => product.name !== productToDelete.name))
-       const indexToDelete = products.products.indexOf(productToDelete)
-       products.products.splice(indexToDelete, 1)
+       const productToDelete = products.array.find(product => product.name === name)
+       products.setArrayData(products.array.filter(product => product.name !== productToDelete.name))
+       const indexToDelete = products.array.indexOf(productToDelete)
+       products.array.splice(indexToDelete, 1)
     }
 
-    //Get user data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getUser().then(response => setUser(response.data))    
-        })();  
-      }, []);
 
     return (
         <div>
@@ -285,24 +292,24 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                {strings.invoiceRec}
-                            <FormControl variant="standard" className={classes.formControl}>
-                                <InputLabel id="asiakasDropdown">
-                                    {strings.customers}
-                                </InputLabel>
-                                <Select
-                                    labelId="asiakasDropdownLabel"
-                                    id="asiakasDropdown"
-                                    value={client.value}
-                                    onChange={client.onChange}   
-                                >
-                                <MenuItem value="">
-                                    <em>Tyhjä</em>
-                                </MenuItem>
-                                <MenuItem value={'getValueFromAPI'}>Asiakas 1</MenuItem>
-                                </Select>
-                            </FormControl>
+                                Laskunsaajan tiedot
                             </Typography>
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard" 
+                                select 
+                                label="Asiakas"
+                                type="text"
+                                fullWidth
+                                value={customer.value}
+                                onChange={customer.onChange}
+                            >
+                                {customers.array.map(asiakas => (
+                                    <MenuItem key={asiakas.company} value={asiakas.company}>
+                                        {asiakas.company}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
@@ -500,7 +507,7 @@ const UusiLaskuContent = (props) => {
                     Tuotteet laskulla
             </Typography>
             <div className={classes.productsCard}>
-                {products.products.length === 0 ? 
+                {products.array.length === 0 ? 
                     <Typography variant="h6" color="secondary">
                     Ei vielä lisättyjä tuotteita
                     </Typography>
@@ -516,7 +523,7 @@ const UusiLaskuContent = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products.products.map(product => (
+                            {products.array.map(product => (
                                 <TableRow key={product.name}>
                                     <TableCell component="th" scope="row">{product.name}</TableCell>
                                     <TableCell>{product.amount}</TableCell>
@@ -529,7 +536,7 @@ const UusiLaskuContent = (props) => {
                         </TableBody>
                     </Table>
                 </TableContainer>}
-                {products.products.length === 0 ?
+                {products.array.length === 0 ?
                     ''
                 : 
                 <div className={classes.total}>

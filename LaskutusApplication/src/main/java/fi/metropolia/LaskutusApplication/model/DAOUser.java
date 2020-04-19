@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,6 +41,12 @@ public class DAOUser {
     @Column
     private String bankAccount;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<DAOCompany> customers;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<Invoice> invoices;
+
     public DAOUser(String username, String name, String email, String vatID,
                    String address, String city, String bankAccount) {
         this.username = username;
@@ -54,13 +61,20 @@ public class DAOUser {
     public DAOUser() {
 
     }
-/*	   public List<Company> getCustomers() {
-	        return customers;
-	    }
+    public Set<Invoice> getInvoices() {
+        return invoices;
+    }
 
-	    public void setCustomers(List<Company> customers) {
-	        this.customers = customers;
-	    } */
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+    public Set<DAOCompany> getCustomers() {
+        return customers;
+    }
+
+    public void setCustomers(Set<DAOCompany> customers) {
+        this.customers = customers;
+    }
 
 
     public String getUsername() {

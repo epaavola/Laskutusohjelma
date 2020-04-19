@@ -3,21 +3,20 @@ package fi.metropolia.LaskutusApplication.model;
 
  import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
  import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMERS")
 public class DAOCompany {
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id", insertable=false, updatable=false)
-	@JsonIgnore
-	private DAOUser user;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long customer_id;
 
 	@Column
 	private String company;
 
-	@Id
 	@Column
 	private String vatID;
 
@@ -32,6 +31,11 @@ public class DAOCompany {
 
 	@Column
 	private String email;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
+	@JsonIgnore
+	private DAOUser user;
 
 	public DAOCompany() {
 	}
@@ -98,12 +102,19 @@ public class DAOCompany {
 		this.email = email;
 	}
 
-
 	public DAOUser getUser() {
 		return user;
 	}
 
 	public void setUser(DAOUser user) {
 		this.user = user;
+	}
+
+	public long getCustomer_id() {
+		return customer_id;
+	}
+
+	public void setCustomer_id(long customer_id) {
+		this.customer_id = customer_id;
 	}
 } 

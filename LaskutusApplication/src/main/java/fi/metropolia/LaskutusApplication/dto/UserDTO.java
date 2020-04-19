@@ -1,4 +1,4 @@
-package fi.metropolia.LaskutusApplication.model;
+package fi.metropolia.LaskutusApplication.dto;
 
 
 public class UserDTO {

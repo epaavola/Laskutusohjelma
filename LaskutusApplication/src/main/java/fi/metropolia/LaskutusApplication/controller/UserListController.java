@@ -40,14 +40,14 @@ public class UserListController {
     }
 
     @GetMapping(path = "/customers")
-    public List<DAOCompany> getAllCompanies(){
-        List<DAOCompany> comp = new ArrayList<>();
-        company.findAll().forEach(comp :: add);
-        return comp;
+    public List<DAOCompany> getAllCompanies(Authentication authentication){
+        DAOUser user = userListRepo.findByUsername(authentication.getName());
+        return new ArrayList<>(company.findAllByUser_Id(user.getId()));
     }
 
     @PostMapping(path = "/customer")
-    public DAOCompany addCustomer(@RequestBody DAOCompany comp){
+    public DAOCompany addCustomer(@RequestBody DAOCompany comp, Authentication authentication){
+        comp.setUser(userListRepo.findByUsername(authentication.getName()));
         company.save(comp);
         return comp;
     }
@@ -69,5 +69,11 @@ public class UserListController {
     @DeleteMapping(path = "/users/{id}")
     public void deleteUser(@PathVariable long id) {
         userListRepo.deleteById(id);
+    }
+
+    @DeleteMapping(path = "/customers/{companyName}")
+    public void deleteCustomer(@PathVariable String companyName) {
+        DAOCompany comp = company.findByCompany(companyName);
+        company.deleteById(comp.getCustomer_id());
     }
 } 

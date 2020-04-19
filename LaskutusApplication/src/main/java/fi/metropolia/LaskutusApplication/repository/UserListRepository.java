@@ -1,4 +1,4 @@
-package fi.metropolia.LaskutusApplication;
+package fi.metropolia.LaskutusApplication.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import fi.metropolia.LaskutusApplication.model.*;
