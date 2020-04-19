@@ -3,17 +3,6 @@ import 'typeface-roboto'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { Paper } from '@material-ui/core'
-<<<<<<< HEAD
-import { makeStyles } from '@material-ui/core/styles'
-import Table from '@material-ui/core/Table'
-import TableBody from '@material-ui/core/TableBody'
-import TableCell from '@material-ui/core/TableCell'
-import TableContainer from '@material-ui/core/TableContainer'
-import TableHead from '@material-ui/core/TableHead'
-import TableRow from '@material-ui/core/TableRow'
-import { getCustomers, newClient, deleteClient, updateClient } from '../service/ClientDataService'
-import strings from "../LocalizedStrings"
-=======
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -29,8 +18,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { getCustomers, newCustomer, deleteCustomer, updateClient } from '../service/ClientDataService';
 import { useField } from '../hooks/UseFields'
-
->>>>>>> 2c4e6574bfff894d7061c18ed88560f65fe80371
+import strings from "../LocalizedStrings"
 
 const useStyles = makeStyles(theme => ({
     title: {

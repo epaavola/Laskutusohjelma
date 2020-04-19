@@ -29,7 +29,6 @@ public class DAOInvoice {
 	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
 	@JsonIgnore
 	private DAOUser user;
-	private DAOInvoice invoice;
 
 	public DAOInvoice() {
 	}
@@ -80,14 +79,6 @@ public class DAOInvoice {
 
 	public void setVatAmount(Double vatAmount) {
 		this.vatAmount = vatAmount;
-	}
-
-	public DAOInvoice getInvoice() {
-		return invoice;
-	}
-
-	public void setInvoice(DAOInvoice invoice) {
-		this.invoice = invoice;
 	}
 
 	public DAOUser getUser() {

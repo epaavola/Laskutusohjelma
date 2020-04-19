@@ -45,7 +45,7 @@ public class DAOUser {
     private Set<DAOCompany> customers;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Invoice> invoices;
+    private Set<DAOInvoice> invoices;
 
     public DAOUser(String username, String name, String email, String vatID,
                    String address, String city, String bankAccount) {
@@ -61,11 +61,11 @@ public class DAOUser {
     public DAOUser() {
 
     }
-    public Set<Invoice> getInvoices() {
+    public Set<DAOInvoice> getInvoices() {
         return invoices;
     }
 
-    public void setInvoices(Set<Invoice> invoices) {
+    public void setInvoices(Set<DAOInvoice> invoices) {
         this.invoices = invoices;
     }
     public Set<DAOCompany> getCustomers() {
