@@ -3,10 +3,10 @@ import 'typeface-roboto'
 import DashboardNavbar from '../components/DashboardNavbar'
 import AsetuksetContent from '../components/AsetuksetContent'
 
-const Asetukset = () => {
+const Asetukset = ({store}) => {
     return (
         <>
-          <DashboardNavbar />
+          <DashboardNavbar store={store} />
           <AsetuksetContent />
         </>
       )

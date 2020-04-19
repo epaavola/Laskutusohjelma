@@ -10,8 +10,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { getClients, newClient, deleteClient, updateClient } from '../service/ClientDataService';
-
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import TextField from '@material-ui/core/TextField';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { getCustomers, newCustomer, deleteCustomer, updateClient } from '../service/ClientDataService';
+import { useField } from '../hooks/UseFields'
+import strings from "../LocalizedStrings"
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -23,13 +30,13 @@ const useStyles = makeStyles(theme => ({
         margin: '1%'
     },
     table: {
-        
+
     },
     content: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        marginLeft: '10%', 
+        marginLeft: '10%',
         marginRight: '10%',
         marginTop: '2%'
     },
@@ -41,69 +48,166 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4),
     }
-})) 
+}))
 
 
 const AsiakkaatContent = (props) => {
+
+    //Variables
+    const company = useField('company')
+    const name = useField('name')
+    const vatID = useField('vatID')
+    const address = useField('address')
+    const city = useField('city')
+    const email = useField('email')
 
     // Style
     const classes = useStyles()
 
     //States
-    const [clients, setClients] = useState([])
-    const [updatePage, setUpdatePage] = useState(false)
+    const [customers, setCustomers] = useState([])
+    const [open, setOpen] = useState(false)
+
+    //Handle register
+    const onSubmit = async (event) => {
+        if(company.value != null) {
+            event.preventDefault()
+            newCustomer(company.value, vatID.value, name.value, address.value, city.value, email.value)
+        }
+        handleClose()
+        window.location.reload()   
+    }
 
     //Get customers data from database through API
     useEffect(() => {
-        (async function fetchData() {
-            await getClients().then(response => setClients(response.data))      
-        })();
-      }, [updatePage]);
+        showCustomerData()
+    }, []);
+
+    function showCustomerData() {
+        getCustomers().then(res => setCustomers(res.data))
+    }
+    const handleClickOpen = () => {
+        setOpen(true)
+    }
+    const handleClose = () => {
+        setOpen(false)
+        window.location.reload()
+    }
 
     return (
         <div>
             <div className={classes.title}>
                 <Typography variant="h2" color="primary" className={classes.header1}>
-                    Asiakkaat
+                    {strings.customers}
                 </Typography>
-                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => {newClient(); setUpdatePage(!updatePage)}}>Lisää uusi asiakas</Button>
+                <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={handleClickOpen}>Lisää uusi asiakas</Button>
             </div>
             <div className={classes.content}>
                 <TableContainer component={Paper}>
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell>ID</TableCell>
-                                <TableCell align="center">Yrityksen Nimi</TableCell>
-                                <TableCell align="center">Yhteyshenkilö</TableCell>
-                                <TableCell align="center">Y-tunnus</TableCell>                       
-                                <TableCell align="center">Osoite</TableCell>
-                                <TableCell align="center">Postitoimipaikka</TableCell>
-                                <TableCell align="center">Sähköposti</TableCell>
+                                <TableCell align="center">{strings.companyName}</TableCell>
+                                <TableCell align="center">{strings.contactP}</TableCell>
+                                <TableCell align="center">{strings.businessid}</TableCell>                       
+                                <TableCell align="center">{strings.address}</TableCell>
+                                <TableCell align="center">{strings.postal}</TableCell>
+                                <TableCell align="center">{strings.email}</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>                  
-                            {clients.map(client => (
-                                    <TableRow key={client.id}>
-                                    <TableCell component="th" scope="row">{client.id}</TableCell>   
-                                    <TableCell align="center">{client.yritysnimi}</TableCell>
-                                    <TableCell align="center">{client.yhthlo}</TableCell>
-                                    <TableCell align="center">{client.ytunnus}</TableCell>
-                                    <TableCell align="center">{client.osoite}</TableCell>
-                                    <TableCell align="center">{client.postitoimipaikka}</TableCell>
-                                    <TableCell align="center">{client.sposti}</TableCell>
-                                    <TableCell ><Button variant="contained" color="primary" 
-                                        onClick={(e) => {updateClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Päivitä</Button></TableCell>
-                                    <TableCell ><Button variant="contained" color="secondary" 
-                                        onClick={(e) => {deleteClient(client.yritysnimi, e); setUpdatePage(!updatePage)}}>Poista</Button></TableCell>
-                                    </TableRow>
+                        <TableBody>
+                            {customers.map(customer => (
+                                <TableRow key={customer.id}>
+                                    <TableCell align="center">{customer.company}</TableCell>
+                                    <TableCell align="center">{customer.name}</TableCell>
+                                    <TableCell align="center">{customer.vatID}</TableCell>
+                                    <TableCell align="center">{customer.address}</TableCell>
+                                    <TableCell align="center">{customer.city}</TableCell>
+                                    <TableCell align="center">{customer.email}</TableCell>
+                                    <TableCell ><Button variant="contained" color="primary"
+                                        onClick={(e) => { updateClient(customer.company, e)}}>{strings.update}</Button></TableCell>
+                                    <TableCell ><Button variant="contained" color="secondary"
+                                        onClick={(e) => { deleteCustomer(customer.company, e); handleClose() }}>{strings.delete}</Button></TableCell>
+                                </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </div>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle>Uusi Asiakas</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Täytä uuden asiakkaan tiedot taulukkoon ja paina sen jälkeen tallenna.
+                        Voit tallentaa asiakkaan vaikka jokin tieto puuttuisi.
+                        Tietoja voi helposti muokata jälkikäteen 'päivitä' -painikkeen avulla.
+          </DialogContentText>
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Yrityksen nimi"
+                        type="text"
+                        fullWidth
+                        value={company.value}
+                        onChange={company.onChange}
+                    />
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Yhteyshenkilö"
+                        type="text"
+                        fullWidth
+                        value={name.value}
+                        onChange={name.onChange}
+                    />
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Y-tunnus"
+                        type="text"
+                        fullWidth
+                        value={vatID.value}
+                        onChange={vatID.onChange}
+                    />
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Postiosoite"
+                        type="text"
+                        fullWidth
+                        value={address.value}
+                        onChange={address.onChange}
+                    />
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Postinumero ja -toimipaikka"
+                        type="text"
+                        fullWidth
+                        value={city.value}
+                        onChange={city.onChange}
+                    />
+                    <TextField
+                        className={classes.TextField}
+                        variant="standard"
+                        label="Sähköposti"
+                        type="text"
+                        fullWidth
+                        value={email.value}
+                        onChange={email.onChange}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="secondary">
+                        Peruuta
+                    </Button>
+                    <Button onClick={onSubmit} color="primary">
+                        Tallenna
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
-    ) 
+    )
 }
 
 

@@ -10,11 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import fi.metropolia.LaskutusApplication.dao.UserDao;
+import fi.metropolia.LaskutusApplication.dto.UserDTO;
 import fi.metropolia.LaskutusApplication.model.DAOUser;
-import fi.metropolia.LaskutusApplication.model.UserDTO;
-
-
-
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
@@ -42,7 +39,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 		newUser.setEmail(user.getEmail());
 		newUser.setCity(user.getCity());
 		newUser.setAddress(user.getAddress());
-		newUser.setyTunnus(user.getyTunnus());
+		newUser.setVatID(user.getVatID());
+		newUser.setBankAccount(user.getBankAccount());
 		newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
 		return userDao.save(newUser);
 	}

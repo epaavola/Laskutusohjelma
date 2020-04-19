@@ -3,10 +3,10 @@ import 'typeface-roboto'
 import DashboardNavbar from '../components/DashboardNavbar'
 import UusiLaskuContent from '../components/UusiLaskuContent'
 
-const UusiLasku = () => {
+const UusiLasku = ({store}) => {
     return (
         <>
-          <DashboardNavbar />
+          <DashboardNavbar store={store} />
           <UusiLaskuContent />
         </>
       )

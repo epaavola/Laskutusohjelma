@@ -1,64 +1,42 @@
 import axios from 'axios'
 
     //API
-    const loginURL = 'http://localhost:4567/login'
-    const newUserURL = 'http://localhost:4567/createuser'
-    const userURL = 'http://localhost:4567/api/user'
+    const loginURL = 'http://localhost:8080/authenticate'
+    const newUserURL = 'http://localhost:8080/register'
+    const userURL = 'http://localhost:8080/user'
 
-    //POST Login to the application using username and password
-    export const userLogin = async (user, pass) => {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                username: user,
-                password: pass
-            })
-        };
-        const response = await fetch(loginURL, options)
-        const data = await response.json()
-        localStorage.setItem('auth', data.data) // Save auth token to the local storage
-        return data
-    }
-
-    //GET get the user data
-    export const getUser = async () => {
-        return axios.get(userURL, {
-            headers: {
-              'Authorization': 'Basic ' + localStorage.getItem('auth')
-            }
-        }).then(res => {return res.data})
-        
-    }
-
-    export const newUser2 = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
-        axios({
-            method: 'POST',
-            url: newUserURL,
-            data: {username: username, password: password, nimi: nimi, osoite: osoite, postitoimipaikka: postitoimipaikka, sahkoposti: sahkoposti, tilinro: tilinro, ytunnus: ytunnus}
+    //Login to the application using username and password
+    export async function userLogin(user, pass) {
+        const response = await axios.post(loginURL, {
+            username: user,
+            password: pass
         })
-        console.log(username)
+        return response
+    }
+
+    //Get the user data
+    export async function getUser() {
+        const response = await axios.get(userURL, {
+            headers: { 'Authorization': localStorage.getItem('auth')}
+        })
+        return response
     }
 
     //POST create new user
-    export const newUser = (username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus) => {
-        const options = {
-            method: 'POST',
-            body: JSON.stringify({
-                "username": username,
-                "password": password,
-                nimi: nimi,
-                osoite: osoite,
-                postitoimipaikka: postitoimipaikka,
-                sahkoposti: sahkoposti,
-                tilinro: tilinro,
-                ytunnus: ytunnus
-            })
-        };
-        fetch(newUserURL, options)
-        .then(response => {
-        console.log(response.status);
-        });
+    export async function newUser(username,password,name,address,city,email,bankAccount,vatID) {
+        const response = await axios.post(newUserURL,{
+            username: username,
+            password: password,
+            name: name,
+            address: address,
+            city: city,
+            email: email,
+            bankAccount :bankAccount,
+            vatID: vatID
+        })
+        return response
     }
+
 
     const UserDataService = (props) => {
     }

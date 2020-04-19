@@ -5,8 +5,8 @@ export const useField = (type) => {
     const [value, setValue] = useState('')
     const [date, setDate] = useState(new Date())
     const [price, setPrice] = useState(0)
-    const [products, setProducts] = useState([])
-
+    const [array, setArray] = useState([])
+    
     const onChange = (event) => {
         setValue(event.target.value)
     }
@@ -19,19 +19,19 @@ export const useField = (type) => {
         setPrice(event.target.value)
     }
 
-    const onChangeProduct = (event) => {
-        setProducts(event.target.value)
+    const onChangeArray = (event) => {
+        setArray(event.target.value)
     }
 
     const reset = () => {
         setValue('')
         setDate(new Date())
         setPrice(0)
-        setProducts([])
+        setArray([])
     }
 
-    const setProduct = (obj) => {
-        setProducts(obj)
+    const setArrayData = (obj) => {
+        setArray(obj)
     }
 
     const setPrices = (price) => {
@@ -39,16 +39,17 @@ export const useField = (type) => {
     }
 
     return {
+        setValue,
         type,
         value,
         date,
         price,
-        products,
+        array,
         onChange,
         onChangeDate,
         onChangePrice,
-        onChangeProduct,
-        setProduct,
+        onChangeArray,
+        setArrayData,
         setPrices,
         reset
     }

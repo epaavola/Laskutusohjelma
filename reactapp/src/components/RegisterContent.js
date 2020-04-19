@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import 'typeface-roboto'
 import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,9 +6,11 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {newUser} from '../service/UserDataService'
+import { useField } from '../hooks/UseFields'
+import strings from "../LocalizedStrings"
 
 /**
- *  Registration form for registration
+ *  Registration form for new user registration
  */
 
 const useStyles  = makeStyles({
@@ -39,65 +41,43 @@ const useStyles  = makeStyles({
 
 const Registeration = (props) => {
 
+    //Variables
+    const username = useField('username')
+    const password = useField('password')
+    const name = useField('name')
+    const address = useField('address')
+    const city = useField('city')
+    const email = useField('email')
+    const vatID = useField('vatID')
+    const bankAccount = useField('bankAccount')
+
     //States
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [nimi, setNimi] = useState('')
-    const [osoite, setOsoite] = useState('')
-    const [postitoimipaikka, setPostitoimipaikka] = useState('')
-    const [sahkoposti, setSahkoposti] = useState('')
-    const [ytunnus, setYtunnus] = useState('')
-    const [tilinro, setTilinro] = useState('')
+    const [isRegistered, setIsRegistered] = useState(0)
 
     //Handle register
     const onSubmit = async (event) => {
         event.preventDefault()
-        await newUser(username,password,nimi,osoite,postitoimipaikka,sahkoposti,tilinro,ytunnus)
-        
-        if (window.confirm('Haluatko heti kirjautua sisään?')) {
-            props.history.push('/dashboard')
-        } else {
-            props.history.push('/')
-        }
-        
+        newUser(username.value,password.value,name.value,address.value,city.value,email.value,bankAccount.value,vatID.value)
+        .then(response => setIsRegistered(response.status)) 
     }
 
-    //Handle inputs
-    const handleUserameChange = (event) => {
-        setUsername(event.target.value)
-    }
-    const handlePasswordChange = (event) => {
-        setPassword(event.target.value)
-    }
-    const handleNimiChange = (event) => {
-        setNimi(event.target.value)
-    }
-    const handleOsoiteChange = (event) => {
-        setOsoite(event.target.value)
-    }
-    const handlePostitoimipaikkaChange = (event) => {
-        setPostitoimipaikka(event.target.value)
-    }
-    const handleSahkopostiChange = (event) => {
-        setSahkoposti(event.target.value)
-    }
-    const handleYtunnusChange = (event) => {
-        setYtunnus(event.target.value)
-    }
-    const handleTilinroChange = (event) => {
-        setTilinro(event.target.value)
-    }
+    // Move to the dashboard after login is OK
+    useEffect(() => {
+        if(isRegistered === 200)
+            props.history.push('/')
+        }, [isRegistered]) 
+
     const classes = useStyles()
     return (
         
         <div className={classes.container}>   
             <div className={classes.registerInput}>
                 <Typography variant="h3" color="primary">
-                    Syötä tietosi
+                    {strings.enterInfo}
                 </Typography>
                 <br></br>
                 <Typography>
-                    * = pakollinen tieto
+                    * = {strings.required}
                 </Typography>
             </div>
             <div>
@@ -109,8 +89,8 @@ const Registeration = (props) => {
                             label="Käyttäjänimi*"
                             type="text"
                             fullWidth
-                            value={username}
-                            onChange={handleUserameChange}
+                            value={username.value}
+                            onChange={username.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -118,8 +98,8 @@ const Registeration = (props) => {
                             label="Salasana*"
                             type="password"
                             fullWidth
-                            value={password}
-                            onChange={handlePasswordChange}
+                            value={password.value}
+                            onChange={password.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -127,8 +107,8 @@ const Registeration = (props) => {
                             label="Yritys*"
                             type="text"
                             fullWidth
-                            value={nimi}
-                            onChange={handleNimiChange}
+                            value={name.value}
+                            onChange={name.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -136,8 +116,8 @@ const Registeration = (props) => {
                             label="Sähköpostiosoite*"
                             type="text"
                             fullWidth
-                            value={sahkoposti}
-                            onChange={handleSahkopostiChange}
+                            value={email.value}
+                            onChange={email.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -145,8 +125,8 @@ const Registeration = (props) => {
                             label="Y-tunnus"
                             type="text"
                             fullWidth
-                            value={ytunnus}
-                            onChange={handleYtunnusChange}
+                            value={vatID.value}
+                            onChange={vatID.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -154,8 +134,8 @@ const Registeration = (props) => {
                             label="Postiosoite"
                             type="text"
                             fullWidth
-                            value={osoite}
-                            onChange={handleOsoiteChange}
+                            value={address.value}
+                            onChange={address.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -163,8 +143,8 @@ const Registeration = (props) => {
                             label="Postitoimipaikka"
                             type="text"
                             fullWidth
-                            value={postitoimipaikka}
-                            onChange={handlePostitoimipaikkaChange}
+                            value={city.value}
+                            onChange={city.onChange}
                         />
                         <TextField 
                             className={classes.registerTextField} 
@@ -172,11 +152,11 @@ const Registeration = (props) => {
                             label="Tilinumero"
                             type="text"
                             fullWidth
-                            value={tilinro}
-                            onChange={handleTilinroChange}
+                            value={bankAccount.value}
+                            onChange={bankAccount.onChange}
                         />
                         <Button variant="contained" color="primary" type="submit">
-                            Rekisteröidy
+                            {strings.signup}
                         </Button>
                     </div>
                 </form>

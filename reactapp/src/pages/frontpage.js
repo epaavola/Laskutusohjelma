@@ -1,13 +1,14 @@
 import React from 'react'
 import 'typeface-roboto'
 import Login from '../components/LoginContent'
-import LoginNavbar from '../components/LoginNavbar'
+import Register from '../components/RegisterContent'
+import NavigationBar from '../components/NavigationBar'
 
-const Frontpage = () => {
+const Frontpage = (props) => {
       return (
             <>
-                <LoginNavbar />
-                <Login />
+                <NavigationBar store={props.store} />
+                {window.location.pathname === ("/registration") ? <Register/> : <Login/>}
             </>
       );
     }

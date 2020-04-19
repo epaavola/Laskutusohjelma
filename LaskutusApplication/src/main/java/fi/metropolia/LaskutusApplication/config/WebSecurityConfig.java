@@ -15,47 +15,51 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-@Autowired
-private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-@Autowired
-private UserDetailsService jwtUserDetailsService;
-@Autowired
-private JwtRequestFilter jwtRequestFilter;
-@Autowired
-public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	// konfiguroi AuthenticationManagerin, jotta tietää mistä ladata oikea käyttäjä
-	// käyttää BCryptPasswordEncoder:ia
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private UserDetailsService jwtUserDetailsService;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
-auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
-}
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        // konfiguroi AuthenticationManagerin, jotta tietää mistä ladata oikea käyttäjä
+        // käyttää BCryptPasswordEncoder:ia
 
-
-
-@Bean
-public PasswordEncoder passwordEncoder() {
-return new BCryptPasswordEncoder();
-}
-@Bean
-@Override
-public AuthenticationManager authenticationManagerBean() throws Exception {
-return super.authenticationManagerBean();
-}
-@Override
-protected void configure(HttpSecurity httpSecurity) throws Exception {
-httpSecurity.csrf().disable()
-// tätä pyyntöä ei autentikoida
-.authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
-// muut pyynnot autentikoidaan
-anyRequest().authenticated().and().
+        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
+    }
 
 
-exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//Lisää filterin validoidakseen tokenin jokaisella pyynnöllä
-httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
-}
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.csrf().disable()
+        // tätä pyyntöä ei autentikoida
+                .authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
+        // muut pyynnot autentikoidaan
+        anyRequest().authenticated().and().
+                exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        //Lisää filterin validoidakseen tokenin jokaisella pyynnöllä
+        httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.cors();
+    }
 }

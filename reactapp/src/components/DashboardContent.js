@@ -7,6 +7,12 @@ import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper';
 import { getUser } from '../service/UserDataService';
 import { withRouter } from 'react-router-dom';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
+import strings from "../LocalizedStrings"
 
 /**
  * Content of dashboard page
@@ -14,11 +20,14 @@ import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     root: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'center',
-      paddingLeft: theme.spacing(5),
-      marginTop: theme.spacing(5),
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingLeft: theme.spacing(5),
+        marginTop: theme.spacing(5),
+    },
+    table: {
+        color: "primary",
     },
     buttonContainer: {
         display: 'flex',
@@ -73,7 +82,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const DashboardContent = (props) => {
+const DashboardContent = () => {
 
     //Style
     const classes = useStyles();
@@ -82,12 +91,13 @@ const DashboardContent = (props) => {
     const [user, setUser] = useState([])
 
     //Get user data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getUser().then(response => setUser(response.data))    
-        })();  
+    useEffect(() => {       
+            showUserData()
       }, []);
 
+    function showUserData() {
+        getUser().then(res => setUser(res.data))
+    }
 
     //return  
     return(
@@ -95,39 +105,69 @@ const DashboardContent = (props) => {
         <div className={classes.userInfo}>
             <Paper className={classes.paperUserInfo}>
                 <Typography variant="h4" color="primary" className={classes.paperUserInfoHeader}>
-                    Omat tiedot
+                    {strings.info}
                 </Typography>
-                <Typography variant="body1" color="primary" style={{paddingTop: '1em'}}>
-                        <b>Yritys :</b> {user.nimi} <br />
-                        <b>Nimi :</b> {user.username} <br />
-                        <b>Sähköposti :</b> {user.sahkoposti} <br />
-                        <b>Osoite :</b> {user.osoite} <br />
-                        <b>Postitoimipaikka :</b> {user.postitoimipaikka} <br />
-                        <b>Y-tunnus :</b> {user.ytunnus} <br />
-                        <b>Tilinumero :</b> {user.tilinro}     
-                </Typography>
+                <TableContainer>
+                    <Table>
+                        <TableBody>                  
+                            <TableRow>
+                                <TableCell>{strings.company} :</TableCell>
+                                <TableCell>{user.name}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.name} :</TableCell>
+                                <TableCell>{user.username}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.email} :</TableCell>
+                                <TableCell>{user.email}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.businessid} :</TableCell>
+                                <TableCell>{user.vatID}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.address} :</TableCell>
+                                <TableCell>{user.address}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.postal} :</TableCell>
+                                <TableCell>{user.city}</TableCell> 
+                            </TableRow>
+                            <TableRow>
+                                <TableCell>{strings.accnumber} :</TableCell>
+                                <TableCell>{user.bankAccount}</TableCell> 
+                            </TableRow>
+                            <TableRow>  
+                                <TableCell ><Button variant="contained" color="primary" 
+                                    onClick={console.log("Ei toiminnallisuutta")}>{strings.update}</Button></TableCell>
+                            </TableRow>
+            
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Paper>
         </div>
         <div className={classes.buttonContainer}>       
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/uusilasku">Uusi Lasku</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/uusilasku">{strings.newInvoice}</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/asiakkaat">Asiakkaat</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/asiakkaat">{strings.customers}</Button>
             </Paper>    
         </div>
         <div className={classes.buttonContainer}>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/arkisto">Arkisto</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/arkisto">{strings.archive}</Button>
             </Paper>
             <Paper className={classes.paperButton} elevation={3}>
-                <Button className={classes.buttonMain} component={Link} to ="/asetukset">Asetukset</Button>
+                <Button className={classes.buttonMain} component={Link} to ="/asetukset">{strings.settings}</Button>
             </Paper>
         </div>
         <div className={classes.latestInvoice}>
             <Paper className={classes.paperLatestInvoice}>
             <Typography variant="h4" color="primary">
-                    Viimeisimmät laskut
+                    {strings.latestInvoices}
                 </Typography>
             </Paper>
         </div>

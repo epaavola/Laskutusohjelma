@@ -12,7 +12,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import {getClients} from '../service/ClientDataService'
+import {getCustomers} from '../service/ClientDataService'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -33,6 +33,7 @@ import {
 } from '@material-ui/pickers';
 import { useField } from '../hooks/UseFields'
 import { getALVdata, getBankData } from '../components/DataVariables'
+import strings from "../LocalizedStrings.js"
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -118,6 +119,9 @@ const UusiLaskuContent = (props) => {
     const alvKannat = getALVdata()
     const pankit = getBankData()
 
+    const customers = useField([])
+    const customerActive = useField([])
+    const customer = useField('')
     const invoiceReceiverName = useField('invoiceReceiverName')
     const invoiceReceiverContactPerson = useField('invoiceReceiverContactPerson')
     const invoiceReceiverPostAddress = useField('invoiceReceiverPostAddress')
@@ -147,37 +151,52 @@ const UusiLaskuContent = (props) => {
     const alvKanta = useField('')
     const products = useField([])
     const bank = useField('')
-    const client = useField('')
-
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [tempProduct, setTempProduct] = useState('')
+    let netPrice
+    let tax
+    let gross
 
-    //States
-    const [user, setUser] = useState([])
-    const [clients, setClients] = useState([])
-    //Get customers data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getClients().then(response => setClients(response.data))      
-        })();
-      });
+    //Run fetch functions on page load
+    useEffect(() => {       
+        showCustomerData()
+        showUserData()
+    }, []);
+
+    // Get customers from database
+    function showCustomerData() {
+        getCustomers().then(res => {
+            customers.setArrayData(res.data)
+        })
+    }
+    // Get the user data from database and fill the 'Omat tiedot' form
+    function showUserData() {
+        getUser().then(res => {
+            billerName.setValue(res.data.name)
+            billerPostAddress.setValue(res.data.address)
+            billerPostalCode.setValue(res.data.city)
+            billerBusinessId.setValue(res.data.vatID)
+            billerAccountNumber.setValue(res.data.bankAccount)
+        })    
+    }
 
     //Button to clear states  
     const emptyTextFields = (event) => {
         window.location.reload(false);
     }
 
-    const handleAddingProduct = (event) => {
-        event.preventDefault()
+    const handleAddingProduct = () => {
+        console.log('product price net tultaessa addingiin', productPriceNet.price)
         const productObject = {
             name: productName.value,
             amount: productAmount.value,
             price: productPrice.value,
             alvKanta: alvKanta.value
         }
-        products.setProduct(products.products.concat(productObject))
-        let netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
-        let tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
-        let gross = Math.round((netPrice + tax) * 100) / 100
+        products.setArrayData(products.array.concat(productObject))
+        netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
+        tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
+        gross = Math.round((netPrice + tax) * 100) / 100
         productPriceNet.setPrices(netPrice)
         productPriceTax.setPrices(tax)
         productPriceGross.setPrices(gross)
@@ -185,73 +204,45 @@ const UusiLaskuContent = (props) => {
         productPrice.reset()
         productAmount.reset()
         alvKanta.reset()
+        setDialogOpen(false)
     }
 
-    const openDialog = () => {
+    const openDialog = (name) => {
         setDialogOpen(true)
-        handleUpdatingProduct()
+        setTempProduct(name)
     }
 
     const closeDialog = () => {
         setDialogOpen(false)
     }
 
-    const handleUpdatingProduct = () => {
-        console.log('päivitä painettu')
-        console.log('dialogopen: ', dialogOpen)
-        return (
-            <div>
-                <Dialog open={openDialog} onClose={closeDialog} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                        To subscribe to this website, please enter your email address here. We will send updates
-                        occasionally.
-                        </DialogContentText>
-                        <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={closeDialog} color="primary">
-                        Cancel
-                        </Button>
-                        <Button onClick={closeDialog} color="primary">
-                        Subscribe
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </div>
-        )
-    }
-
     const handleDeletingProduct = (name) => {
-       const productToDelete = products.products.find(product => product.name === name)
-       products.setProduct(products.products.filter(product => product.name !== productToDelete.name))
-       const indexToDelete = products.products.indexOf(productToDelete)
-       products.products.splice(indexToDelete, 1)
+        const productToDelete = products.array.find(product => product.name === name)
+        netPrice = Math.round((productPriceNet.price - productToDelete.price * productToDelete.amount) * 100) / 100
+        tax = Math.round((productPriceTax.price - productToDelete.price * productToDelete.amount * (productToDelete.alvKanta / 100)) * 100 ) / 100
+        gross = Math.round((netPrice + tax) * 100) / 100
+        console.log(netPrice)
+        productPriceNet.setPrices(netPrice)
+        productPriceTax.setPrices(tax)
+        productPriceGross.setPrices(gross)
+        console.log('price net kun deleten update valmis', productPriceNet.price)
+        products.setArrayData(products.array.filter(product => product.name !== productToDelete.name))
+        const indexToDelete = products.array.indexOf(productToDelete)
+        products.array.splice(indexToDelete, 1)
+        if (tempProduct !== '') {
+            handleAddingProduct()
+        }
+        setTempProduct('')
     }
-
-    //Get user data from database through API
-    useEffect(() => {
-        (async function fetchData() {
-            await getUser().then(response => setUser(response.data))    
-        })();  
-      }, []);
 
     return (
         <div>
             <div className={classes.title}>
                 <Typography variant="h2" color="primary" className={classes.header1}>
-                    Luo uusi lasku
+                    {strings.newInvoice}
                 </Typography>
                 <Button variant="contained" color="secondary" className={classes.emptyButton} onClick={emptyTextFields}>
-                    Tyhjennä
+                    {strings.clear}
                 </Button>
             </div>
             <form className={classes.form}>
@@ -259,7 +250,7 @@ const UusiLaskuContent = (props) => {
                 <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Omat tiedot
+                                {strings.info}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
@@ -328,23 +319,23 @@ const UusiLaskuContent = (props) => {
                         <CardContent>
                             <Typography variant="h6" color="secondary">
                                 Laskunsaajan tiedot
-                            <FormControl variant="standard" className={classes.formControl}>
-                                <InputLabel id="asiakasDropdown">
-                                    Valitse Asiakas
-                                </InputLabel>
-                                <Select
-                                    labelId="asiakasDropdownLabel"
-                                    id="asiakasDropdown"
-                                    value={client.value}
-                                    onChange={client.onChange}   
-                                >
-                                <MenuItem value="">
-                                    <em>Tyhjä</em>
-                                </MenuItem>
-                                <MenuItem value={'getValueFromAPI'}>Asiakas 1</MenuItem>
-                                </Select>
-                            </FormControl>
                             </Typography>
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard" 
+                                select 
+                                label="Asiakas"
+                                type="text"
+                                fullWidth
+                                value={customer.value}
+                                onChange={customer.onChange}
+                            >
+                                {customers.array.map(asiakas => (
+                                    <MenuItem key={asiakas.company} value={asiakas.company}>
+                                        {asiakas.company}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
@@ -395,7 +386,7 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Laskun tiedot
+                                {strings.invoiceInfo}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
@@ -542,7 +533,7 @@ const UusiLaskuContent = (props) => {
                     Tuotteet laskulla
             </Typography>
             <div className={classes.productsCard}>
-                {products.products.length === 0 ? 
+                {products.array.length === 0 ? 
                     <Typography variant="h6" color="secondary">
                     Ei vielä lisättyjä tuotteita
                     </Typography>
@@ -558,20 +549,82 @@ const UusiLaskuContent = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {products.products.map(product => (
+                            {products.array.map(product => (
                                 <TableRow key={product.name}>
                                     <TableCell component="th" scope="row">{product.name}</TableCell>
                                     <TableCell>{product.amount}</TableCell>
                                     <TableCell>{product.price}</TableCell>
                                     <TableCell>{product.alvKanta}</TableCell>
-                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" onClick={() => openDialog()}>Päivitä</Button></TableCell>
+                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" 
+                                        onClick={() => openDialog(product.name)}>Päivitä</Button></TableCell>
                                     <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>}
-                {products.products.length === 0 ?
+                <div>
+                    <Dialog open={dialogOpen} onClose={closeDialog} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Tuotteen päivitys</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                            Päivittääksesi tuotteen, syötä tuotteet kaikki tiedot uudelleen ja paina päivitä. Paina peruuta peruuttaaksesi.
+                            </DialogContentText>
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard" 
+                                label="Tuotteen uusi nimi"
+                                type="text"
+                                fullWidth
+                                value={productName.value}
+                                onChange={productName.onChange}
+                            />
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard" 
+                                label="Uusi kappalemäärä"
+                                type="text"
+                                fullWidth
+                                value={productAmount.value}
+                                onChange={productAmount.onChange}
+                            />
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard" 
+                                label="Uusi hinta, € (veroton)"
+                                type="text"
+                                fullWidth
+                                value={productPrice.value}
+                                onChange={productPrice.onChange}
+                            />
+                            <TextField
+                                className={classes.TextField}
+                                variant="standard"
+                                select 
+                                label="Uusi ALV-kanta"
+                                type="text"
+                                fullWidth
+                                value={alvKanta.value}
+                                onChange={alvKanta.onChange}
+                            >
+                                {alvKannat.map(kanta => (
+                                    <MenuItem key={kanta.value} value={kanta.value}>
+                                        {kanta.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={closeDialog} color="primary">
+                            Peruuta
+                            </Button>
+                            <Button onClick={() => { handleDeletingProduct(tempProduct) }} color="primary">
+                            Päivitä
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+                {products.array.length === 0 ?
                     ''
                 : 
                 <div className={classes.total}>
