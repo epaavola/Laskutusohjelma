@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import {newUser} from '../service/UserDataService'
 import { useField } from '../hooks/UseFields'
+import strings from "../LocalizedStrings"
 
 /**
  *  Registration form for new user registration
@@ -72,11 +73,11 @@ const Registeration = (props) => {
         <div className={classes.container}>   
             <div className={classes.registerInput}>
                 <Typography variant="h3" color="primary">
-                    Syötä tietosi
+                    {strings.enterInfo}
                 </Typography>
                 <br></br>
                 <Typography>
-                    * = pakollinen tieto
+                    * = {strings.required}
                 </Typography>
             </div>
             <div>
@@ -155,7 +156,7 @@ const Registeration = (props) => {
                             onChange={bankAccount.onChange}
                         />
                         <Button variant="contained" color="primary" type="submit">
-                            Rekisteröidy
+                            {strings.signup}
                         </Button>
                     </div>
                 </form>

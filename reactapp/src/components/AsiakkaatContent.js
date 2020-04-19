@@ -3,15 +3,15 @@ import 'typeface-roboto'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import { Paper } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import { getCustomers, newClient, deleteClient, updateClient } from '../service/ClientDataService';
-
+import { makeStyles } from '@material-ui/core/styles'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableContainer from '@material-ui/core/TableContainer'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import { getCustomers, newClient, deleteClient, updateClient } from '../service/ClientDataService'
+import strings from "../LocalizedStrings"
 
 const useStyles = makeStyles(theme => ({
     title: {
@@ -65,7 +65,7 @@ const AsiakkaatContent = (props) => {
         <div>
             <div className={classes.title}>
                 <Typography variant="h2" color="primary" className={classes.header1}>
-                    Asiakkaat
+                    {strings.customers}
                 </Typography>
                 <Button className={classes.newAsiakasButton} variant="contained" color="primary" onClick={(e) => {newClient(); setUpdatePage(!updatePage)}}>Lisää uusi asiakas</Button>
             </div>
@@ -74,12 +74,12 @@ const AsiakkaatContent = (props) => {
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
-                                <TableCell align="center">Yrityksen Nimi</TableCell>
-                                <TableCell align="center">Yhteyshenkilö</TableCell>
-                                <TableCell align="center">Y-tunnus</TableCell>                       
-                                <TableCell align="center">Osoite</TableCell>
-                                <TableCell align="center">Postitoimipaikka</TableCell>
-                                <TableCell align="center">Sähköposti</TableCell>
+                                <TableCell align="center">{strings.companyName}</TableCell>
+                                <TableCell align="center">{strings.contactP}</TableCell>
+                                <TableCell align="center">{strings.businessid}</TableCell>                       
+                                <TableCell align="center">{strings.address}</TableCell>
+                                <TableCell align="center">{strings.postal}</TableCell>
+                                <TableCell align="center">{strings.email}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>                  
@@ -92,9 +92,9 @@ const AsiakkaatContent = (props) => {
                                     <TableCell align="center">{customer.city}</TableCell>
                                     <TableCell align="center">{customer.email}</TableCell>
                                     <TableCell ><Button variant="contained" color="primary" 
-                                        onClick={(e) => {updateClient(customer.company, e); setUpdatePage(!updatePage)}}>Päivitä</Button></TableCell>
+                                        onClick={(e) => {updateClient(customer.company, e); setUpdatePage(!updatePage)}}>{strings.update}</Button></TableCell>
                                     <TableCell ><Button variant="contained" color="secondary" 
-                                        onClick={(e) => {deleteClient(customer.company, e); setUpdatePage(!updatePage)}}>Poista</Button></TableCell>
+                                        onClick={(e) => {deleteClient(customer.company, e); setUpdatePage(!updatePage)}}>{strings.delete}</Button></TableCell>
                                     </TableRow>
                             ))}
                         </TableBody>

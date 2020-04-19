@@ -5,6 +5,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import strings from "../LocalizedStrings"
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -31,6 +32,7 @@ const ButtonAppBar = (props) => {
     }
 
     const changeLangFi = () => {
+        console.log(props)
         props.store.dispatch({ type: "fi" })
     }
     const changeLangEn = () => {
@@ -56,21 +58,21 @@ const ButtonAppBar = (props) => {
         <>
             <div className={classes.root}>
                 <AppBar position="static">
-                    {window.location.pathname.localeCompare("/registration") ?
+                    {window.location.pathname === ("/registration") ?
+                        <Toolbar>
+                            <Typography variant="h6" className={classes.title}>
+                                Laskutusohjelma - {strings.signup}
+                            </Typography>
+                            <LangSelect />
+                            <Button color="inherit" onClick={Login}>{strings.signin}</Button>
+                        </Toolbar>
+                        :
                         <Toolbar>
                             <Typography variant="h6" className={classes.title}>
                                 Laskutusohjelma
                             </Typography>
                             <LangSelect />
-                            <Button color="inherit" onClick={Register}>Rekisteröidy</Button>
-                        </Toolbar>
-                        :
-                        <Toolbar>
-                            <Typography variant="h6" className={classes.title}>
-                                Laskutusohjelma - Rekisteröityminen
-                            </Typography>
-                            <LangSelect />
-                            <Button color="inherit" onClick={Login}>Kirjaudu sisään</Button>
+                            <Button color="inherit" onClick={Register}>{strings.signup}</Button>
                         </Toolbar>
                     }
                 </AppBar>

@@ -1,7 +1,8 @@
 import React from 'react'
 import 'typeface-roboto'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
+import strings from "../LocalizedStrings"
 
 
 const useStyles = makeStyles(theme => ({
@@ -36,7 +37,7 @@ const AboutContent = (props) => {
         <div>
             <div className={classes.title}>
                 <Typography variant="h2" color="primary" className={classes.header1}>
-                    Tietoa Meistä
+                    {strings.about}
                 </Typography>         
             </div>
         </div>

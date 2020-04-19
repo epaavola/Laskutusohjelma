@@ -21,6 +21,8 @@ import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import InfoIcon from '@material-ui/icons/Info';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import strings from "../LocalizedStrings"
+import LocalizedStrings from 'react-localization';
 
 const drawerWidth = 300;
 
@@ -107,19 +109,19 @@ const DashboardNavbar = (props) => {
   const programState = () => {
     switch (props.history.location.pathname) {
       case '/dashboard':
-        return 'Etusivu'
+        return strings.front
       case '/uusilasku':
-        return 'Uusi lasku'
+        return strings.newInvoice
       case '/asiakkaat':
-        return 'Asiakkaat'
+        return strings.customers
       case '/asetukset':
-        return 'Asetukset'
+        return strings.settings
       case '/FAQ':
-        return 'Usein kysytyt kysymykset'
+        return 'FAQ'
       case '/arkisto':
-        return 'Arkisto'
+        return strings.archive
       case '/tietoameista':
-        return 'Tietoa meistä'
+        return strings.about
       default:
         return 'Laskutusohjelma'
     }
@@ -140,13 +142,13 @@ const DashboardNavbar = (props) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" className={classes.title} onClick={handleDashboard}>
-              Etusivulle
+              {strings.toFrontpage}
               </Typography>
             <Typography variant="h6" className={classes.state}>
               Laskutusohjelma - {programState()}
             </Typography>
             <LangSelect />
-            <Button color="inherit" onClick={handleLogout}>Kirjaudu ulos</Button>
+            <Button color="inherit" onClick={handleLogout}>{strings.logout}</Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -162,31 +164,31 @@ const DashboardNavbar = (props) => {
                 <ListItemIcon>
                   <KeyboardArrowRightIcon />
                 </ListItemIcon>
-                <ListItemText primary="Etusivu" />
+                <ListItemText primary={strings.front} />
               </ListItem>
               <ListItem button component={Link} to="/uusilasku">
                 <ListItemIcon>
                   <InsertDriveFile />
                 </ListItemIcon>
-                <ListItemText primary="Uusi Lasku" />
+                <ListItemText primary={strings.newInvoice} />
               </ListItem>
               <ListItem button component={Link} to="/asiakkaat">
                 <ListItemIcon>
                   <AccountCircle />
                 </ListItemIcon>
-                <ListItemText primary="Asiakkaat" />
+                <ListItemText primary={strings.newCustomer} />
               </ListItem>
               <ListItem button component={Link} to="/arkisto">
                 <ListItemIcon>
                   <InboxIcon />
                 </ListItemIcon>
-                <ListItemText primary="Arkisto" />
+                <ListItemText primary={strings.archive} />
               </ListItem>
               <ListItem button component={Link} to="/asetukset">
                 <ListItemIcon>
                   <Settings />
                 </ListItemIcon>
-                <ListItemText primary="Asetukset" />
+                <ListItemText primary={strings.settings} />
               </ListItem>
               <ListItem button component={Link} to="/FAQ" >
                 <ListItemIcon>
@@ -198,7 +200,7 @@ const DashboardNavbar = (props) => {
                 <ListItemIcon>
                   <InfoIcon />
                 </ListItemIcon>
-                <ListItemText primary="Tietoa meistä" />
+                <ListItemText primary={strings.about} />
               </ListItem>
             </List>) : null}
           <Divider />

@@ -2,8 +2,13 @@ import LocalizedStrings from 'react-localization';
  
 let strings = new LocalizedStrings({
  en:{
+   front:"Frontpage",
    info:"Your info",
+   invoiceRec:"Invoice receiver",
+   invoiceInfo:"Invoice information",
    company:"Company",
+   companyName:"Company name",
+   contactP:"Contact person",
    name:"Name",
    email:"Email",
    address:"Address",
@@ -16,11 +21,26 @@ let strings = new LocalizedStrings({
    customers:"Customers",
    archive:"Archive",
    settings:"Settings",
-   update:"Update"
+   update:"Update",
+   delete:"Delete",
+   enterInfo:"Enter your info",
+   signin:"Sign in",
+   signinInfo:"Sign-in info",
+   signup:"Sign up",
+   logout:"Log out",
+   about:"About us",
+   toFrontpage:"To main page",
+   required:"Required field",
+   clear:"Clear"
  },
  fi: {
+   front:"Etusivu",
    info:"Omat tiedot",
+   invoiceRec:"Laskun vastaanottaja",
+   invoiceInfo:"Laskun tiedot",
    company:"Yritys",
+   companyName:"Yrityksen nimi",
+   contactP:"Yhteyshenkilö",
    name:"Nimi",
    email:"Sähköposti",
    address:"Osoite",
@@ -33,11 +53,26 @@ let strings = new LocalizedStrings({
    customers:"Asiakkaat",
    archive:"Arkisto",
    settings:"Asetukset",
-   update:"Päiviä"
+   update:"Päivitä",
+   delete:"Poista",
+   enterInfo:"Syötä tietosi",
+   signin:"Kirjaudu sisään",
+   signinInfo:"Kirjautumistiedot",
+   signup:"Rekisteröityminen",
+   logout:"Kirjaudu ulos",
+   about:"Tietoa meistä",
+   toFrontpage:"Etusivulle",
+   required:"Pakollinen kenttä",
+   clear:"Tyhjennä"
  },
  alb: {
+  front:"Faqja Kryesore",
   info:"Informacione vetanake",
+  invoiceRec:"Marrësi i faturës",
+  invoiceInfo:"Informacione për faturën",
   company:"Kompani",
+  companyName:"Emri i Kompanise",
+  contactP:"Personi i kontaktit",
   name:"Emër",
   email:"Email",
   address:"Adresë",
@@ -50,7 +85,17 @@ let strings = new LocalizedStrings({
   customers:"Klientët",
   archive:"Arkivi",
   settings:"Faqosje",
-  update:"LISÄÄ ALBANIA UPDATE"
+  update:"Përditësimi",
+  enterInfo:"Shkruani informacionin tuaj",
+  delete:"Fshij",
+  signin:"Hyni",
+  signinInfo:"Informacioni i hyrjes",
+  signup:"Regjistrohu",
+  logout:"Shkyç",
+  about:"Rreth nesh",
+  toFrontpage:"Te faqja kryesore",
+  required:"Fusha e kërkuar",
+  clear:"Qartë"
  }
 });
 

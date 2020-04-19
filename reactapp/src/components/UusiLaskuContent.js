@@ -28,6 +28,7 @@ import {
 } from '@material-ui/pickers';
 import { useField } from '../hooks/UseFields'
 import { getALVdata, getBankData } from '../components/DataVariables'
+import strings from "../LocalizedStrings"
 
 const useStyles  = makeStyles(theme => ({
     title: {
@@ -205,10 +206,10 @@ const UusiLaskuContent = (props) => {
         <div>
             <div className={classes.title}>
                 <Typography variant="h2" color="primary" className={classes.header1}>
-                    Luo uusi lasku
+                    {strings.newInvoice}
                 </Typography>
                 <Button variant="contained" color="secondary" className={classes.emptyButton} onClick={emptyTextFields}>
-                    Tyhjennä
+                    {strings.clear}
                 </Button>
             </div>
             <form className={classes.form}>
@@ -216,7 +217,7 @@ const UusiLaskuContent = (props) => {
                 <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Omat tiedot
+                                {strings.info}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
@@ -284,10 +285,10 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Laskunsaajan tiedot
+                                {strings.invoiceRec}
                             <FormControl variant="standard" className={classes.formControl}>
                                 <InputLabel id="asiakasDropdown">
-                                    Valitse Asiakas
+                                    {strings.customers}
                                 </InputLabel>
                                 <Select
                                     labelId="asiakasDropdownLabel"
@@ -352,7 +353,7 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Laskun tiedot
+                                {strings.invoiceInfo}
                             </Typography>
                             <TextField
                                 className={classes.TextField}

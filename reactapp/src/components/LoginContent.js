@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
 import 'typeface-roboto'
 import { withRouter } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,7 +6,8 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import AppIcon from '../images/Laskutuslogo.png'
-import { userLogin } from '../service/UserDataService';
+import { userLogin } from '../service/UserDataService'
+import strings from "../LocalizedStrings"
 
 /**
  *  Login form for login page
@@ -74,7 +75,7 @@ const Frontpage = (props) => {
             <div className={classes.loginInput}>
             <img src={AppIcon} alt="Laskutusohjelman logo" className={classes.image}></img>
                 <Typography variant="h3" color="primary">
-                    Syötä kirjautumistietosi
+                    {strings.signinInfo}
                 </Typography>
             </div>
             <div>
@@ -97,7 +98,7 @@ const Frontpage = (props) => {
                             onChange={e => setPassword(e.target.value)}
                         />
                         <Button variant="contained" color="primary" disabled={!validateForm()} type="submit" >
-                            Kirjaudu sisään
+                            {strings.signin}
                         </Button>
                     </div>                   
                 </form>

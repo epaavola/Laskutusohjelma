@@ -7,7 +7,7 @@ import NavigationBar from '../components/NavigationBar'
 const Frontpage = (props) => {
       return (
             <>
-                <NavigationBar />
+                <NavigationBar store={props.store} />
                 {window.location.pathname === ("/registration") ? <Register/> : <Login/>}
             </>
       );
