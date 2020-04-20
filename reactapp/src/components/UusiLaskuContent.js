@@ -204,7 +204,6 @@ const UusiLaskuContent = (props) => {
         productPrice.reset()
         productAmount.reset()
         alvKanta.reset()
-        setDialogOpen(false)
     }
 
     const openDialog = (name) => {
@@ -214,6 +213,30 @@ const UusiLaskuContent = (props) => {
 
     const closeDialog = () => {
         setDialogOpen(false)
+    }
+
+    const handleUpdatingProduct = (name) => {
+        var productToUpdate = products.array.find(product => product.name === name)
+        netPrice = Math.round(((productPriceNet.price + productPrice.value * productAmount.value) - (productToUpdate.price * productToUpdate.amount)) * 100) / 100
+        tax = Math.round(((productPriceTax.price + productPrice.value * productAmount.value * (alvKanta.value / 100)) 
+            - (productToUpdate.price * productToUpdate.amount * (productToUpdate.alvKanta / 100))) * 100 ) / 100
+        gross = Math.round((netPrice + tax) * 100) / 100
+        productPriceNet.setPrices(netPrice)
+        productPriceTax.setPrices(tax)
+        productPriceGross.setPrices(gross)
+        const indexToUpdate = products.array.indexOf(productToUpdate)
+        productToUpdate.name = productName.value
+        productToUpdate.amount = productAmount.value
+        productToUpdate.price = productPrice.value
+        productToUpdate.alvKanta = alvKanta.value
+        products.setArrayData(products.array.filter(product => product.name !== productToUpdate.name))
+        products.array.splice(indexToUpdate, 1)
+        products.setArrayData(products.array.concat(productToUpdate))
+        productName.reset()
+        productPrice.reset()
+        productAmount.reset()
+        alvKanta.reset()
+        setTempProduct('')
     }
 
     const handleDeletingProduct = (name) => {
@@ -229,10 +252,6 @@ const UusiLaskuContent = (props) => {
         products.setArrayData(products.array.filter(product => product.name !== productToDelete.name))
         const indexToDelete = products.array.indexOf(productToDelete)
         products.array.splice(indexToDelete, 1)
-        if (tempProduct !== '') {
-            handleAddingProduct()
-        }
-        setTempProduct('')
     }
 
     return (
@@ -615,10 +634,10 @@ const UusiLaskuContent = (props) => {
                             </TextField>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={closeDialog} color="primary">
+                            <Button onClick={closeDialog} variant="contained" color="secondary">
                             Peruuta
                             </Button>
-                            <Button onClick={() => { handleDeletingProduct(tempProduct) }} color="primary">
+                            <Button onClick={() => { handleUpdatingProduct(tempProduct); closeDialog() }} variant="contained" color="primary">
                             Päivitä
                             </Button>
                         </DialogActions>
