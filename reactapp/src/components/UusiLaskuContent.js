@@ -153,9 +153,9 @@ const UusiLaskuContent = (props) => {
     const bank = useField('')
     const [dialogOpen, setDialogOpen] = useState(false)
     const [tempProduct, setTempProduct] = useState('')
-    let netPrice
-    let tax
-    let gross
+    const netPrice = useField(0)
+    const tax = useField(0)
+    const gross = useField(0)
 
     //Run fetch functions on page load
     useEffect(() => {       
@@ -194,12 +194,12 @@ const UusiLaskuContent = (props) => {
             alvKanta: alvKanta.value
         }
         products.setArrayData(products.array.concat(productObject))
-        netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
-        tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
-        gross = Math.round((netPrice + tax) * 100) / 100
-        productPriceNet.setPrices(netPrice)
-        productPriceTax.setPrices(tax)
-        productPriceGross.setPrices(gross)
+        netPrice.setPrices(Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100)
+        tax.setPrices(Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100)
+        gross.setPrices(Math.round((netPrice.price + tax.price) * 100) / 100)
+        productPriceNet.setPrices(netPrice.price)
+        productPriceTax.setPrices(tax.price)
+        productPriceGross.setPrices(gross.price)
         productName.reset()
         productPrice.reset()
         productAmount.reset()
@@ -241,13 +241,13 @@ const UusiLaskuContent = (props) => {
 
     const handleDeletingProduct = (name) => {
         const productToDelete = products.array.find(product => product.name === name)
-        netPrice = Math.round((productPriceNet.price - productToDelete.price * productToDelete.amount) * 100) / 100
-        tax = Math.round((productPriceTax.price - productToDelete.price * productToDelete.amount * (productToDelete.alvKanta / 100)) * 100 ) / 100
-        gross = Math.round((netPrice + tax) * 100) / 100
-        console.log(netPrice)
-        productPriceNet.setPrices(netPrice)
-        productPriceTax.setPrices(tax)
-        productPriceGross.setPrices(gross)
+        netPrice.setPrices(Math.round((productPriceNet.price - productToDelete.price * productToDelete.amount) * 100) / 100)
+        tax.setPrices(Math.round((productPriceTax.price - productToDelete.price * productToDelete.amount * (productToDelete.alvKanta / 100)) * 100 ) / 100)
+        gross.setPrices(Math.round((netPrice.price + tax.price) * 100) / 100)
+        console.log(netPrice.price)
+        productPriceNet.setPrices(netPrice.price)
+        productPriceTax.setPrices(tax.price)
+        productPriceGross.setPrices(gross.price)
         console.log('price net kun deleten update valmis', productPriceNet.price)
         products.setArrayData(products.array.filter(product => product.name !== productToDelete.name))
         const indexToDelete = products.array.indexOf(productToDelete)
