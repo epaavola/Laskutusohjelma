@@ -16,7 +16,7 @@ import fi.metropolia.LaskutusApplication.dao.CompanyDao;
 import fi.metropolia.LaskutusApplication.model.DAOCompany;
 
 @RunWith(SpringRunner.class)
-class CompanyDTOTest {
+public class CompanyDTOTest {
 	@TestConfiguration
 	static class CompanyServiceImplTestContextConfiguration {
 
