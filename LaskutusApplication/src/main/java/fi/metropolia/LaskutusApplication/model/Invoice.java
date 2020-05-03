@@ -17,11 +17,10 @@ public class Invoice implements Serializable {
 	private Long id;
 
 	private String invoiceNumber;
-
 	private Double netAmount; // Netto
 	private Double grossAmount; // Brutto
 	private Double vatAmount; // alvi
-	
+	private DAOCompany client;
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Company company;
 
@@ -98,6 +97,9 @@ public class Invoice implements Serializable {
 			total += line.calculatePrice();
 		}
 		return total;
+	}
+	public void setCompany(DAOCompany client) {
+		this.client = client;
 	}
 
 }
