@@ -19,7 +19,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	@Autowired
 	private UserDao userDao;
 
-	@Autowired
+	@Autowired(required = false)
 	private PasswordEncoder bcryptEncoder;
 
 	@Override

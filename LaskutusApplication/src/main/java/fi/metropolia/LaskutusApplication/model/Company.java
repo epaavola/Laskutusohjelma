@@ -1,5 +1,6 @@
 package fi.metropolia.LaskutusApplication.model;
 
+import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -9,81 +10,79 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
+
 public class Company {
 
-    @Id
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String company;
-    private String vatID;
-    private String name;
-    private String address;
-    private String city;
+	private String company;
+	private String vatID;
+	private String name;
+	private String address;
+	private String city;
 
+	@NaturalId
+	@NotBlank
+	@Size(max = 40)
+	@Email
+	private String email;
 
-    @NaturalId
-    @NotBlank
-    @Size(max = 40)
-    @Email
-    private String email;
+	public String getCompany() {
+		return company;
+	}
 
-    public String getCompany() {
-        return company;
-    }
+	public void setCompany(String company) {
+		this.company = company;
+	}
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
+	public String getVatID() {
+		return vatID;
+	}
 
+	public void setVatID(String vatID) {
+		this.vatID = vatID;
+	}
 
+	public String getName() {
+		return name;
+	}
 
-    public String getVatID() {
-        return vatID;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public void setVatID(String vatID) {
-        this.vatID = vatID;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public String getCity() {
+		return city;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getCity() {
-        return city;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setCity(String city) {
-        this.city = city;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
+	public void setId(long id) {
+		this.id = id;
+	}
 
 }

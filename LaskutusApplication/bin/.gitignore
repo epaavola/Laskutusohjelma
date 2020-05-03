@@ -32,4 +32,5 @@ build/
 .vscode/
 =======
 hibernate.cfg.xml
+application.properties
 >>>>>>> b2b9fb1adea4bc2a1067380da23ef80416851666
