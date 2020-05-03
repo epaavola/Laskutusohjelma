@@ -17,8 +17,14 @@
     <properties>
         <java.version>1.8</java.version>
     </properties>
-
+    <packaging>jar</packaging>
     <dependencies>
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <type>maven-plugin</type>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -65,8 +71,8 @@
             <scope>test</scope>
             <exclusions>
                 <exclusion>
-                    <groupId>junit</groupId>
-                    <artifactId>junit</artifactId>
+                    <groupId>junit-vintage</groupId>
+                    <artifactId>junit-vintage</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
