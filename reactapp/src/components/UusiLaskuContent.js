@@ -122,6 +122,7 @@ const UusiLaskuContent = (props) => {
     const customers = useField([])
     const customerActive = useField([])
     const customer = useField('')
+
     const invoiceReceiverName = useField('invoiceReceiverName')
     const invoiceReceiverContactPerson = useField('invoiceReceiverContactPerson')
     const invoiceReceiverPostAddress = useField('invoiceReceiverPostAddress')
@@ -255,16 +256,18 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Yrityksen nimi"
+                                label={strings.companyName}
                                 type="text"
                                 fullWidth
                                 value={billerName.value}
+                                //value={biller.object.name.value}
                                 onChange={billerName.onChange}
+                                //onChange={biller.onObjectChange}
                             />
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Postiosoite"
+                                label={strings.address}
                                 type="text"
                                 fullWidth
                                 value={billerPostAddress.value}
@@ -273,7 +276,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Postinumero ja -toimipaikka"
+                                label={strings.postal}
                                 type="text"
                                 fullWidth
                                 value={billerPostalCode.value}
@@ -282,7 +285,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Y-tunnus"    
+                                label={strings.businessid}   
                                 type="text"
                                 fullWidth
                                 value={billerBusinessId.value}
@@ -292,7 +295,7 @@ const UusiLaskuContent = (props) => {
                                 className={classes.TextField}
                                 variant="standard" 
                                 select 
-                                label="Pankki"
+                                label={strings.bank}
                                 type="text"
                                 fullWidth
                                 value={bank.value}
@@ -307,7 +310,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Tilinumero (IBAN)"    
+                                label={strings.accnumber+" (IBAN)"}  
                                 type="text"
                                 fullWidth
                                 value={billerAccountNumber.value}
@@ -318,13 +321,13 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Laskunsaajan tiedot
+                                {strings.invoiceRecipient}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
                                 select 
-                                label="Asiakas"
+                                label={strings.customer}
                                 type="text"
                                 fullWidth
                                 value={customer.value}
@@ -339,7 +342,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Nimi / yrityksen nimi"
+                                label={strings.name+" / "+strings.companyName}
                                 type="text"
                                 fullWidth
                                 value= {invoiceReceiverName.value}
@@ -348,7 +351,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Yhteyshenkilö"
+                                label={strings.contactP}
                                 type="text"
                                 fullWidth
                                 value={invoiceReceiverContactPerson.value}
@@ -357,7 +360,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Postiosoite"
+                                label={strings.address}
                                 type="text"
                                 fullWidth
                                 value={invoiceReceiverPostAddress.value}
@@ -366,7 +369,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Postinumero"
+                                label={strings.postalnmb}
                                 type="text"
                                 fullWidth
                                 value={invoiceReceiverPostalCode.value}
@@ -375,7 +378,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Postitoimipaikka"
+                                label={strings.postaldist}
                                 type="text"
                                 fullWidth
                                 value={invoiceReceiverPostOffice.value}
@@ -391,7 +394,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Laskun numero"    
+                                label={strings.invoiceNmb}   
                                 type="text"
                                 fullWidth
                                 value={invoiceNumber.value}
@@ -405,7 +408,7 @@ const UusiLaskuContent = (props) => {
                                     format="dd.MM.yyyy"
                                     fullWidth
                                     id="date-picker-standard"
-                                    label="Laskun päiväys"
+                                    label={strings.dateOfInvoice}
                                     minDate={minDate}
                                     value={invoiceDate.date}
                                     onChange={invoiceDate.onChangeDate}
@@ -418,7 +421,7 @@ const UusiLaskuContent = (props) => {
                                     format="dd.MM.yyyy"
                                     fullWidth
                                     id="date-picker-standard"
-                                    label="Laskun eräpäivä"
+                                    label={strings.invoiceDue}
                                     minDate={minDate}
                                     value={invoiceExpirationDate.date}
                                     onChange={invoiceExpirationDate.onChangeDate}
@@ -428,7 +431,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Myöhästymiskorko, %"
+                                label={strings.delayRate+", %"}
                                 type="text"
                                 fullWidth
                                 value={invoicePenaltyInterest.value}
@@ -437,7 +440,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Viitenumero"
+                                label={strings.refnmb}
                                 type="text"
                                 fullWidth
                                 value={invoiceRefNumber.value}
@@ -446,7 +449,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Huomautusaika (vrk)"
+                                label={strings.remarkTime}
                                 type="text"
                                 fullWidth
                                 value={invoiceNotificationTime.value}
@@ -457,7 +460,7 @@ const UusiLaskuContent = (props) => {
                 </div>
                 <div className={classes.invoiceMessage}>
                     <Typography variant="h6" color="secondary">
-                        Laskuviesti
+                        {strings.invoiceMsg}
                     </Typography>
                     <TextField
                         variant="outlined"
@@ -471,12 +474,12 @@ const UusiLaskuContent = (props) => {
                     <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
-                                Tuotteiden tiedot
+                                {strings.productinfo}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Tuotteen nimi"
+                                label={strings.productName}
                                 type="text"
                                 fullWidth
                                 value={productName.value}
@@ -485,7 +488,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Kappalemäärä"
+                                label={strings.productAmount}
                                 type="text"
                                 fullWidth
                                 value={productAmount.value}
@@ -494,7 +497,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Hinta, € (veroton)"
+                                label={strings.priceGross+", €"}
                                 type="text"
                                 fullWidth
                                 value={productPrice.value}
@@ -504,7 +507,7 @@ const UusiLaskuContent = (props) => {
                                 className={classes.TextField}
                                 variant="standard"
                                 select 
-                                label="ALV-kanta"
+                                label={strings.vat}
                                 type="text"
                                 fullWidth
                                 value={alvKanta.value}
@@ -520,32 +523,32 @@ const UusiLaskuContent = (props) => {
                     </Card>
                 </div>
                 <Button type="button" variant="contained" color="primary" className={classes.createProductButton} onClick={handleAddingProduct}>
-                    Lisää tuote
+                    {strings.productadd}
                 </Button>
                 <div className={classes.createButtonDiv}>
                     <Button type="submit" variant="contained" color="primary" className={classes.createInvoiceButton}>
-                        Luo
+                        {strings.create}
                     </Button>
                 </div>
             </form>
             
             <Typography variant="h3" color="primary" className={classes.previewHeader}>
-                    Tuotteet laskulla
+                    {strings.invoiceProducts}
             </Typography>
             <div className={classes.productsCard}>
                 {products.array.length === 0 ? 
                     <Typography variant="h6" color="secondary">
-                    Ei vielä lisättyjä tuotteita
+                    {strings.emptyproductlist}
                     </Typography>
                 : 
                 <TableContainer component={Paper}>
                     <Table className={classes.table} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell>Tuotteen nimi</TableCell>
-                                <TableCell>Kappalemäärä</TableCell>
-                                <TableCell>Veroton hinta, €</TableCell>
-                                <TableCell>ALV-kanta, %</TableCell>
+                                <TableCell>{strings.productName}</TableCell>
+                                <TableCell>{strings.productAmount}</TableCell>
+                                <TableCell>{strings.priceGross+", €"}</TableCell>
+                                <TableCell>{strings.vat+", %"}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -556,7 +559,7 @@ const UusiLaskuContent = (props) => {
                                     <TableCell>{product.price}</TableCell>
                                     <TableCell>{product.alvKanta}</TableCell>
                                     <TableCell align="right"><Button type="button" variant="contained" color="primary" 
-                                        onClick={() => openDialog(product.name)}>Päivitä</Button></TableCell>
+                                        onClick={() => openDialog(product.name)}>{strings.update}</Button></TableCell>
                                     <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
                                 </TableRow>
                             ))}
@@ -565,15 +568,15 @@ const UusiLaskuContent = (props) => {
                 </TableContainer>}
                 <div>
                     <Dialog open={dialogOpen} onClose={closeDialog} aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Tuotteen päivitys</DialogTitle>
+                        <DialogTitle id="form-dialog-title">{strings.updateProduct}</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                            Päivittääksesi tuotteen, syötä tuotteet kaikki tiedot uudelleen ja paina päivitä. Paina peruuta peruuttaaksesi.
+                            {strings.updateProductExp}
                             </DialogContentText>
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Tuotteen uusi nimi"
+                                label={strings.productName}
                                 type="text"
                                 fullWidth
                                 value={productName.value}
@@ -582,7 +585,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Uusi kappalemäärä"
+                                label={strings.productAmount}
                                 type="text"
                                 fullWidth
                                 value={productAmount.value}
@@ -591,7 +594,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard" 
-                                label="Uusi hinta, € (veroton)"
+                                label={strings.priceGross+", € (veroton)"}
                                 type="text"
                                 fullWidth
                                 value={productPrice.value}
@@ -601,7 +604,7 @@ const UusiLaskuContent = (props) => {
                                 className={classes.TextField}
                                 variant="standard"
                                 select 
-                                label="Uusi ALV-kanta"
+                                label={strings.vat}
                                 type="text"
                                 fullWidth
                                 value={alvKanta.value}
@@ -616,10 +619,10 @@ const UusiLaskuContent = (props) => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={closeDialog} color="primary">
-                            Peruuta
+                            {strings.cancel}
                             </Button>
                             <Button onClick={() => { handleDeletingProduct(tempProduct) }} color="primary">
-                            Päivitä
+                            {strings.update}
                             </Button>
                         </DialogActions>
                     </Dialog>
@@ -629,15 +632,15 @@ const UusiLaskuContent = (props) => {
                 : 
                 <div className={classes.total}>
                     <Typography variant="h3" color="primary">
-                        Yhteensä
+                        {strings.total}
                     </Typography>
                     <TableContainer component={Paper}>
                         <Table className={classes.table}>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Veroton, €</TableCell>
-                                    <TableCell>Vero, €</TableCell>
-                                    <TableCell>Verollinen, €</TableCell>
+                                    <TableCell>{strings.priceGross+", €"}</TableCell>
+                                    <TableCell>{strings.tax+", €"}</TableCell>
+                                    <TableCell>{strings.priceNet+", €"}</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -652,6 +655,7 @@ const UusiLaskuContent = (props) => {
                 </div>}
             </div>
         </div>
+        
     )
 }
 

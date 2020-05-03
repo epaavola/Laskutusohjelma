@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react'
-import Frontpage from './pages/frontpage'
+import Frontpage from './pages/Frontpage'
 import Dashboard from './pages/Dashboard'
 import UusiLasku from './pages/UusiLasku'
 import Asiakkaat from './pages/Asiakkaat'
@@ -13,6 +13,7 @@ const App = ({store}) => {
 
   useEffect(() => {
     if(localStorage.getItem("language")===null){
+      console.log("Get state")
       store.getState();
     }
   });
