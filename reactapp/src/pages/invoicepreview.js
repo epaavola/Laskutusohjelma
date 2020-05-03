@@ -1,15 +1,17 @@
 import React from 'react'
 import "../styles/InvoiceStyle.css"
+import Pdf from "react-to-pdf";
 
+const ref = React.createRef();
 
 const Products = ({ products }) => {
     const productList = products.map((prod, index) =>
         <tr>
-            <td className="no" >{index+1}</td>
+            <td className="no" >{index + 1}</td>
             <td className="text-left" >{prod.name}</td>
             <td className="unit" >{prod.price}</td>
             <td className="qty" >{prod.amount}</td>
-            <td className="total">{prod.price*prod.amount}</td>
+            <td className="total">{prod.price * prod.amount}</td>
         </tr>
     )
     return (
@@ -30,11 +32,13 @@ const Previev = (props) => {
             <div className="toolbar hidden-print">
                 <div className="text-right">
                     <button id="printInvoice" className="btn btn-info"><i className="fa fa-print"></i> Print</button>
-                    <button className="btn btn-info"><i className="fa fa-file-pdf-o"></i> Export as PDF</button>
+                    <Pdf targetRef={ref} filename="Invoice.pdf">
+                        {({ toPdf }) => <button  onClick={toPdf}className="btn btn-info"><i className="fa fa-file-pdf-o"></i>Generate Pdf</button>}
+                    </Pdf>
                 </div>
                 <hr />
             </div>
-            <div className="invoice overflow-auto">
+            <div ref={ref} className="invoice overflow-auto">
                 <div styles="min-width: 600px">
                     <header>
                         <div className="row">
@@ -77,7 +81,7 @@ const Previev = (props) => {
                             </thead>
 
                             <Products products={content.products} />
-                             
+
                             <tfoot>
                                 <tr>
                                     <td colSpan="2"></td>
