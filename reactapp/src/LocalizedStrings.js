@@ -121,7 +121,6 @@ let strings = new LocalizedStrings({
     update: "Päivitä",
     updateProduct: "Tuotteen päivitys",
     updateProductExp: "Päivittääksesi tuotteen, syötä tuotteet kaikki tiedot uudelleen ja paina päivitä. Paina peruuta peruuttaaksesi.",
-    clear: "Tyhjennä",
     vat: "ALV"
   },
   alb: {
