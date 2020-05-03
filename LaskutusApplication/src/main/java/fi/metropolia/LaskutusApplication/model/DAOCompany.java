@@ -1,10 +1,11 @@
 package fi.metropolia.LaskutusApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
- import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.List;
 
-
- import javax.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "CUSTOMERS")
@@ -31,6 +32,11 @@ public class DAOCompany {
 
 	@Column
 	private String email;
+	@OneToMany(mappedBy="company", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	private List<Invoice> invoices;
+
+
+	
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
@@ -38,10 +44,12 @@ public class DAOCompany {
 	private DAOUser user;
 
 	public DAOCompany() {
+		invoices = new ArrayList<>();
+
+
 	}
 
-	public DAOCompany(String company, String vatID, String name, String address, String city,
-			String email) {
+	public DAOCompany(String company, String vatID, String name, String address, String city, String email) {
 		this.company = company;
 		this.vatID = vatID;
 		this.name = name;
@@ -50,8 +58,6 @@ public class DAOCompany {
 		this.email = email;
 	}
 
-
-
 	public String getCompany() {
 		return company;
 	}
@@ -59,8 +65,6 @@ public class DAOCompany {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-
-
 
 	public String getVatID() {
 		return vatID;
@@ -117,4 +121,4 @@ public class DAOCompany {
 	public void setCustomer_id(long customer_id) {
 		this.customer_id = customer_id;
 	}
-} 
+}

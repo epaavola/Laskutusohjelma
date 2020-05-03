@@ -7,12 +7,14 @@ import Arkisto from './pages/Arkisto'
 import FAQ from './pages/FAQ'
 import About from './pages/About'
 import Asetukset from './pages/Asetukset'
+import Invoicepreview from './pages/invoicepreview'
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 
 const App = ({store}) => {
 
   useEffect(() => {
     if(localStorage.getItem("language")===null){
+      console.log("Get state")
       store.getState();
     }
   });
@@ -28,6 +30,7 @@ const App = ({store}) => {
                         <AuthenticatedPath path="/asiakkaat" store={store} exact component={Asiakkaat} />
                         <AuthenticatedPath path="/arkisto" store={store} exact component={Arkisto} />
                         <AuthenticatedPath path="/asetukset" store={store} exact component={Asetukset} />
+                        <AuthenticatedPath path="/invoicepreview" store={store} exact component={Invoicepreview} /> 
                         <Route path="/FAQ" store={store} exact component={FAQ} />
                         <Route path="/tietoameista" store={store} exact component={About} />
                     </Switch>

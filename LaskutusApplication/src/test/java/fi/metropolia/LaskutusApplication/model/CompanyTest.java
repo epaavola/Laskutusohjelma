@@ -10,4 +10,5 @@ class CompanyTest {
     void setUp() {
         companyUnderTest = new Company();
     }
+    
 }

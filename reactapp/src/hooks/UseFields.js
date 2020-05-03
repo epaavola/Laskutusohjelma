@@ -6,9 +6,14 @@ export const useField = (type) => {
     const [date, setDate] = useState(new Date())
     const [price, setPrice] = useState(0)
     const [array, setArray] = useState([])
+    const [object, setObject] = useState({})
     
     const onChange = (event) => {
         setValue(event.target.value)
+    }
+
+    const onObjectChange = (event) => {
+        setObject(event.target.object)
     }
 
     const onChangeDate = (date) => {
@@ -30,6 +35,10 @@ export const useField = (type) => {
         setArray([])
     }
 
+    const resetObj = () => {
+        setObject({})
+    }
+
     const setArrayData = (obj) => {
         setArray(obj)
     }
@@ -39,7 +48,11 @@ export const useField = (type) => {
     }
 
     return {
+        setObject,
+        onObjectChange,
+        resetObj,
         setValue,
+        object,
         type,
         value,
         date,

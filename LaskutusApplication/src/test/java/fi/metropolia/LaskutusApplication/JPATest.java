@@ -34,7 +34,7 @@ public class JPATest {
 	static class UserServiceImplTestContextConfiguration {
 
 		@Bean
-		public JwtUserDetailsService employeeService() {
+		public JwtUserDetailsService userService() {
 			return new JwtUserDetailsService();
 		}
 	}

@@ -22,7 +22,6 @@ import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import InfoIcon from '@material-ui/icons/Info';
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import strings from "../LocalizedStrings"
-import LocalizedStrings from 'react-localization';
 
 const drawerWidth = 300;
 
