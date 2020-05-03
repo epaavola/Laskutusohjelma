@@ -26,21 +26,21 @@ public class InvoiceController {
 	@Autowired
 	UserDao userListRepo;
 
-    
+    //Gets all invoices
 	@GetMapping(value = "/invoices")
 	List<DAOInvoice> getAllInvoices(Authentication authentication) {
         DAOUser user = userListRepo.findByUsername(authentication.getName());
         return new ArrayList<>(invoiceRepo.findAllByUser_Id(user.getId()));
 
 	}
-
+	//Adds invoice for the right user
     @PostMapping(path = "/invoice")
     public DAOInvoice addInvoice(@RequestBody DAOInvoice inv, Authentication authentication){
         inv.setUser(userListRepo.findByUsername(authentication.getName()));
         invoiceRepo.save(inv);
         return inv;
     }
-	
+	//Delets invoice by it's number
 	 @DeleteMapping(path = "/invoice/{invoiceNumber}")
 	    public void deleteInvoice(@PathVariable String invoiceNumber) {
 	        DAOInvoice inv = invoiceRepo.findByInvoiceNumber(invoiceNumber);

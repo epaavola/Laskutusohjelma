@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "INVOICES")
+@Table(name = "INVOICES")			//DataAccessObject
 public class DAOInvoice {
 
 	@Id
