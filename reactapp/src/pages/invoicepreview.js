@@ -31,7 +31,7 @@ const Previev = (props) => {
         <div>
             <div className="toolbar hidden-print">
                 <div className="text-right">
-                    <button id="printInvoice" className="btn btn-info"><i className="fa fa-print"></i> Print</button>
+                    <button id="printInvoice" className="btn btn-info" onClick={() => window.print()}><i className="fa fa-print"></i> Print</button>
                     <Pdf targetRef={ref} filename="Invoice.pdf">
                         {({ toPdf }) => <button  onClick={toPdf}className="btn btn-info"><i className="fa fa-file-pdf-o"></i>Generate Pdf</button>}
                     </Pdf>
