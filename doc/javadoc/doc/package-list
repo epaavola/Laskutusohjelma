@@ -1,0 +1,9 @@
+fi.metropolia.LaskutusApplication
+fi.metropolia.LaskutusApplication.config
+fi.metropolia.LaskutusApplication.controller
+fi.metropolia.LaskutusApplication.dao
+fi.metropolia.LaskutusApplication.dto
+fi.metropolia.LaskutusApplication.model
+fi.metropolia.LaskutusApplication.repository
+fi.metropolia.LaskutusApplication.service
+fi.metropolia.LaskutusApplication.view
