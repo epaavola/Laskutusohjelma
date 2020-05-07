@@ -1,6 +1,7 @@
 import React from 'react'
 import "../styles/InvoiceStyle.css"
 import Pdf from "react-to-pdf";
+import logo from '../images/Laskutuslogo.png'
 
 const ref = React.createRef();
 
@@ -9,9 +10,9 @@ const Products = ({ products }) => {
         <tr>
             <td className="no" >{index + 1}</td>
             <td className="text-left" >{prod.name}</td>
-            <td className="unit" >{prod.price}</td>
-            <td className="qty" >{prod.amount}</td>
-            <td className="total">{prod.price * prod.amount}</td>
+            <td className="unit" >{prod.amount}</td>
+            <td className="qty" >{prod.price} €</td>
+            <td className="total">{prod.price * prod.amount} €</td>
         </tr>
     )
     return (
@@ -29,11 +30,11 @@ const Previev = (props) => {
 
     return (
         <div>
-            <div className="toolbar hidden-print">
+            <div className="toolbar hidden-print no-print">
                 <div className="text-right">
                     <button id="printInvoice" className="btn btn-info" onClick={() => window.print()}><i className="fa fa-print"></i> Print</button>
                     <Pdf targetRef={ref} filename="Invoice.pdf">
-                        {({ toPdf }) => <button  onClick={toPdf}className="btn btn-info"><i className="fa fa-file-pdf-o"></i>Generate Pdf</button>}
+                        {({ toPdf }) => <button onClick={toPdf} className="btn btn-info"><i className="fa fa-file-pdf-o"></i>Generate Pdf</button>}
                     </Pdf>
                 </div>
                 <hr />
@@ -43,13 +44,13 @@ const Previev = (props) => {
                     <header>
                         <div className="row">
                             <div className="col">
-                                <img src="../images/Laskutuslogo.png" data-holder-rendered="true" alt="Laskutusohjelma logo" />
+                                <img src={logo} data-holder-rendered="true" width="220px" alt="Company logo logo" />
                             </div>
                             <div className="col company-details">
                                 <h2 className="name">
                                     {content.billerName}
                                 </h2>
-                                <div>{content.billerAddress + ", " + content.billerPostalCode}</div>
+                                <div>{content.billerPostAddress + ", " + content.billerPostalCode}</div>
                                 <div>(123) 456-789</div>
                                 <div>company@example.com</div>
                             </div>
@@ -61,12 +62,12 @@ const Previev = (props) => {
                                 <div className="text-gray-light">INVOICE TO:</div>
                                 <h2 className="to">{content.invoiceReceiverName}</h2>
                                 <div className="address">{content.invoiceReceiverPostAddress + ", " + content.invoiceReceiverPostalCode + ", " + content.invoiceReceiverPostOffice}</div>
-                                <div className="email"><a href="mailto:example@example.com">example@example.com</a></div>
+                                <div className="email"><a href="mailto:example@example.com">{content.invoiceReceiverName}@example.com</a></div>
                             </div>
                             <div className="col invoice-details">
                                 <h1 className="invoice-id">{"INVOICE " + content.invoiceNumber}</h1>
-                                <div className="date">{"Date of Invoice: " + content.invoiceDate}</div>
-                                <div className="date">{"Due Date: " + content.invoiceExpirationDate}</div>
+                                <div className="date">{"Date of Invoice: " + content.invoiceDate.toUTCString()}</div>
+                                <div className="date">{"Due Date: " + content.invoiceExpirationDate.toUTCString()}</div>
                             </div>
                         </div>
                         <table border="0" cellSpacing="0" cellPadding="0">
@@ -75,8 +76,8 @@ const Previev = (props) => {
                                     <th>#</th>
                                     <th className="text-left">NAME</th>
                                     <th className="text-right">AMOUNT</th>
-                                    <th className="text-right">PRICE</th>
-                                    <th className="text-right">TOTAL</th>
+                                    <th className="text-right">PRICE €</th>
+                                    <th className="text-right">TOTAL €</th>
                                 </tr>
                             </thead>
 
@@ -86,24 +87,24 @@ const Previev = (props) => {
                                 <tr>
                                     <td colSpan="2"></td>
                                     <td colSpan="2">SUBTOTAL</td>
-                                    <td>$5,200.00</td>
+                                    <td>{content.productPriceNet} €</td>
                                 </tr>
                                 <tr>
                                     <td colSpan="2"></td>
-                                    <td colSpan="2">TAX 25%</td>
-                                    <td>$1,300.00</td>
+                                    <td colSpan="2">TAX</td>
+                                    <td>{content.productPriceTax} €</td>
                                 </tr>
                                 <tr>
                                     <td colSpan="2"></td>
                                     <td colSpan="2">GRAND TOTAL</td>
-                                    <td>$6,500.00</td>
+                                    <td>{content.productPriceGross} €</td>
                                 </tr>
                             </tfoot>
                         </table>
                         <div className="thanks">Thank you!</div>
                         <div className="notices">
                             <div>NOTICE:</div>
-                            <div className="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+                            <div className="notice">{content.invoiceMessage}</div>
                         </div>
                     </main>
                     <footer>

@@ -569,6 +569,7 @@ const UusiLaskuContent = (props) => {
                             productPriceNet: productPriceNet.price,
                             productPriceGross: productPriceGross.price,
                             productPriceTax: productPriceTax.price
+                         
                         }
                     }} >
                         <Button variant="contained" color="primary" className={classes.createInvoiceButton}>{strings.preview}</Button>
