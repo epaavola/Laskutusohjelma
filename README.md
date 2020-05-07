@@ -26,11 +26,6 @@ git clone https://gitlab.com/OTP-Ryhma10/laskutusohjelma.git
 
 2. Käynnistä backend
 
-```bash
-java -jar laskutusApplication.jar
-```
-tai 
-
 Avaa maven projekti haluamallasi IDE:llä ja aja laskutusApplication.java
 
 3. Käynnistä Frontend
@@ -56,9 +51,3 @@ npm start
 
 Siirry osoitteeseen localhost:3000
 
-## Osallistu
-Pull pyynnöt ovat tervetulleita. Projekti on vasta alussa ja meillä on paljon ominaisuuksia kehittämättä.
-Lisätiedot: Ryhmä10
-
-## License
-GNU General Public License 
