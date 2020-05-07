@@ -41,62 +41,10 @@ class UserListControllerTest {
         // Verify the results
     }
 
-    @Test
-    @Ignore
-    void testGetUser() {
-        // Setup
-        final Authentication authentication = null;
 
-        // Configure UserDao.findByUsername(...).
-        final DAOUser daoUser = new DAOUser("username", "name", "email", "vatID", "address", "city", "bankAccount");
-        when(userListControllerUnderTest.userListRepo.findByUsername("username")).thenReturn(daoUser);
 
-        // Run the test
-        final DAOUser result = userListControllerUnderTest.getUser(authentication);
 
-        // Verify the results
-    }
 
-    @Test
-    @Ignore
-    void testGetAllCompanies() {
-        // Setup
-        final Authentication authentication = null;
-
-        // Configure UserDao.findByUsername(...).
-        final DAOUser daoUser = new DAOUser("username", "name", "email", "vatID", "address", "city", "bankAccount");
-        when(userListControllerUnderTest.userListRepo.findByUsername("username")).thenReturn(daoUser);
-
-        // Configure CompanyDao.findAllByUser_Id(...).
-        final List<DAOCompany> daoCompanies = Arrays.asList(new DAOCompany("company", "vatID", "name", "address", "city", "email"));
-        when(userListControllerUnderTest.company.findAllByUser_Id(0L)).thenReturn(daoCompanies);
-
-        // Run the test
-        final List<DAOCompany> result = userListControllerUnderTest.getAllCompanies(authentication);
-
-        // Verify the results
-    }
-
-    @Test
-    @Ignore
-    void testAddCustomer() {
-        // Setup
-        final DAOCompany comp = new DAOCompany("company", "vatID", "name", "address", "city", "email");
-        final Authentication authentication = null;
-
-        // Configure UserDao.findByUsername(...).
-        final DAOUser daoUser = new DAOUser("username", "name", "email", "vatID", "address", "city", "bankAccount");
-        when(userListControllerUnderTest.userListRepo.findByUsername("username")).thenReturn(daoUser);
-
-        // Configure CompanyDao.save(...).
-        final DAOCompany daoCompany = new DAOCompany("company", "vatID", "name", "address", "city", "email");
-        when(userListControllerUnderTest.company.save(any(DAOCompany.class))).thenReturn(daoCompany);
-
-        // Run the test
-        final DAOCompany result = userListControllerUnderTest.addCustomer(comp, authentication);
-
-        // Verify the results
-    }
 
     @Test
     void testGetById() {
@@ -138,19 +86,4 @@ class UserListControllerTest {
         verify(userListControllerUnderTest.userListRepo).deleteById(0L);
     }
 
-    @Test
-    @Ignore
-    void testDeleteCustomer() {
-        // Setup
-
-        // Configure CompanyDao.findByCompany(...).
-        final DAOCompany daoCompany = new DAOCompany("company", "vatID", "name", "address", "city", "email");
-        when(userListControllerUnderTest.company.findByCompany("username")).thenReturn(daoCompany);
-
-        // Run the test
-        userListControllerUnderTest.deleteCustomer("companyName");
-
-        // Verify the results
-        verify(userListControllerUnderTest.company).deleteById(0L);
-    }
 }

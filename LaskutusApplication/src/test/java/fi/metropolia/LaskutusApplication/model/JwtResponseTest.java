@@ -15,15 +15,5 @@ class JwtResponseTest {
         jwtResponseUnderTest = new JwtResponse("jwttoken");
     }
 
-    @Test
-    @Ignore
-    void testGetToken() {
-        // Setup
 
-        // Run the test
-        final String result = jwtResponseUnderTest.getToken();
-
-        // Verify the results
-        assertEquals("result", result);
-    }
 }

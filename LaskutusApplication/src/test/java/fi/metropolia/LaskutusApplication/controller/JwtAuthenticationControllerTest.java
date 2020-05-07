@@ -38,50 +38,8 @@ class JwtAuthenticationControllerTest {
         initMocks(this);
     }
 
-    @Test
-    @Ignore
-    void testCreateAuthenticationToken() throws Exception {
-        // Setup
-        final JwtRequest authenticationRequest = new JwtRequest("username", "password");
-        when(mockAuthenticationManager.authenticate(null)).thenReturn(null);
-        when(mockUserDetailsService.loadUserByUsername("username")).thenReturn(null);
-        when(mockJwtTokenUtil.generateToken(any(UserDetails.class))).thenReturn("result");
 
-        // Run the test
-        final ResponseEntity<?> result = jwtAuthenticationControllerUnderTest.createAuthenticationToken(authenticationRequest);
 
-        // Verify the results
-    }
-
-    @Test
-    @Ignore
-    void testCreateAuthenticationToken_AuthenticationManagerThrowsAuthenticationException() throws Exception {
-        // Setup
-        final JwtRequest authenticationRequest = new JwtRequest("username", "password");
-        when(mockAuthenticationManager.authenticate(null)).thenThrow(AuthenticationException.class);
-        when(mockUserDetailsService.loadUserByUsername("username")).thenReturn(null);
-        when(mockJwtTokenUtil.generateToken(any(UserDetails.class))).thenReturn("result");
-
-        // Run the test
-        final ResponseEntity<?> result = jwtAuthenticationControllerUnderTest.createAuthenticationToken(authenticationRequest);
-
-        // Verify the results
-    }
-
-    @Test
-    @Ignore
-    void testCreateAuthenticationToken_JwtUserDetailsServiceThrowsUsernameNotFoundException() throws Exception {
-        // Setup
-        final JwtRequest authenticationRequest = new JwtRequest("username", "password");
-        when(mockAuthenticationManager.authenticate(null)).thenReturn(null);
-        when(mockUserDetailsService.loadUserByUsername("username")).thenThrow(UsernameNotFoundException.class);
-        when(mockJwtTokenUtil.generateToken(any(UserDetails.class))).thenReturn("result");
-
-        // Run the test
-        final ResponseEntity<?> result = jwtAuthenticationControllerUnderTest.createAuthenticationToken(authenticationRequest);
-
-        // Verify the results
-    }
 
     @Test
     void testSaveUser() throws Exception {
@@ -98,19 +56,5 @@ class JwtAuthenticationControllerTest {
         // Verify the results
     }
 
-    @Test
-    @Ignore
-    void testSaveUser_ThrowsException() {
-        // Setup
-        final UserDTO user = new UserDTO("username", "name", "email", "vatID", "address", "city", "bankAccount");
 
-        // Configure JwtUserDetailsService.save(...).
-        final DAOUser daoUser = new DAOUser("username", "name", "email", "vatID", "address", "city", "bankAccount");
-        when(mockUserDetailsService.save(any(UserDTO.class))).thenReturn(daoUser);
-
-        // Run the test
-        assertThrows(Exception.class, () -> {
-            jwtAuthenticationControllerUnderTest.saveUser(user);
-        });
-    }
 }
