@@ -19,7 +19,7 @@ Asennus- ja konfigurointiohjeita:
 
 2) Backend
 	- Avaa projektin build path Eclipsessä tai VSCodessa
-	- Suorita main.java
+	- Suorita laskutusohjelma\LaskutusApplication\src\main\java\fi\metropolia\LaskutusApplication\LaskutusApplication.java
 
 3) Frontend
 	- Siirry reactapp-hakemistoon ja avaa komentorivi. 
