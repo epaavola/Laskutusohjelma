@@ -15,7 +15,7 @@ import fi.metropolia.LaskutusApplication.model.Company;
 
 @Repository
 public interface CompanyDao extends CrudRepository<DAOCompany, Long> {
-	
+	// find comapny by username or by user id
 	DAOCompany findByCompany(String username);
     List<DAOCompany> findAllByUser_Id(Long id);
 }

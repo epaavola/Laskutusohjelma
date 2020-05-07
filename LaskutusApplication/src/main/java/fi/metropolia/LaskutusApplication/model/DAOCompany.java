@@ -8,7 +8,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "CUSTOMERS")
+@Table(name = "CUSTOMERS")		//DataAccessObject
 public class DAOCompany {
 
 	@Id

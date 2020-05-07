@@ -1,6 +1,6 @@
 package fi.metropolia.LaskutusApplication.dto;
 
-public class InvoiceDTO {
+public class InvoiceDTO {	//DataTransferObject
 
 	private String invoiceNumber;
 	private Double netAmount;

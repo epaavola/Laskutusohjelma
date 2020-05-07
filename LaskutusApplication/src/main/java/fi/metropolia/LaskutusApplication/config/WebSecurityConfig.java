@@ -31,8 +31,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        // konfiguroi AuthenticationManagerin, jotta tietää mistä ladata oikea käyttäjä
-        // käyttää BCryptPasswordEncoder:ia
+        // Configurates AuthenticationManager, in order to know where to download the right user
+        // Uses BCryptPasswordEncoder
 
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
@@ -52,13 +52,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-        // tätä pyyntöä ei autentikoida
-                .authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
-        // muut pyynnot autentikoidaan
+
+     // this request is not authenticated
+        .authorizeRequests().antMatchers("/authenticate", "/register").permitAll().
+        // other requestes are authenticated 
         anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //Lisää filterin validoidakseen tokenin jokaisella pyynnöllä
+
+     // Adds a filter to validate the token with each request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.cors();
     }

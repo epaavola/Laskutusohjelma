@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+@Entity								// invoices in line
 @Table(name="invoice_lines")
 public class InvoiceLine implements Serializable{
 

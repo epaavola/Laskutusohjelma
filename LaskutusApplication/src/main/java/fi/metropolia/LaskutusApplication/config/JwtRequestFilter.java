@@ -32,7 +32,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         final String requestTokenHeader = request.getHeader("Authorization");
         String username = null;
         String jwtToken = null;
-        //JWT Token on "Bearer token" muodossa. Poistaa bearer sanan ja saa ainoastaan tokenin
+
+     // The JWT Token is in the "Bearer token" format. Deletes the word bearer and only gets the token
         if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
@@ -45,20 +46,20 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         } else {
             logger.warn("JWT Token does not begin with Bearer String");
         }
-        // Validoi tokenin sen saatuaan
 
+     // Validate the token after receiving it
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
-            //Jos token on validi konfiguroi Spring Securityn asettamaan autentikaation
-
+         // If the token is valid, configure Spring Security to set authentication
+            
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities());
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                //tarkistaa että käyttäjä on autentikoitu, jotta läpäisee Spring Security Configuraation onnistuneesti
 
+             // verifies that the user is authenticated to successfully pass the Spring Security Configuration
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }

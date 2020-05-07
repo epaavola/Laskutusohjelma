@@ -13,7 +13,7 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.annotations.NaturalId;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USER")		//DataAccessObject
 
 public class DAOUser {
 

@@ -1,6 +1,6 @@
 package fi.metropolia.LaskutusApplication.dto;
 
-public class CompanyDTO {
+public class CompanyDTO {	//DataTransferObject
 	
 	private long id;
 
