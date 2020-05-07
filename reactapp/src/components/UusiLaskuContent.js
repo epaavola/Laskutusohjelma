@@ -1,3 +1,4 @@
+//importit
 import React, { useState, useEffect } from 'react'
 import 'typeface-roboto'
 import { makeStyles } from '@material-ui/core/styles'
@@ -31,8 +32,8 @@ import {
 import { useField } from '../hooks/UseFields'
 import { getALVdata, getBankData } from '../components/DataVariables'
 import strings from "../LocalizedStrings.js"
-
-const useStyles = makeStyles(theme => ({
+//tyylit
+const useStyles  = makeStyles(theme => ({
     title: {
         display: 'flex',
         flexDirection: 'row',
@@ -109,10 +110,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const UusiLaskuContent = (props) => {
-    //Style
+    //Tyylin käyttöönotto
     const classes = useStyles()
 
-    //Variables
+    //Muuttujien alustus
     const minDate = new Date()
     const alvKannat = getALVdata()
     const pankit = getBankData()
@@ -156,19 +157,19 @@ const UusiLaskuContent = (props) => {
     let tax
     let gross
 
-    //Run fetch functions on page load
-    useEffect(() => {
+    //Haetaan sivulle data sivun latauksen yhteydessä
+    useEffect(() => {       
         showCustomerData()
         showUserData()
     }, []);
 
-    // Get customers from database
+    //Haetaan asiakkaat tietokannasta
     function showCustomerData() {
         getCustomers().then(res => {
             customers.setArrayData(res.data)
         })
     }
-    // Get the user data from database and fill the 'Omat tiedot' form
+    //Haetaan käyttäjän omat tiedot ja täytetään ne "Omat tiedot" -kohtaan
     function showUserData() {
         getUser().then(res => {
             billerName.setValue(res.data.name)
@@ -179,11 +180,11 @@ const UusiLaskuContent = (props) => {
         })
     }
 
-    //Button to clear states  
+    //Nappula kaikkien statejen tyhjennykseen (laskupohjan tyhjennykseen) 
     const emptyTextFields = (event) => {
         window.location.reload(false);
     }
-
+    //Funktio tuotteen lisäämiseen laskulle
     const handleAddingProduct = () => {
         console.log('product price net tultaessa addingiin', productPriceNet.price)
         const productObject = {
@@ -204,7 +205,7 @@ const UusiLaskuContent = (props) => {
         productAmount.reset()
         alvKanta.reset()
     }
-
+    //Tuotteen päivitykseen tarvittavan dialogi-ikkunan avaus- ja sulkufunktiot
     const openDialog = (name) => {
         setDialogOpen(true)
         setTempProduct(name)
@@ -213,7 +214,7 @@ const UusiLaskuContent = (props) => {
     const closeDialog = () => {
         setDialogOpen(false)
     }
-
+    //Funktio tuotteen päivittämiseksi
     const handleUpdatingProduct = (name) => {
         var productToUpdate = products.array.find(product => product.name === name)
         netPrice = Math.round(((productPriceNet.price + productPrice.value * productAmount.value) - (productToUpdate.price * productToUpdate.amount)) * 100) / 100
@@ -237,7 +238,7 @@ const UusiLaskuContent = (props) => {
         alvKanta.reset()
         setTempProduct('')
     }
-
+    //Funktio tuotteen poistamiseksi
     const handleDeletingProduct = (name) => {
         const productToDelete = products.array.find(product => product.name === name)
         netPrice = Math.round((productPriceNet.price - productToDelete.price * productToDelete.amount) * 100) / 100
