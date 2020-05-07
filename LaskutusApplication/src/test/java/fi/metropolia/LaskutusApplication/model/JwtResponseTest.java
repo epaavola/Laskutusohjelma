@@ -1,5 +1,6 @@
 package fi.metropolia.LaskutusApplication.model;
 
+import org.junit.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,7 @@ class JwtResponseTest {
     }
 
     @Test
+    @Ignore
     void testGetToken() {
         // Setup
 

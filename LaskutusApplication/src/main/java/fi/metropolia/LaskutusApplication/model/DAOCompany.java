@@ -36,7 +36,6 @@ public class DAOCompany {
 	private List<Invoice> invoices;
 
 
-	
 
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", updatable = false, nullable = false)
