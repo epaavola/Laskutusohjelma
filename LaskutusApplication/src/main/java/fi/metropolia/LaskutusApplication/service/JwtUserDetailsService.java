@@ -14,7 +14,7 @@ import fi.metropolia.LaskutusApplication.dto.UserDTO;
 import fi.metropolia.LaskutusApplication.model.DAOUser;
 
 @Service
-public class JwtUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {		//Gets user details from authenticated user
 	
 	@Autowired
 	private UserDao userDao;

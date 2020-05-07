@@ -140,7 +140,7 @@ const Registeration = (props) => {
                         <TextField 
                             className={classes.registerTextField} 
                             variant="outlined" 
-                            label="Postitoimipaikka"
+                            label="Postinumero ja -toimipaikka"
                             type="text"
                             fullWidth
                             value={city.value}

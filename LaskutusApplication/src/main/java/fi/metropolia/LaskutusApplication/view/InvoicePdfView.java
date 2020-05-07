@@ -19,7 +19,8 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
 @Component("invoices/view")
-public class InvoicePdfView extends AbstractPdfView {
+public class InvoicePdfView extends AbstractPdfView {	//Creates pdf-document from invoice data received from database
+														// Uses Lowagie 2.1.7 jar library
 
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model, Document document, PdfWriter arg2,

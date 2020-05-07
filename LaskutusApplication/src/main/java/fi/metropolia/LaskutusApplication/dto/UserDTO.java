@@ -1,7 +1,7 @@
 package fi.metropolia.LaskutusApplication.dto;
 
 
-public class UserDTO {
+public class UserDTO {		//DataTransferObject
 	private String username;
 	private String password;
 	private String name;

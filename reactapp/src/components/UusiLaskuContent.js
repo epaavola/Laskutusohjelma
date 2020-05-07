@@ -10,7 +10,7 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import MenuItem from '@material-ui/core/MenuItem'
 import { getUser } from '../service/UserDataService';
-import {getCustomers} from '../service/ClientDataService'
+import { getCustomers } from '../service/ClientDataService'
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -26,8 +26,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
 import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
+    MuiPickersUtilsProvider,
+    KeyboardDatePicker
 } from '@material-ui/pickers';
 import { useField } from '../hooks/UseFields'
 import { getALVdata, getBankData } from '../components/DataVariables'
@@ -97,7 +97,7 @@ const useStyles  = makeStyles(theme => ({
     },
     table: {
         minWidth: 650
-      },
+    },
     total: {
         marginTop: theme.spacing(5),
         marginBottom: theme.spacing(10)
@@ -106,7 +106,7 @@ const useStyles  = makeStyles(theme => ({
         margin: theme.spacing(1),
         minWidth: 160,
     },
-    
+
 }))
 
 const UusiLaskuContent = (props) => {
@@ -129,8 +129,8 @@ const UusiLaskuContent = (props) => {
     const invoiceReceiverPostOffice = useField('invoiceReceiverPostOffice')
 
     const invoiceNumber = useField('invoiceNumber')
-    const invoiceDate = useField(new Date()) 
-    const invoiceExpirationDate = useField(new Date()) 
+    const invoiceDate = useField(new Date())
+    const invoiceExpirationDate = useField(new Date())
     const invoicePenaltyInterest = useField('invoicePenaltyInterest')
     const invoiceMessage = useField('invoiceMessage')
     const invoiceRefNumber = useField('invoiceRefNumber')
@@ -141,13 +141,13 @@ const UusiLaskuContent = (props) => {
     const billerPostAddress = useField('billerPostAddress')
     const billerPostalCode = useField('billerPostalCode')
     const billerAccountNumber = useField('billerAccountNumber')
- 
+
     const productName = useField('productName')
     const productAmount = useField('productAmount')
     const productPrice = useField('productPrice')
-    const productPriceNet = useField(0) 
-    const productPriceGross = useField(0) 
-    const productPriceTax = useField(0) 
+    const productPriceNet = useField(0)
+    const productPriceGross = useField(0)
+    const productPriceTax = useField(0)
     const alvKanta = useField('')
     const products = useField([])
     const bank = useField('')
@@ -177,7 +177,7 @@ const UusiLaskuContent = (props) => {
             billerPostalCode.setValue(res.data.city)
             billerBusinessId.setValue(res.data.vatID)
             billerAccountNumber.setValue(res.data.bankAccount)
-        })    
+        })
     }
 
     //Nappula kaikkien statejen tyhjennykseen (laskupohjan tyhjennykseen) 
@@ -195,7 +195,7 @@ const UusiLaskuContent = (props) => {
         }
         products.setArrayData(products.array.concat(productObject))
         netPrice = Math.round((productPriceNet.price + productObject.price * productObject.amount) * 100) / 100
-        tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100 ) / 100
+        tax = Math.round((productPriceTax.price + productObject.price * productObject.amount * (productObject.alvKanta / 100)) * 100) / 100
         gross = Math.round((netPrice + tax) * 100) / 100
         productPriceNet.setPrices(netPrice)
         productPriceTax.setPrices(tax)
@@ -218,8 +218,8 @@ const UusiLaskuContent = (props) => {
     const handleUpdatingProduct = (name) => {
         var productToUpdate = products.array.find(product => product.name === name)
         netPrice = Math.round(((productPriceNet.price + productPrice.value * productAmount.value) - (productToUpdate.price * productToUpdate.amount)) * 100) / 100
-        tax = Math.round(((productPriceTax.price + productPrice.value * productAmount.value * (alvKanta.value / 100)) 
-            - (productToUpdate.price * productToUpdate.amount * (productToUpdate.alvKanta / 100))) * 100 ) / 100
+        tax = Math.round(((productPriceTax.price + productPrice.value * productAmount.value * (alvKanta.value / 100))
+            - (productToUpdate.price * productToUpdate.amount * (productToUpdate.alvKanta / 100))) * 100) / 100
         gross = Math.round((netPrice + tax) * 100) / 100
         productPriceNet.setPrices(netPrice)
         productPriceTax.setPrices(tax)
@@ -242,7 +242,7 @@ const UusiLaskuContent = (props) => {
     const handleDeletingProduct = (name) => {
         const productToDelete = products.array.find(product => product.name === name)
         netPrice = Math.round((productPriceNet.price - productToDelete.price * productToDelete.amount) * 100) / 100
-        tax = Math.round((productPriceTax.price - productToDelete.price * productToDelete.amount * (productToDelete.alvKanta / 100)) * 100 ) / 100
+        tax = Math.round((productPriceTax.price - productToDelete.price * productToDelete.amount * (productToDelete.alvKanta / 100)) * 100) / 100
         gross = Math.round((netPrice + tax) * 100) / 100
         console.log(netPrice)
         productPriceNet.setPrices(netPrice)
@@ -266,25 +266,25 @@ const UusiLaskuContent = (props) => {
             </div>
             <form className={classes.form}>
                 <div className={classes.invoiceInfoCards}>
-                <Card className={classes.card}>
+                    <Card className={classes.card}>
                         <CardContent>
                             <Typography variant="h6" color="secondary">
                                 {strings.info}
                             </Typography>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.companyName}
                                 type="text"
                                 fullWidth
                                 value={billerName.value}
                                 //value={biller.object.name.value}
                                 onChange={billerName.onChange}
-                                //onChange={biller.onObjectChange}
+                            //onChange={biller.onObjectChange}
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.address}
                                 type="text"
                                 fullWidth
@@ -293,7 +293,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.postal}
                                 type="text"
                                 fullWidth
@@ -302,8 +302,8 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.businessid}   
+                                variant="standard"
+                                label={strings.businessid}
                                 type="text"
                                 fullWidth
                                 value={billerBusinessId.value}
@@ -311,8 +311,8 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                select 
+                                variant="standard"
+                                select
                                 label={strings.bank}
                                 type="text"
                                 fullWidth
@@ -327,8 +327,8 @@ const UusiLaskuContent = (props) => {
                             </TextField>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.accnumber+" (IBAN)"}  
+                                variant="standard"
+                                label={strings.accnumber + " (IBAN)"}
                                 type="text"
                                 fullWidth
                                 value={billerAccountNumber.value}
@@ -343,8 +343,8 @@ const UusiLaskuContent = (props) => {
                             </Typography>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                select 
+                                variant="standard"
+                                select
                                 label={strings.customer}
                                 type="text"
                                 fullWidth
@@ -359,16 +359,16 @@ const UusiLaskuContent = (props) => {
                             </TextField>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.name+" / "+strings.companyName}
+                                variant="standard"
+                                label={strings.name + " / " + strings.companyName}
                                 type="text"
                                 fullWidth
-                                value= {invoiceReceiverName.value}
+                                value={invoiceReceiverName.value}
                                 onChange={invoiceReceiverName.onChange}
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.contactP}
                                 type="text"
                                 fullWidth
@@ -377,7 +377,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.address}
                                 type="text"
                                 fullWidth
@@ -386,7 +386,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.postalnmb}
                                 type="text"
                                 fullWidth
@@ -395,7 +395,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.postaldist}
                                 type="text"
                                 fullWidth
@@ -411,8 +411,8 @@ const UusiLaskuContent = (props) => {
                             </Typography>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.invoiceNmb}   
+                                variant="standard"
+                                label={strings.invoiceNmb}
                                 type="text"
                                 fullWidth
                                 value={invoiceNumber.value}
@@ -448,8 +448,8 @@ const UusiLaskuContent = (props) => {
                             </MuiPickersUtilsProvider>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.delayRate+", %"}
+                                variant="standard"
+                                label={strings.delayRate + ", %"}
                                 type="text"
                                 fullWidth
                                 value={invoicePenaltyInterest.value}
@@ -457,7 +457,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.refnmb}
                                 type="text"
                                 fullWidth
@@ -466,7 +466,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.remarkTime}
                                 type="text"
                                 fullWidth
@@ -496,7 +496,7 @@ const UusiLaskuContent = (props) => {
                             </Typography>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.productName}
                                 type="text"
                                 fullWidth
@@ -505,7 +505,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.productAmount}
                                 type="text"
                                 fullWidth
@@ -514,8 +514,8 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.priceGross+", €"}
+                                variant="standard"
+                                label={strings.priceGross + ", €"}
                                 type="text"
                                 fullWidth
                                 value={productPrice.value}
@@ -524,7 +524,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard"
-                                select 
+                                select
                                 label={strings.vat}
                                 type="text"
                                 fullWidth
@@ -544,59 +544,88 @@ const UusiLaskuContent = (props) => {
                     {strings.productadd}
                 </Button>
                 <div className={classes.createButtonDiv}>
-                    <Button variant="contained" color="primary" className={classes.createInvoiceButton} component={Link} to ="/invoicepreview">
-                        {strings.preview}
-                    </Button>
+                    
+
+                    <Link to={{
+                        pathname: "/invoicepreview",
+                        state: {
+                            billerName: billerName.value,
+                            billerPostAddress: billerPostAddress.value,
+                            billerPostalCode: billerPostalCode.value,
+                            billerBusinessId: billerBusinessId.value,
+                            billerAccountNumber: billerAccountNumber.value,
+                            invoiceNumber: invoiceNumber.value,
+                            invoiceDate: invoiceDate.date,
+                            invoiceExpirationDate: invoiceExpirationDate.date,
+                            invoicePenaltyInterest: invoicePenaltyInterest.value,
+                            invoiceMessage: invoiceMessage.value,
+                            invoiceRefNumber: invoiceRefNumber.value,
+                            invoiceNotificationTime: invoiceNotificationTime.value,
+                            invoiceReceiverContactPerson: invoiceReceiverContactPerson.value,
+                            invoiceReceiverName: invoiceReceiverName.value,
+                            invoiceReceiverPostAddress: invoiceReceiverPostAddress.value,
+                            invoiceReceiverPostOffice: invoiceReceiverPostOffice.value,
+                            invoiceReceiverPostalCode: invoiceReceiverPostalCode.value,
+                            products: products.array,
+                            productPriceNet: productPriceNet.price,
+                            productPriceGross: productPriceGross.price,
+                            productPriceTax: productPriceTax.price
+                         
+                        }
+                    }} >
+                        <Button variant="contained" color="primary" className={classes.createInvoiceButton}>{strings.preview}</Button>
+                    </Link>
+
                     <Button type="submit" variant="contained" color="primary" className={classes.createInvoiceButton}>
                         {strings.create}
                     </Button>
                 </div>
             </form>
-            
+
             <Typography variant="h3" color="primary" className={classes.previewHeader}>
-                    {strings.invoiceProducts}
+                {strings.invoiceProducts}
             </Typography>
             <div className={classes.productsCard}>
-                {products.array.length === 0 ? 
+                {products.array.length === 0 ?
                     <Typography variant="h6" color="secondary">
-                    {strings.emptyproductlist}
+                        {strings.emptyproductlist}
                     </Typography>
-                : 
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>{strings.productName}</TableCell>
-                                <TableCell>{strings.productAmount}</TableCell>
-                                <TableCell>{strings.priceGross+", €"}</TableCell>
-                                <TableCell>{strings.vat+", %"}</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {products.array.map(product => (
-                                <TableRow key={product.name}>
-                                    <TableCell component="th" scope="row">{product.name}</TableCell>
-                                    <TableCell>{product.amount}</TableCell>
-                                    <TableCell>{product.price}</TableCell>
-                                    <TableCell>{product.alvKanta}</TableCell>
-                                    <TableCell align="right"><Button type="button" variant="contained" color="primary" 
-                                        onClick={() => openDialog(product.name)}>{strings.update}</Button></TableCell>
-                                    <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
+                    :
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>{strings.productName}</TableCell>
+                                    <TableCell>{strings.productAmount}</TableCell>
+                                    <TableCell>{strings.priceGross + ", €"}</TableCell>
+                                    <TableCell>{strings.vat + ", %"}</TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>}
+                            </TableHead>
+                            <TableBody>
+                                {products.array.map(product => (
+                                    <TableRow key={product.name}>
+                                        <TableCell component="th" scope="row">{product.name}</TableCell>
+                                        <TableCell>{product.amount}</TableCell>
+                                        <TableCell>{product.price}</TableCell>
+                                        <TableCell>{product.alvKanta}</TableCell>
+                                        <TableCell align="right"><Button type="button" variant="contained" color="primary"
+                                            onClick={() => openDialog(product.name)}>{strings.update}</Button></TableCell>
+                                        <TableCell><Button type="button" variant="contained" color="secondary" onClick={() => handleDeletingProduct(product.name)}>Poista</Button></TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>}
                 <div>
                     <Dialog open={dialogOpen} onClose={closeDialog} aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">{strings.updateProduct}</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                            {strings.updateProductExp}
+                                {strings.updateProductExp}
                             </DialogContentText>
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.productName}
                                 type="text"
                                 fullWidth
@@ -605,7 +634,7 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
+                                variant="standard"
                                 label={strings.productAmount}
                                 type="text"
                                 fullWidth
@@ -614,8 +643,8 @@ const UusiLaskuContent = (props) => {
                             />
                             <TextField
                                 className={classes.TextField}
-                                variant="standard" 
-                                label={strings.priceGross+", € (veroton)"}
+                                variant="standard"
+                                label={strings.priceGross + ", € (veroton)"}
                                 type="text"
                                 fullWidth
                                 value={productPrice.value}
@@ -624,7 +653,7 @@ const UusiLaskuContent = (props) => {
                             <TextField
                                 className={classes.TextField}
                                 variant="standard"
-                                select 
+                                select
                                 label={strings.vat}
                                 type="text"
                                 fullWidth
@@ -640,43 +669,43 @@ const UusiLaskuContent = (props) => {
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={closeDialog} color="secondary" variant="contained">
-                            {strings.cancel}
+                                {strings.cancel}
                             </Button>
                             <Button onClick={() => { handleUpdatingProduct(tempProduct); closeDialog() }} color="primary" variant="contained">
-                            {strings.update}
+                                {strings.update}
                             </Button>
                         </DialogActions>
                     </Dialog>
                 </div>
                 {products.array.length === 0 ?
                     ''
-                : 
-                <div className={classes.total}>
-                    <Typography variant="h3" color="primary">
-                        {strings.total}
-                    </Typography>
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>{strings.priceGross+", €"}</TableCell>
-                                    <TableCell>{strings.tax+", €"}</TableCell>
-                                    <TableCell>{strings.priceNet+", €"}</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                <TableRow>
-                                    <TableCell>{productPriceNet.price}</TableCell>
-                                    <TableCell>{productPriceTax.price}</TableCell>
-                                    <TableCell>{productPriceGross.price}</TableCell>
-                                </TableRow>
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>}
+                    :
+                    <div className={classes.total}>
+                        <Typography variant="h3" color="primary">
+                            {strings.total}
+                        </Typography>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table}>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>{strings.priceGross + ", €"}</TableCell>
+                                        <TableCell>{strings.tax + ", €"}</TableCell>
+                                        <TableCell>{strings.priceNet + ", €"}</TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    <TableRow>
+                                        <TableCell>{productPriceNet.price}</TableCell>
+                                        <TableCell>{productPriceTax.price}</TableCell>
+                                        <TableCell>{productPriceGross.price}</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>}
             </div>
         </div>
-        
+
     )
 }
 

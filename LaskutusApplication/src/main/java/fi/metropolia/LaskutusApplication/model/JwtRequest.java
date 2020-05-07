@@ -2,12 +2,12 @@ package fi.metropolia.LaskutusApplication.model;
 
 import java.io.Serializable;
 
-public class JwtRequest implements Serializable {
+public class JwtRequest implements Serializable {		//Token request class with username and password
     private static final long serialVersionUID = 5926468583005150707L;
     private String username;
     private String password;
 
-    //default konstruktori
+    //Default constructor
     public JwtRequest() {
     }
 
