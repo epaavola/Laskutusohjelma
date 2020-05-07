@@ -7,7 +7,7 @@ Ohjelmaan voi lisätä asiakkaita. Laskun luonnin yhteydessä asiakkaan voi vali
 Ohjelma hakee laskuttajan tiedot laskulle automaattisesti. Myös vanhoja laskuja voi tallentaa arkistoon ja niitä voi tarkastella arkistosta. 
 Ohjelma on todella näppärä työkalu laskutukseen
 
-![Laskutusohjelma aloitusnäkymä](/img/dashboard.jpg)
+![Laskutusohjelma aloitusnäkymä](/doc/dashboard.jpg)
 
 ## Teknologiat
 
